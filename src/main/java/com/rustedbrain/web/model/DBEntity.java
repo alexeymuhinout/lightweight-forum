@@ -2,7 +2,7 @@ package com.rustedbrain.web.model;
 
 import java.util.Date;
 
-public class Entity implements Comparable<Entity> {
+public class DBEntity implements Comparable<DBEntity> {
 
     private int id;
     private Date creationDate;
@@ -28,7 +28,7 @@ public class Entity implements Comparable<Entity> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Entity entity = (Entity) o;
+        DBEntity entity = (DBEntity) o;
 
         return getId() == entity.getId();
 
@@ -39,7 +39,7 @@ public class Entity implements Comparable<Entity> {
         return getId();
     }
 
-    public int compareTo(Entity o) {
+    public int compareTo(DBEntity o) {
         return this.getCreationDate().compareTo(o.getCreationDate());
     }
 }

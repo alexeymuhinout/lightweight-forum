@@ -4,7 +4,7 @@ package com.rustedbrain.web.model;
 import java.util.Date;
 import java.util.List;
 
-public class User extends Entity {
+public class User extends DBEntity {
 
     private String name;
     private String surname;
