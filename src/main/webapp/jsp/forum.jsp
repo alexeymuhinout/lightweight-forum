@@ -11,12 +11,12 @@
 <header>
     <nav class="main-nav">
         <section class="user-block">
-            <div>HOTEL-INFO</div>
+            <div>Lightweight-forum</div>
             <div>USER BLOCK</div>
         </section>
         <ul>
             <li><a href="${pageContext.request.contextPath}/index.jsp">Main</a></li>
-            <li><a href="${pageContext.request.contextPath}/controller?command=show_forum">Forum</a></li>
+            <li><a href="${pageContext.request.contextPath}/jsp/forum.jsp">Forum</a></li>
             <li><a href="${pageContext.request.contextPath}/jsp/blog.jsp">Blog</a></li>
             <li><a href="${pageContext.request.contextPath}/jsp/community.jsp">Community</a></li>
             <li><a href="${pageContext.request.contextPath}/jsp/find.jsp">Find</a></li>

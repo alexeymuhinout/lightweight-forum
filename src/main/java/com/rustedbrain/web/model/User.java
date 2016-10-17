@@ -1,10 +1,9 @@
 package com.rustedbrain.web.model;
 
 
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
 
-public class User extends DBEntity {
+public class User extends DBEntity implements Cloneable {
 
     private String name;
     private String surname;
@@ -12,15 +11,14 @@ public class User extends DBEntity {
     private String password;
     private String mail;
     private Date birthday;
-    private City homeCity;
-    private List<Message> messages;
+    private int cityId;
 
-    public List<Message> getMessages() {
-        return messages;
+    public int getCityId() {
+        return cityId;
     }
 
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
     public String getName() {
@@ -71,11 +69,40 @@ public class User extends DBEntity {
         this.birthday = birthday;
     }
 
-    public City getHomeCity() {
-        return homeCity;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        User user = (User) o;
+
+        return name.equals(user.name) && surname.equals(user.surname) && login.equals(user.login);
     }
 
-    public void setHomeCity(City homeCity) {
-        this.homeCity = homeCity;
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + surname.hashCode();
+        result = 31 * result + login.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", login='" + login + '\'' +
+                ", mail='" + mail + '\'' +
+                ", birthday=" + birthday +
+                ", cityId=" + cityId +
+                '}';
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+header {
+    background-color: #848484;
+}
+
+nav.main-nav {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+div {
+    padding: 8px;
+}
+
+section {
+    padding: 8px;
+}
+
+section.user-block {
+    color: orange;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: #606060;
+}
+
+nav.main-nav ul {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
+nav.main-nav ul li {
+    display: flex;
+    justify-content: center;
+}
+
+li {
+    padding: 5px;
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #848484;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+li:hover {
+    background-color: orange;
+}
+
+a {
+    text-decoration: none;
+}
+
+.social-button {
+    background-color: #f09f13;
+    border-radius: 12px;
+    border-width: 0;
+    cursor: pointer;
+    color: #ffffff;
+    padding: 6px 6px;
+}
+
+.social-button:hover {
+    background-color: #606160;
+}
+
+section.table-view {
+    width: 100%;
+    background-color: #dfdfdf;
+}
+
+section.table-edit {
+    background-color: #dfdfdf;
+}
+
+table {
+    background-color: white;
+    width: 100%;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: darkgray;
+}
+
+tr:hover {
+    background-color: orange;
+    cursor: pointer;
+}
+
+form {
+    width: 100%;
+    padding: 10px;
+    background-color: darkgrey;
+}

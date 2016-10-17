@@ -6,7 +6,7 @@ import java.util.List;
 
 public class DBCityControllerImpl implements DBCityController {
 
-    public void create(City entity) {
+    public void insert(City entity) {
 
     }
 

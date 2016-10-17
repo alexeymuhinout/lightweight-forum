@@ -7,11 +7,8 @@ import com.rustedbrain.web.model.User;
 
 import java.util.List;
 
-/**
- * Created by Bloodar on 17.09.2016.
- */
 public class DBMessageControllerImpl implements DBMessageController {
-    public void create(Message entity) {
+    public void insert(Message entity) {
 
     }
 

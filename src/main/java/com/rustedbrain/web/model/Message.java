@@ -2,18 +2,10 @@ package com.rustedbrain.web.model;
 
 public class Message extends DBEntity {
 
-    private Subcategory subcategory;
-    private User user;
-    private User replyTo;
+    private int subcategoryId;
+    private int userId;
+    private int replyToUserId;
     private String text;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public String getText() {
         return text;
@@ -23,19 +15,58 @@ public class Message extends DBEntity {
         this.text = text;
     }
 
-    public Subcategory getSubcategory() {
-        return subcategory;
+    public int getSubcategoryId() {
+        return subcategoryId;
     }
 
-    public void setSubcategory(Subcategory subcategory) {
-        this.subcategory = subcategory;
+    public void setSubcategoryId(int subcategoryId) {
+        this.subcategoryId = subcategoryId;
     }
 
-    public User getReplyTo() {
-        return replyTo;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setReplyTo(User replyTo) {
-        this.replyTo = replyTo;
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getReplyToUserId() {
+        return replyToUserId;
+    }
+
+    public void setReplyToUserId(int replyToUserId) {
+        this.replyToUserId = replyToUserId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Message message = (Message) o;
+
+        if (subcategoryId != message.subcategoryId) return false;
+        return text.equals(message.text);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + subcategoryId;
+        result = 31 * result + text.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "subcategoryId=" + subcategoryId +
+                ", userId=" + userId +
+                ", replyToUserId=" + replyToUserId +
+                ", text='" + text + '\'' +
+                '}';
     }
 }

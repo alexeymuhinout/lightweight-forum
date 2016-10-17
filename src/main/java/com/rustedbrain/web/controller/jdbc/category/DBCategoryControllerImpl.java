@@ -5,7 +5,17 @@ import com.rustedbrain.web.model.Category;
 import java.util.List;
 
 public class DBCategoryControllerImpl implements DBCategoryController {
-    public void create(Category entity) {
+
+    private static DBCategoryControllerImpl ourInstance = new DBCategoryControllerImpl();
+
+    private DBCategoryControllerImpl() {
+    }
+
+    public static DBCategoryControllerImpl getInstance() {
+        return ourInstance;
+    }
+
+    public void insert(Category entity) {
 
     }
 
@@ -18,6 +28,11 @@ public class DBCategoryControllerImpl implements DBCategoryController {
     }
 
     public List<Category> getAllEntities() {
+        return null;
+    }
+
+    @Override
+    public List<Category> getCategories(int currentPage, int categoriesPerPage) {
         return null;
     }
 }

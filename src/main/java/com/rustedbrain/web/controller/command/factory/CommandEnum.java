@@ -3,10 +3,8 @@ package com.rustedbrain.web.controller.command.factory;
 import com.rustedbrain.web.controller.command.ActionCommand;
 import com.rustedbrain.web.controller.command.LoginCommand;
 import com.rustedbrain.web.controller.command.LogoutCommand;
+import com.rustedbrain.web.controller.command.ShowForumCommand;
 
-/**
- * Created by Bloodar on 25.09.2016.
- */
 public enum CommandEnum {
 
     LOGIN {
@@ -19,9 +17,15 @@ public enum CommandEnum {
         {
             this.action = new LogoutCommand();
         }
+    },
+
+    SHOW_FORUM {
+        {
+            this.action = new ShowForumCommand();
+        }
     };
 
-    private ActionCommand action;
+    protected ActionCommand action;
 
     public ActionCommand getCurrentCommand() {
         return this.action;

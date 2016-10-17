@@ -5,7 +5,7 @@ import com.rustedbrain.web.model.Subcategory;
 import java.util.List;
 
 public class DBSubcategoryControllerImpl implements DBSubcategoryController {
-    public void create(Subcategory entity) {
+    public void insert(Subcategory entity) {
 
     }
 

@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 public class MessageManager extends Manager {
 
-    private static final String MESSAGE_PROPERTIES_PATH = "";
+    private static final String MESSAGE_PROPERTIES_PATH = "C:\\Work\\IdeaProjects\\lightweight-forum\\resources\\messages.properties";
     private static MessageManager ourInstance = new MessageManager();
 
     private MessageManager() {
