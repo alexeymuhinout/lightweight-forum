@@ -1,4 +1,4 @@
-package com.rustedbrain.web.controller.jdbc;
+package com.rustedbrain.web.controller.jdbc.util;
 
 
 import java.sql.Connection;
@@ -20,6 +20,10 @@ public class DBUtil {
         resultSet.close();
 
         return isExist;
+    }
+
+    public void createTable(String tableName) {
+
     }
 
 }

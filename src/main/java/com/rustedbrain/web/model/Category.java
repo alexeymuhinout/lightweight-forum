@@ -3,6 +3,7 @@ package com.rustedbrain.web.model;
 public class Category extends DBEntity {
 
     private String name;
+    private int adminId;
 
     public String getName() {
         return name;
@@ -36,5 +37,13 @@ public class Category extends DBEntity {
         return "Category{" +
                 "name='" + name + '\'' +
                 '}';
+    }
+
+    public int getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
     }
 }

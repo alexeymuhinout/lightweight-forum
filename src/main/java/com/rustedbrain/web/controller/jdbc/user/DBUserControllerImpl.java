@@ -1,43 +1,23 @@
 package com.rustedbrain.web.controller.jdbc.user;
 
+import com.rustedbrain.web.controller.jdbc.DBConnector;
 import com.rustedbrain.web.controller.jdbc.PostgreSQLDBConnector;
 import com.rustedbrain.web.controller.resource.ConfigurationManager;
+import com.rustedbrain.web.controller.resource.Manager;
 import com.rustedbrain.web.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class DBUserControllerImpl implements DBUserController {
+public class DBUserControllerImpl extends DBUserController {
 
-    private ConfigurationManager configurationManager = ConfigurationManager.getInstance();
-    private PostgreSQLDBConnector dbConnector = PostgreSQLDBConnector.getInstance();
+    private Manager configurationManager = ConfigurationManager.getInstance();
+    private DBConnector dbConnector = PostgreSQLDBConnector.getInstance();
 
-    public void insertUsers(User... users) throws SQLException {
-        String sqlInsert = configurationManager.getProperty("database.sql.insert.users");
-        Connection connection = dbConnector.getConnection();
-        PreparedStatement insertStatement = null;
-
-        try {
-            connection.setAutoCommit(false);
-            insertStatement = connection.prepareStatement(sqlInsert);
-            for (User user : users) {
-                fillInsertStatement(user, insertStatement);
-                insertStatement.executeUpdate();
-                connection.commit();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            connection.rollback();
-        } finally {
-            if (insertStatement != null) {
-                insertStatement.close();
-            }
-            connection.setAutoCommit(true);
-        }
-    }
-
-    private void fillInsertStatement(User user, PreparedStatement insertStatement) throws SQLException {
+    @Override
+    protected void fillInsertStatement(User user, PreparedStatement insertStatement) throws SQLException {
         insertStatement.setString(1, user.getName());
         insertStatement.setString(2, user.getSurname());
         insertStatement.setString(3, user.getLogin());
@@ -48,112 +28,101 @@ public class DBUserControllerImpl implements DBUserController {
     }
 
     @Override
-    public void insert(User entity) throws SQLException {
-        this.insertUsers(entity);
+    public User getEntityById(int id) throws SQLException {
+        String sqlSelect = configurationManager.getProperty("database.sql.select.user.id").replace("%1", String.valueOf(id));
+        return executeSelectEntity(dbConnector, sqlSelect);
     }
 
+    @Override
+    public void insert(User entity) throws SQLException {
+        this.insertAll(Collections.singletonList(entity));
+    }
+
+    @Override
+    public void insertAll(List<User> entities) throws SQLException {
+        String sqlInsert = configurationManager.getProperty("database.sql.insert.users");
+        executePreparedInsert(dbConnector, sqlInsert, entities);
+    }
+
+    @Override
     public void update(User oldEntity, User newEntity) throws SQLException {
         String sqlUpdate = configurationManager.getProperty("database.sql.update.users");
-        Connection connection = dbConnector.getConnection();
-        PreparedStatement updateStatement = null;
-
-        try {
-            connection.setAutoCommit(false);
-            updateStatement = connection.prepareStatement(sqlUpdate);
-            fillUpdateStatement(oldEntity, newEntity, updateStatement);
-            updateStatement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            connection.rollback();
-        } finally {
-            if (updateStatement != null) {
-                updateStatement.close();
-            }
-            connection.setAutoCommit(true);
-        }
+        executePreparedUpdate(dbConnector, oldEntity, newEntity, sqlUpdate);
     }
 
-    private void fillUpdateStatement(User oldUser, User newUser, PreparedStatement statement) throws SQLException {
+    @Override
+    protected void fillUpdateStatement(User oldUser, User newUser, PreparedStatement statement) throws SQLException {
         statement.setString(1, newUser.getName());
         statement.setString(2, newUser.getSurname());
         statement.setString(3, newUser.getLogin());
         statement.setString(4, newUser.getPassword());
         statement.setString(5, newUser.getMail());
         statement.setDate(6, newUser.getBirthday());
-        statement.setInt(5, newUser.getCityId());
-        statement.setInt(5, oldUser.getId());
+        statement.setInt(7, newUser.getCityId());
+        statement.setInt(8, oldUser.getId());
     }
 
+    @Override
     public void delete(User entity) throws SQLException {
-        this.deleteUsers(entity);
+        this.deleteAll(Collections.singletonList(entity));
     }
 
-    private void deleteUsers(User... users) throws SQLException {
+    @Override
+    public void deleteAll(List<User> entities) throws SQLException {
         String sqlDelete = configurationManager.getProperty("database.sql.delete.users");
-        Connection connection = dbConnector.getConnection();
-        PreparedStatement deleteStatement = null;
-
-        try {
-            connection.setAutoCommit(false);
-            deleteStatement = connection.prepareStatement(sqlDelete);
-            for (User user : users) {
-                fillDeleteStatement(user, deleteStatement);
-                deleteStatement.executeUpdate();
-                connection.commit();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            connection.rollback();
-        } finally {
-            if (deleteStatement != null) {
-                deleteStatement.close();
-            }
-            connection.setAutoCommit(true);
-        }
+        executePreparedDelete(dbConnector, sqlDelete, entities);
     }
 
-    private void fillDeleteStatement(User userToDelete, PreparedStatement deleteStatement) throws SQLException {
+    @Override
+    protected void fillDeleteStatement(User userToDelete, PreparedStatement deleteStatement) throws SQLException {
         deleteStatement.setInt(1, userToDelete.getId());
     }
 
-    public List<User> getAllEntities() {
-        Connection connection = dbConnector.getConnection();
-
+    public List<User> getAll() throws SQLException {
         String sqlSelect = configurationManager.getProperty("database.sql.select.users");
-        List<User> users = new ArrayList<>();
-
-        try (Statement insertStatement = connection.createStatement();
-             ResultSet resultSet = insertStatement.executeQuery(sqlSelect)) {
-            mapSelectResultSetToUsers(users, resultSet);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return users;
+        return executeSelectEntities(dbConnector, sqlSelect);
     }
 
-    private void mapSelectResultSetToUsers(List<User> users, ResultSet resultSet) throws SQLException {
+    @Override
+    protected void fillGeneratedEntityId(User entity, ResultSet generatedKeys) throws SQLException {
+        entity.setId(generatedKeys.getInt(1));
+    }
+
+    @Override
+    protected List<User> mapSelectResultSetToEntities(ResultSet resultSet) throws SQLException {
+        List<User> users = new ArrayList<>();
         while (resultSet.next()) {
             User user = new User();
-            user.setId(resultSet.getInt(7));
-            user.setName(resultSet.getString(1));
-            user.setSurname(resultSet.getString(2));
-            user.setLogin(resultSet.getString(3));
-            user.setPassword(resultSet.getString(4));
-            user.setMail(resultSet.getString(5));
-            user.setBirthday(resultSet.getDate(6));
+            user.setId(resultSet.getInt(1));
+            user.setName(resultSet.getString(2));
+            user.setSurname(resultSet.getString(3));
+            user.setLogin(resultSet.getString(4));
+            user.setPassword(resultSet.getString(5));
+            user.setMail(resultSet.getString(6));
+            user.setBirthday(resultSet.getDate(7));
             user.setCityId(resultSet.getInt(8));
             users.add(user);
         }
+        return users;
     }
 
-    public User getUserByLogin(String login) {
+    @Override
+    protected User mapSelectResultSetToEntity(ResultSet resultSet) throws SQLException {
+        User user = new User();
+        user.setId(resultSet.getInt(1));
+        user.setName(resultSet.getString(2));
+        user.setSurname(resultSet.getString(3));
+        user.setLogin(resultSet.getString(4));
+        user.setPassword(resultSet.getString(5));
+        user.setMail(resultSet.getString(6));
+        user.setBirthday(resultSet.getDate(7));
+        user.setCityId(resultSet.getInt(8));
+        return user;
+    }
 
-        Connection connection = dbConnector.getConnection();
-
+    public User getUserByLogin(String login) throws SQLException {
         String sqlSelect = configurationManager.getProperty("database.sql.select.user.login").replace("%1", login);
-        User user = null;
+        Connection connection = dbConnector.getConnection();
 
         try (Statement insertStatement = connection.createStatement();
              ResultSet resultSet = insertStatement.executeQuery(sqlSelect)) {
@@ -162,21 +131,8 @@ public class DBUserControllerImpl implements DBUserController {
                 return null;
             } else {
                 resultSet.next();
-                user = new User();
-                user.setName(resultSet.getString(1));
-                user.setSurname(resultSet.getString(2));
-                user.setLogin(resultSet.getString(3));
-                user.setPassword(resultSet.getString(4));
-                user.setMail(resultSet.getString(5));
-                user.setBirthday(resultSet.getDate(6));
-                user.setId(resultSet.getInt(7));
-                user.setCityId(resultSet.getInt(8));
-                return user;
+                return mapSelectResultSetToEntity(resultSet);
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return user;
     }
 }

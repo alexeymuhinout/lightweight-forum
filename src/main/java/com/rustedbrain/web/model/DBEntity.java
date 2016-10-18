@@ -1,19 +1,8 @@
 package com.rustedbrain.web.model;
 
-import java.util.Date;
-
-public class DBEntity {
+public abstract class DBEntity implements Cloneable {
 
     private int id;
-    private Date creationDate;
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
 
     public int getId() {
         return id;
@@ -28,22 +17,21 @@ public class DBEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DBEntity entity = (DBEntity) o;
+        DBEntity dbEntity = (DBEntity) o;
 
-        return getId() == entity.getId();
+        return id == dbEntity.id;
 
     }
 
     @Override
     public int hashCode() {
-        return getId();
+        return id;
     }
 
     @Override
     public String toString() {
         return "DBEntity{" +
                 "id=" + id +
-                ", creationDate=" + creationDate +
                 '}';
     }
 }

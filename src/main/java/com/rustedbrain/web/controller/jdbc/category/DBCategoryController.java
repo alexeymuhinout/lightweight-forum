@@ -1,12 +1,12 @@
 package com.rustedbrain.web.controller.jdbc.category;
 
-import com.rustedbrain.web.controller.jdbc.CRUDController;
+import com.rustedbrain.web.controller.jdbc.DBController;
 import com.rustedbrain.web.model.Category;
 
 import java.util.List;
 
-public interface DBCategoryController extends CRUDController<Category> {
+public abstract class DBCategoryController extends DBController<Category> {
 
-    List<Category> getCategories(int currentPage, int categoriesPerPage);
+    public abstract List<Category> getCategories(int currentPage, int categoriesPerPage);
 
 }

@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class PostgreSQLDBConnector {
+public class PostgreSQLDBConnector implements DBConnector {
 
     private static PostgreSQLDBConnector instance;
     private Connection connection;
@@ -29,6 +29,7 @@ public class PostgreSQLDBConnector {
         return instance;
     }
 
+    @Override
     public Connection getConnection() {
         return this.connection;
     }

@@ -36,4 +36,9 @@ public class City extends DBEntity {
         result = 31 * result + name.hashCode();
         return result;
     }
+
+    @Override
+    public City clone() throws CloneNotSupportedException {
+        return (City) super.clone();
+    }
 }

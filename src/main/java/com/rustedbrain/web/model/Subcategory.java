@@ -1,8 +1,7 @@
 package com.rustedbrain.web.model;
 
-public class Subcategory {
+public class Subcategory extends Category {
 
-    private String name;
     private int authorId;
 
     public int getAuthorId() {
@@ -13,34 +12,29 @@ public class Subcategory {
         this.authorId = authorId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         Subcategory that = (Subcategory) o;
 
-        return name.equals(that.name);
+        return authorId == that.authorId;
 
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        int result = super.hashCode();
+        result = 31 * result + authorId;
+        return result;
     }
 
     @Override
     public String toString() {
         return "Subcategory{" +
-                "name='" + name + '\'' +
-                '}';
+                "authorId=" + authorId +
+                "} " + super.toString();
     }
 }

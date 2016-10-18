@@ -1,7 +1,6 @@
 package com.rustedbrain.web.controller.logic;
 
 import com.rustedbrain.web.controller.jdbc.category.DBCategoryController;
-import com.rustedbrain.web.controller.jdbc.category.DBCategoryControllerImpl;
 import com.rustedbrain.web.model.Category;
 
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.List;
 public class ForumLogic {
 
     private static ForumLogic ourInstance = new ForumLogic();
-    private DBCategoryController dbCategoryController = DBCategoryControllerImpl.getInstance();
+    private DBCategoryController dbCategoryController;
 
     private ForumLogic() {
     }

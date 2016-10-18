@@ -1,9 +1,11 @@
 package com.rustedbrain.web.controller.jdbc.user;
 
-import com.rustedbrain.web.controller.jdbc.CRUDController;
+import com.rustedbrain.web.controller.jdbc.DBController;
 import com.rustedbrain.web.model.User;
 
-public interface DBUserController extends CRUDController<User> {
+import java.sql.SQLException;
 
-    User getUserByLogin(String login);
+public abstract class DBUserController extends DBController<User> {
+
+    abstract User getUserByLogin(String login) throws SQLException;
 }

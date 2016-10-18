@@ -3,7 +3,7 @@ package com.rustedbrain.web.model;
 
 import java.sql.Date;
 
-public class User extends DBEntity implements Cloneable {
+public class User extends DBEntity {
 
     private String name;
     private String surname;
@@ -95,14 +95,17 @@ public class User extends DBEntity implements Cloneable {
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
                 ", mail='" + mail + '\'' +
                 ", birthday=" + birthday +
                 ", cityId=" + cityId +
-                '}';
+                "} " + super.toString();
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public User clone() throws CloneNotSupportedException {
+        User clonedUser = (User) super.clone();
+        clonedUser.birthday = (Date) this.birthday.clone();
+        return clonedUser;
     }
 }
