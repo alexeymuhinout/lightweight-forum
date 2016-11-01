@@ -1,4 +1,4 @@
-package com.rustedbrain.web.model;
+package com.rustedbrain.web.model.jdbc;
 
 public class SwearWord extends DBEntity {
 

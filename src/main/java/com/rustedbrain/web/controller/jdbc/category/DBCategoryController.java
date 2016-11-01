@@ -1,7 +1,7 @@
 package com.rustedbrain.web.controller.jdbc.category;
 
 import com.rustedbrain.web.controller.jdbc.DBController;
-import com.rustedbrain.web.model.Category;
+import com.rustedbrain.web.model.jdbc.Category;
 
 import java.util.List;
 

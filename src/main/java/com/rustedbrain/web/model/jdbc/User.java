@@ -1,4 +1,4 @@
-package com.rustedbrain.web.model;
+package com.rustedbrain.web.model.jdbc;
 
 
 import java.sql.Date;
@@ -11,13 +11,22 @@ public class User extends DBEntity {
     private String password;
     private String mail;
     private Date birthday;
-    private int cityId;
+    private Integer cityId;
+    private boolean isAdmin;
 
-    public int getCityId() {
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public Integer getCityId() {
         return cityId;
     }
 
-    public void setCityId(int cityId) {
+    public void setCityId(Integer cityId) {
         this.cityId = cityId;
     }
 
@@ -94,11 +103,7 @@ public class User extends DBEntity {
         return "User{" +
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
                 ", mail='" + mail + '\'' +
-                ", birthday=" + birthday +
-                ", cityId=" + cityId +
                 "} " + super.toString();
     }
 

@@ -1,6 +1,6 @@
 package com.rustedbrain.web.controller.jdbc.city;
 
-import com.rustedbrain.web.model.City;
+import com.rustedbrain.web.model.jdbc.City;
 import junit.framework.TestCase;
 import org.junit.Assert;
 

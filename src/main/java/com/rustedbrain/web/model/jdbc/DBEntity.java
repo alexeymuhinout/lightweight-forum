@@ -1,14 +1,14 @@
-package com.rustedbrain.web.model;
+package com.rustedbrain.web.model.jdbc;
 
 public abstract class DBEntity implements Cloneable {
 
-    private int id;
+    private Integer id;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

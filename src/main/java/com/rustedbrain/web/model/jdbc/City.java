@@ -1,9 +1,8 @@
-package com.rustedbrain.web.model;
+package com.rustedbrain.web.model.jdbc;
 
-public class Category extends DBEntity {
+public class City extends DBEntity {
 
     private String name;
-    private int adminId;
 
     public String getName() {
         return name;
@@ -14,15 +13,21 @@ public class Category extends DBEntity {
     }
 
     @Override
+    public String toString() {
+        return "City{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        Category category = (Category) o;
+        City city = (City) o;
 
-        return name.equals(category.name);
-
+        return name.equals(city.name);
     }
 
     @Override
@@ -33,17 +38,7 @@ public class Category extends DBEntity {
     }
 
     @Override
-    public String toString() {
-        return "Category{" +
-                "name='" + name + '\'' +
-                '}';
-    }
-
-    public int getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(int adminId) {
-        this.adminId = adminId;
+    public City clone() throws CloneNotSupportedException {
+        return (City) super.clone();
     }
 }

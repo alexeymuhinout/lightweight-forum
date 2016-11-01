@@ -3,7 +3,7 @@ package com.rustedbrain.web.controller;
 import com.rustedbrain.web.controller.command.ActionCommand;
 import com.rustedbrain.web.controller.command.factory.ActionFactory;
 import com.rustedbrain.web.controller.util.SessionRequestContentUtil;
-import com.rustedbrain.web.model.SessionRequestContent;
+import com.rustedbrain.web.model.servlet.SessionRequestContent;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

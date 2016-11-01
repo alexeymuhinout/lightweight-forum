@@ -1,4 +1,4 @@
-package com.rustedbrain.web.model;
+package com.rustedbrain.web.model.servlet;
 
 import java.util.HashMap;
 

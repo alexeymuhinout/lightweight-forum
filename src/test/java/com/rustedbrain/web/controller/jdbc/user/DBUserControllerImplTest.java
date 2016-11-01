@@ -1,7 +1,7 @@
 package com.rustedbrain.web.controller.jdbc.user;
 
 
-import com.rustedbrain.web.model.User;
+import com.rustedbrain.web.model.jdbc.User;
 import junit.framework.TestCase;
 import org.junit.Assert;
 
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-public class DBAdminControllerImplTest extends TestCase {
+public class DBUserControllerImplTest extends TestCase {
 
     private Connection connection;
     private DBUserController dbUserController;
@@ -26,12 +26,14 @@ public class DBAdminControllerImplTest extends TestCase {
         String dbUser = "postgres";
         String dbPassword = "postgres";
         this.connection = DriverManager.getConnection(url, dbUser, dbPassword);
+        Statement statement = this.connection.createStatement();
+        statement.execute("");
         this.dbUserController = new DBUserControllerImpl();
-        this.user1 = createTestUser(0, "John", "Coleman", "Johny", "jing$bing", "jhncmn@gmail.com", Date.valueOf(LocalDate.now()), 0);
-        this.user2 = createTestUser(1, "Jack", "Jerido", "likant", "234lilian", "kolgun@gmail.com", Date.valueOf(LocalDate.now()), 1);
+        this.user1 = createTestUser(null, "John", "Coleman", "Johny", "jing$bing", "jhncmn@gmail.com", Date.valueOf(LocalDate.now()), 0);
+        this.user2 = createTestUser(null, "Jack", "Jerido", "likant", "234lilian", "kolgun@gmail.com", Date.valueOf(LocalDate.now()), 1);
     }
 
-    private User createTestUser(int id, String name, String surname, String login, String password, String mail, Date birthday, int cityId) {
+    private User createTestUser(Integer id, String name, String surname, String login, String password, String mail, Date birthday, int cityId) {
         User user = new User();
         user.setId(id);
         user.setName(name);

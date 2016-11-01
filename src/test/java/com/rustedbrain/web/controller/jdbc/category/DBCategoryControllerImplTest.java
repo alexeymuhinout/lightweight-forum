@@ -1,6 +1,6 @@
 package com.rustedbrain.web.controller.jdbc.category;
 
-import com.rustedbrain.web.model.Category;
+import com.rustedbrain.web.model.jdbc.Category;
 import junit.framework.TestCase;
 import org.junit.Assert;
 
@@ -29,7 +29,6 @@ public class DBCategoryControllerImplTest extends TestCase {
     public void testInsertCategory() throws Exception {
         List<Category> categoriesBeforeInsert = dbCategoryController.getAll();
         int categoriesBeforeInsertSize = categoriesBeforeInsert.size();
-
         dbCategoryController.insert(this.category);
         Assert.assertEquals(categoriesBeforeInsertSize, categoriesBeforeInsertSize + 1);
     }

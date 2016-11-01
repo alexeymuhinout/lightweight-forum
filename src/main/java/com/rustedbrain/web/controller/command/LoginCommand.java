@@ -1,7 +1,7 @@
 package com.rustedbrain.web.controller.command;
 
 import com.rustedbrain.web.controller.logic.LoginLogic;
-import com.rustedbrain.web.model.SessionRequestContent;
+import com.rustedbrain.web.model.servlet.SessionRequestContent;
 
 public class LoginCommand implements ActionCommand {
 

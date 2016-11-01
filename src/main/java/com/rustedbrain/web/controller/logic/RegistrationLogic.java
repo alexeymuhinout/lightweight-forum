@@ -1,6 +1,6 @@
 package com.rustedbrain.web.controller.logic;
 
-import com.rustedbrain.web.model.User;
+import com.rustedbrain.web.model.jdbc.User;
 
 public class RegistrationLogic {
 

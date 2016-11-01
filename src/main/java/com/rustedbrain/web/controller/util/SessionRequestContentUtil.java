@@ -1,6 +1,6 @@
 package com.rustedbrain.web.controller.util;
 
-import com.rustedbrain.web.model.SessionRequestContent;
+import com.rustedbrain.web.model.servlet.SessionRequestContent;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;

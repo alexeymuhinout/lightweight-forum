@@ -1,10 +1,10 @@
 package com.rustedbrain.web.controller.jdbc.message;
 
 import com.rustedbrain.web.controller.jdbc.DBController;
-import com.rustedbrain.web.model.Category;
-import com.rustedbrain.web.model.Message;
-import com.rustedbrain.web.model.Subcategory;
-import com.rustedbrain.web.model.User;
+import com.rustedbrain.web.model.jdbc.Category;
+import com.rustedbrain.web.model.jdbc.Message;
+import com.rustedbrain.web.model.jdbc.Subcategory;
+import com.rustedbrain.web.model.jdbc.User;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@ import com.rustedbrain.web.controller.jdbc.DBConnector;
 import com.rustedbrain.web.controller.jdbc.PostgreSQLDBConnector;
 import com.rustedbrain.web.controller.resource.ConfigurationManager;
 import com.rustedbrain.web.controller.resource.Manager;
-import com.rustedbrain.web.model.User;
+import com.rustedbrain.web.model.jdbc.User;
 
 import java.sql.*;
 import java.util.ArrayList;

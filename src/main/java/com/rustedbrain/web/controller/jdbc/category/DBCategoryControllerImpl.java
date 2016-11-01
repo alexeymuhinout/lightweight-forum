@@ -1,6 +1,6 @@
 package com.rustedbrain.web.controller.jdbc.category;
 
-import com.rustedbrain.web.model.Category;
+import com.rustedbrain.web.model.jdbc.Category;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
