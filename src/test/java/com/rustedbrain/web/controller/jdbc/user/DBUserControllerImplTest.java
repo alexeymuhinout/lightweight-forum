@@ -1,13 +1,19 @@
 package com.rustedbrain.web.controller.jdbc.user;
 
 
+import com.rustedbrain.web.controller.jdbc.DBConnectorImpl;
+import com.rustedbrain.web.controller.jdbc.util.DBUtil;
+import com.rustedbrain.web.controller.resource.ConfigurationManager;
+import com.rustedbrain.web.controller.resource.MessageManager;
+import com.rustedbrain.web.controller.resource.SQLManager;
+import com.rustedbrain.web.controller.util.jaxb.JaxbParser;
+import com.rustedbrain.web.controller.util.jaxb.Parser;
 import com.rustedbrain.web.model.jdbc.User;
 import junit.framework.TestCase;
 import org.junit.Assert;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -22,13 +28,12 @@ public class DBUserControllerImplTest extends TestCase {
 
     @Override
     public void setUp() throws Exception {
-        String url = "jdbc:postgresql://192.168.184.102:5432/lightweight-forum";
+        String url = "jdbc:postgresql://127.0.0.1:5432/lightweight-forum-test";
         String dbUser = "postgres";
         String dbPassword = "postgres";
-        this.connection = DriverManager.getConnection(url, dbUser, dbPassword);
-        Statement statement = this.connection.createStatement();
-        statement.execute("");
-        this.dbUserController = new DBUserControllerImpl();
+        Parser parser = new JaxbParser();
+        DBUtil dbUtil = new DBUtil(ConfigurationManager.getInstance(), MessageManager.getInstance(), SQLManager.getInstance(), parser);
+        this.dbUserController = new DBUserControllerImpl(ConfigurationManager.getInstance(), new DBConnectorImpl(url, dbUser, dbPassword), dbUtil);
         this.user1 = createTestUser(null, "John", "Coleman", "Johny", "jing$bing", "jhncmn@gmail.com", Date.valueOf(LocalDate.now()), 0);
         this.user2 = createTestUser(null, "Jack", "Jerido", "likant", "234lilian", "kolgun@gmail.com", Date.valueOf(LocalDate.now()), 1);
     }

@@ -6,6 +6,8 @@ import java.util.List;
 
 public abstract class DBController<T> {
 
+    public abstract void checkTableExistence() throws SQLException;
+
     public abstract T getEntityById(int id) throws SQLException;
 
     public abstract void insert(T entity) throws SQLException;

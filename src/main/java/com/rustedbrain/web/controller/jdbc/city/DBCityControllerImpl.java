@@ -1,11 +1,12 @@
 package com.rustedbrain.web.controller.jdbc.city;
 
 import com.rustedbrain.web.controller.jdbc.DBConnector;
-import com.rustedbrain.web.controller.jdbc.PostgreSQLDBConnector;
-import com.rustedbrain.web.controller.resource.ConfigurationManager;
+import com.rustedbrain.web.controller.jdbc.util.DBUtil;
 import com.rustedbrain.web.controller.resource.Manager;
 import com.rustedbrain.web.model.jdbc.City;
 
+import javax.xml.bind.JAXBException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,8 +16,30 @@ import java.util.List;
 
 public class DBCityControllerImpl extends DBCityController {
 
-    private Manager configurationManager = ConfigurationManager.getInstance();
-    private DBConnector dbConnector = PostgreSQLDBConnector.getInstance();
+    private Manager configurationManager;
+    private DBConnector dbConnector;
+    private DBUtil dbUtil;
+
+    public DBCityControllerImpl(Manager configurationManager, DBConnector dbConnector, DBUtil dbUtil) {
+        this.configurationManager = configurationManager;
+        this.dbConnector = dbConnector;
+        this.dbUtil = dbUtil;
+    }
+
+    @Override
+    public void checkTableExistence() throws SQLException {
+        Connection connection = dbConnector.getConnection();
+        connection.setAutoCommit(false);
+        try {
+            dbUtil.checkTableExistence("public", "city", connection);
+            connection.commit();
+        } catch (JAXBException e) {
+            connection.rollback();
+            e.printStackTrace();
+        } finally {
+            connection.setAutoCommit(true);
+        }
+    }
 
     @Override
     public City getEntityById(int id) throws SQLException {
@@ -42,8 +65,9 @@ public class DBCityControllerImpl extends DBCityController {
     }
 
     protected void fillUpdateStatement(City oldCity, City newCity, PreparedStatement statement) throws SQLException {
-        statement.setString(1, newCity.getName());
-        statement.setInt(2, oldCity.getId());
+        statement.setDate(1, newCity.getCreationDate());
+        statement.setString(2, newCity.getName());
+        statement.setInt(3, oldCity.getId());
     }
 
     public void delete(City entity) throws SQLException {
@@ -71,7 +95,8 @@ public class DBCityControllerImpl extends DBCityController {
         while (resultSet.next()) {
             City city = new City();
             city.setId(resultSet.getInt(1));
-            city.setName(resultSet.getString(2));
+            city.setCreationDate(resultSet.getDate(2));
+            city.setName(resultSet.getString(3));
             cities.add(city);
         }
         return cities;
@@ -81,7 +106,8 @@ public class DBCityControllerImpl extends DBCityController {
     protected City mapSelectResultSetToEntity(ResultSet resultSet) throws SQLException {
         City city = new City();
         city.setId(resultSet.getInt(1));
-        city.setName(resultSet.getString(2));
+        city.setCreationDate(resultSet.getDate(2));
+        city.setName(resultSet.getString(3));
         return city;
     }
 
@@ -92,6 +118,7 @@ public class DBCityControllerImpl extends DBCityController {
 
     @Override
     protected void fillInsertStatement(City entity, PreparedStatement insertStatement) throws SQLException {
-        insertStatement.setString(1, entity.getName());
+        insertStatement.setDate(1, entity.getCreationDate());
+        insertStatement.setString(2, entity.getName());
     }
 }

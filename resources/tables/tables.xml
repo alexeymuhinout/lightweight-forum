@@ -1,0 +1,505 @@
+<tables>
+
+    <table>
+        <schema>public</schema>
+        <name>user</name>
+        <columns>
+            <column>
+                <column-name>id</column-name>
+                <data-type>integer</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                    <constraint>
+                        <definition>DEFAULT nextval('user_id_seq'::regclass)</definition>
+                        <dependent>user_id_seq</dependent>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>creation</column-name>
+                <data-type>date</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>name</column-name>
+                <data-type>character varying(64)</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>surname</column-name>
+                <data-type>character varying(64)</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>login</column-name>
+                <data-type>character varying(64)</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>password</column-name>
+                <data-type>character varying(64)</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>mail</column-name>
+                <data-type>character varying(64)</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>birthday</column-name>
+                <data-type>date</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>city_id</column-name>
+                <data-type>integer</data-type>
+            </column>
+            <column>
+                <column-name>admin</column-name>
+                <data-type>boolean</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+        </columns>
+        <table-constraints>
+            <constraint>
+                <name>user_pkey</name>
+                <definition>PRIMARY KEY (id)</definition>
+            </constraint>
+            <constraint>
+                <name>user_mail_key</name>
+                <definition>UNIQUE (mail)</definition>
+            </constraint>
+        </table-constraints>
+        <foreign-keys>
+            <foreign-key>
+                <name>user_city_id_fkey</name>
+                <local-column>city_id</local-column>
+                <dependent-table-schema>public</dependent-table-schema>
+                <dependent-table>city</dependent-table>
+                <dependent-column>id</dependent-column>
+                <restriction>
+                    ON UPDATE SET NULL
+                    ON DELETE SET NULL
+                </restriction>
+            </foreign-key>
+        </foreign-keys>
+        <namespace>pg_default</namespace>
+        <oids>FALSE</oids>
+        <owners>
+            <owner>postgres</owner>
+        </owners>
+    </table>
+
+    <table>
+        <schema>public</schema>
+        <name>city</name>
+        <columns>
+            <column>
+                <column-name>id</column-name>
+                <data-type>integer</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                    <constraint>
+                        <definition>DEFAULT nextval('city_id_seq'::regclass)</definition>
+                        <dependent>city_id_seq</dependent>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>creation</column-name>
+                <data-type>date</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>name</column-name>
+                <data-type>character varying(32)</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+        </columns>
+        <table-constraints>
+            <constraint>
+                <name>city_pkey</name>
+                <definition>PRIMARY KEY (id)</definition>
+            </constraint>
+            <constraint>
+                <name>city_name_key</name>
+                <definition>UNIQUE (name)</definition>
+            </constraint>
+        </table-constraints>
+        <namespace>pg_default</namespace>
+        <oids>FALSE</oids>
+        <owners>
+            <owner>postgres</owner>
+        </owners>
+    </table>
+
+    <table>
+        <schema>public</schema>
+        <name>category</name>
+        <columns>
+            <column>
+                <column-name>id</column-name>
+                <data-type>integer</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                    <constraint>
+                        <definition>DEFAULT nextval('category_id_seq'::regclass)</definition>
+                        <dependent>category_id_seq</dependent>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>creation</column-name>
+                <data-type>date</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>name</column-name>
+                <data-type>character varying(128)</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>user_id</column-name>
+                <data-type>integer</data-type>
+            </column>
+        </columns>
+        <table-constraints>
+            <constraint>
+                <name>category_pkey</name>
+                <definition>PRIMARY KEY (id)</definition>
+            </constraint>
+            <constraint>
+                <name>category_name_key</name>
+                <definition>UNIQUE (name)</definition>
+            </constraint>
+        </table-constraints>
+        <foreign-keys>
+            <foreign-key>
+                <name>category_user_id_fkey</name>
+                <local-column>user_id</local-column>
+                <dependent-table-schema>public</dependent-table-schema>
+                <dependent-table>user</dependent-table>
+                <dependent-column>id</dependent-column>
+                <restriction>
+                    ON UPDATE SET NULL
+                    ON DELETE SET NULL
+                </restriction>
+            </foreign-key>
+        </foreign-keys>
+        <namespace>pg_default</namespace>
+        <oids>FALSE</oids>
+        <owners>
+            <owner>postgres</owner>
+        </owners>
+    </table>
+
+    <table>
+        <schema>public</schema>
+        <name>subcategory</name>
+        <columns>
+            <column>
+                <column-name>id</column-name>
+                <data-type>integer</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                    <constraint>
+                        <definition>DEFAULT nextval('subcategory_id_seq'::regclass)</definition>
+                        <dependent>subcategory_id_seq</dependent>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>creation</column-name>
+                <data-type>date</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>name</column-name>
+                <data-type>character varying(128)</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>user_id</column-name>
+                <data-type>integer</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>category_id</column-name>
+                <data-type>integer</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+        </columns>
+        <table-constraints>
+            <constraint>
+                <name>subcategory_pkey</name>
+                <definition>PRIMARY KEY (id)</definition>
+            </constraint>
+            <constraint>
+                <name>subcategory_name_key</name>
+                <definition>UNIQUE (name)</definition>
+            </constraint>
+        </table-constraints>
+        <foreign-keys>
+            <foreign-key>
+                <name>subcategory_user_id_fkey</name>
+                <local-column>user_id</local-column>
+                <dependent-table-schema>public</dependent-table-schema>
+                <dependent-table>user</dependent-table>
+                <dependent-column>id</dependent-column>
+                <restriction>
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE
+                </restriction>
+            </foreign-key>
+            <foreign-key>
+                <name>subcategory_category_id_fkey</name>
+                <local-column>category_id</local-column>
+                <dependent-table-schema>public</dependent-table-schema>
+                <dependent-table>category</dependent-table>
+                <dependent-column>id</dependent-column>
+                <restriction>
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE
+                </restriction>
+            </foreign-key>
+        </foreign-keys>
+        <namespace>pg_default</namespace>
+        <oids>FALSE</oids>
+        <owners>
+            <owner>postgres</owner>
+        </owners>
+    </table>
+
+    <table>
+        <schema>public</schema>
+        <name>message</name>
+        <columns>
+            <column>
+                <column-name>id</column-name>
+                <data-type>integer</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                    <constraint>
+                        <definition>DEFAULT nextval('message_id_seq'::regclass)</definition>
+                        <dependent>message_id_seq</dependent>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>creation</column-name>
+                <data-type>date</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>subcategory_id</column-name>
+                <data-type>integer</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>sender_user_id</column-name>
+                <data-type>integer</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>receiver_user_id</column-name>
+                <data-type>integer</data-type>
+            </column>
+            <column>
+                <column-name>text</column-name>
+                <data-type>character varying(1024)</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+        </columns>
+        <table-constraints>
+            <constraint>
+                <name>message_pkey</name>
+                <definition>PRIMARY KEY (id)</definition>
+            </constraint>
+        </table-constraints>
+        <foreign-keys>
+            <foreign-key>
+                <name>message_receiver_user_id_fkey</name>
+                <local-column>receiver_user_id</local-column>
+                <dependent-table-schema>public</dependent-table-schema>
+                <dependent-table>user</dependent-table>
+                <dependent-column>id</dependent-column>
+                <restriction>
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE
+                </restriction>
+            </foreign-key>
+            <foreign-key>
+                <name>message_sender_user_id_fkey</name>
+                <local-column>sender_user_id</local-column>
+                <dependent-table-schema>public</dependent-table-schema>
+                <dependent-table>user</dependent-table>
+                <dependent-column>id</dependent-column>
+                <restriction>
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE
+                </restriction>
+            </foreign-key>
+            <foreign-key>
+                <name>message_subcategory_id_fkey</name>
+                <local-column>subcategory_id</local-column>
+                <dependent-table-schema>public</dependent-table-schema>
+                <dependent-table>subcategory</dependent-table>
+                <dependent-column>id</dependent-column>
+                <restriction>
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE
+                </restriction>
+            </foreign-key>
+        </foreign-keys>
+        <namespace>pg_default</namespace>
+        <oids>FALSE</oids>
+        <owners>
+            <owner>postgres</owner>
+        </owners>
+    </table>
+
+    <table>
+        <schema>public</schema>
+        <name>swear_word</name>
+        <columns>
+            <column>
+                <column-name>id</column-name>
+                <data-type>integer</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                    <constraint>
+                        <definition>DEFAULT nextval('swear_word_id_seq'::regclass)</definition>
+                        <dependent>swear_word_id_seq</dependent>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>creation</column-name>
+                <data-type>date</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+            <column>
+                <column-name>text</column-name>
+                <data-type>character varying(64)</data-type>
+                <column-constraints>
+                    <constraint>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </column-constraints>
+            </column>
+        </columns>
+        <table-constraints>
+            <constraint>
+                <name>swear_word_pkey</name>
+                <definition>PRIMARY KEY (id)</definition>
+            </constraint>
+            <constraint>
+                <name>swear_word_text_key</name>
+                <definition>UNIQUE (text)</definition>
+            </constraint>
+        </table-constraints>
+        <namespace>pg_default</namespace>
+        <oids>FALSE</oids>
+        <owners>
+            <owner>postgres</owner>
+        </owners>
+    </table>
+
+</tables>
+ 

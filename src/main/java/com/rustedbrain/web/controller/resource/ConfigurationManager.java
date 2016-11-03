@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 public class ConfigurationManager extends Manager {
 
-    private static final String CONFIGURATION_PROPERTIES_PATH = "C:\\Work\\IdeaProjects\\lightweight-forum\\resources\\configuration.properties";
+    private static final String CONFIGURATION_PROPERTIES_PATH = "C:\\Work\\IdeaProjects\\lightweight-forum\\resources\\properties\\configuration.properties";
     private static ConfigurationManager ourInstance = new ConfigurationManager();
 
     private ConfigurationManager() {

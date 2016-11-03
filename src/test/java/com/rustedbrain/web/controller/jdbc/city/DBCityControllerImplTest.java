@@ -1,11 +1,17 @@
 package com.rustedbrain.web.controller.jdbc.city;
 
+import com.rustedbrain.web.controller.jdbc.DBConnectorImpl;
+import com.rustedbrain.web.controller.jdbc.util.DBUtil;
+import com.rustedbrain.web.controller.resource.ConfigurationManager;
+import com.rustedbrain.web.controller.resource.MessageManager;
+import com.rustedbrain.web.controller.resource.SQLManager;
+import com.rustedbrain.web.controller.util.jaxb.JaxbParser;
+import com.rustedbrain.web.controller.util.jaxb.Parser;
 import com.rustedbrain.web.model.jdbc.City;
 import junit.framework.TestCase;
 import org.junit.Assert;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
@@ -19,11 +25,12 @@ public class DBCityControllerImplTest extends TestCase {
 
     @Override
     public void setUp() throws Exception {
-        String url = "jdbc:postgresql://192.168.184.102:5432/lightweight-forum";
+        String url = "jdbc:postgresql://127.0.0.1:5432/lightweight-forum-test";
         String dbUser = "postgres";
         String dbPassword = "postgres";
-        this.connection = DriverManager.getConnection(url, dbUser, dbPassword);
-        this.dbCityController = new DBCityControllerImpl();
+        Parser parser = new JaxbParser();
+        DBUtil dbUtil = new DBUtil(ConfigurationManager.getInstance(), MessageManager.getInstance(), SQLManager.getInstance(), parser);
+        this.dbCityController = new DBCityControllerImpl(ConfigurationManager.getInstance(), new DBConnectorImpl(url, dbUser, dbPassword), dbUtil);
         this.city1 = createTestCity(0, "Las Vegas");
         this.city2 = createTestCity(1, "New York");
     }

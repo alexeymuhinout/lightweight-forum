@@ -8,7 +8,11 @@
     <name>lightweight-forum Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <dependencies>
-
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.192</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

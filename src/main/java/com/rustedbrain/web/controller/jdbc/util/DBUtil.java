@@ -2,7 +2,6 @@ package com.rustedbrain.web.controller.jdbc.util;
 
 
 import com.rustedbrain.web.controller.resource.Manager;
-import com.rustedbrain.web.controller.util.jaxb.JaxbParser;
 import com.rustedbrain.web.controller.util.jaxb.Parser;
 import com.rustedbrain.web.controller.util.sql.ObjectToSqlSequenceMapper;
 import com.rustedbrain.web.controller.util.sql.ObjectToSqlTableMapper;
@@ -20,24 +19,26 @@ import java.sql.Statement;
 public class DBUtil {
 
     private Manager configurationManager;
-    private Manager messageManagerManager;
-    private Parser parser = new JaxbParser();
+    private Manager messageManager;
+    private Manager sqlManager;
+    private Parser parser;
 
-    public DBUtil(Parser parser, Manager messageManager, Manager configurationManager) {
+    public DBUtil(Manager configurationManager, Manager messageManager, Manager sqlManager, Parser parser) {
         this.configurationManager = configurationManager;
-        this.messageManagerManager = messageManager;
+        this.messageManager = messageManager;
+        this.sqlManager = sqlManager;
         this.parser = parser;
     }
 
     private boolean tableExist(String tableSchema, String tableName, Connection connection) throws SQLException {
         String resourcesSelectTableSql = "database.sql.select.table";
-        String sql = configurationManager.getProperty(resourcesSelectTableSql).replace("%1", tableName).replace("%2", tableSchema);
+        String sql = sqlManager.getProperty(resourcesSelectTableSql).replace("%1", tableName).replace("%2", tableSchema);
         return checkRowsExistence(sql, connection);
     }
 
     private boolean sequenceExist(String sequenceName, Connection connection) throws SQLException {
         String resourcesSelectTableSql = "database.sql.select.sequence";
-        String sql = configurationManager.getProperty(resourcesSelectTableSql).replace("%1", sequenceName);
+        String sql = sqlManager.getProperty(resourcesSelectTableSql).replace("%1", sequenceName);
         return checkRowsExistence(sql, connection);
     }
 
@@ -108,7 +109,7 @@ public class DBUtil {
             }
         }
         String resourcesSequenceNotFoundXmlMessage = "sequences.xml.found.error";
-        throw new IllegalArgumentException(messageManagerManager.getProperty(resourcesSequenceNotFoundXmlMessage).replace("%1", sequenceName));
+        throw new IllegalArgumentException(messageManager.getProperty(resourcesSequenceNotFoundXmlMessage).replace("%1", sequenceName));
     }
 
     private Table getTableFromXml(String tableSchema, String tableName) throws JAXBException {
@@ -121,6 +122,6 @@ public class DBUtil {
             }
         }
         String resourcesTableNotFoundXmlMessage = "tables.xml.found.error";
-        throw new IllegalArgumentException(messageManagerManager.getProperty(resourcesTableNotFoundXmlMessage).replace("%1", tableName).replace("%2", tableSchema));
+        throw new IllegalArgumentException(messageManager.getProperty(resourcesTableNotFoundXmlMessage).replace("%1", tableName).replace("%2", tableSchema));
     }
 }

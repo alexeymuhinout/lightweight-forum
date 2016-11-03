@@ -1,0 +1,81 @@
+<sequences>
+
+    <sequence>
+        <schema>public</schema>
+        <name>user_id_seq</name>
+        <increment>1</increment>
+        <start>1</start>
+        <min-value>1</min-value>
+        <max-value>9223372036854775807</max-value>
+        <cache>1</cache>
+        <owners>
+            <owner>postgres</owner>
+        </owners>
+    </sequence>
+
+    <sequence>
+        <schema>public</schema>
+        <name>city_id_seq</name>
+        <increment>1</increment>
+        <start>1</start>
+        <min-value>1</min-value>
+        <max-value>9223372036854775807</max-value>
+        <cache>1</cache>
+        <owners>
+            <owner>postgres</owner>
+        </owners>
+    </sequence>
+
+    <sequence>
+        <schema>public</schema>
+        <name>category_id_seq</name>
+        <increment>1</increment>
+        <start>1</start>
+        <min-value>1</min-value>
+        <max-value>9223372036854775807</max-value>
+        <cache>1</cache>
+        <owners>
+            <owner>postgres</owner>
+        </owners>
+    </sequence>
+
+    <sequence>
+        <schema>public</schema>
+        <name>subcategory_id_seq</name>
+        <increment>1</increment>
+        <start>1</start>
+        <min-value>1</min-value>
+        <max-value>9223372036854775807</max-value>
+        <cache>1</cache>
+        <owners>
+            <owner>postgres</owner>
+        </owners>
+    </sequence>
+
+    <sequence>
+        <schema>public</schema>
+        <name>message_id_seq</name>
+        <increment>1</increment>
+        <start>1</start>
+        <min-value>1</min-value>
+        <max-value>9223372036854775807</max-value>
+        <cache>1</cache>
+        <owners>
+            <owner>postgres</owner>
+        </owners>
+    </sequence>
+
+    <sequence>
+        <schema>public</schema>
+        <name>swear_word_id_seq</name>
+        <increment>1</increment>
+        <start>1</start>
+        <min-value>1</min-value>
+        <max-value>9223372036854775807</max-value>
+        <cache>1</cache>
+        <owners>
+            <owner>postgres</owner>
+        </owners>
+    </sequence>
+
+</sequences>

@@ -3,7 +3,7 @@ package com.rustedbrain.web.model.jdbc;
 public class Category extends DBEntity {
 
     private String name;
-    private int adminId;
+    private Integer userId;
 
     public String getName() {
         return name;
@@ -22,7 +22,6 @@ public class Category extends DBEntity {
         Category category = (Category) o;
 
         return name.equals(category.name);
-
     }
 
     @Override
@@ -39,11 +38,11 @@ public class Category extends DBEntity {
                 '}';
     }
 
-    public int getAdminId() {
-        return adminId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setAdminId(int adminId) {
-        this.adminId = adminId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

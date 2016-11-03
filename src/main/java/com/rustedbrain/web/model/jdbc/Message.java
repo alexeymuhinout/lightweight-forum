@@ -2,9 +2,9 @@ package com.rustedbrain.web.model.jdbc;
 
 public class Message extends DBEntity {
 
-    private int subcategoryId;
-    private int userId;
-    private int replyToUserId;
+    private Integer subcategoryId;
+    private Integer userId;
+    private Integer replyToUserId;
     private String text;
 
     public String getText() {
@@ -15,27 +15,27 @@ public class Message extends DBEntity {
         this.text = text;
     }
 
-    public int getSubcategoryId() {
+    public Integer getSubcategoryId() {
         return subcategoryId;
     }
 
-    public void setSubcategoryId(int subcategoryId) {
+    public void setSubcategoryId(Integer subcategoryId) {
         this.subcategoryId = subcategoryId;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getReplyToUserId() {
+    public Integer getReplyToUserId() {
         return replyToUserId;
     }
 
-    public void setReplyToUserId(int replyToUserId) {
+    public void setReplyToUserId(Integer replyToUserId) {
         this.replyToUserId = replyToUserId;
     }
 
@@ -47,15 +47,14 @@ public class Message extends DBEntity {
 
         Message message = (Message) o;
 
-        if (subcategoryId != message.subcategoryId) return false;
-        return text.equals(message.text);
-
+        return subcategoryId.equals(message.subcategoryId) && userId.equals(message.userId) && text.equals(message.text);
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + subcategoryId;
+        result = 31 * result + subcategoryId.hashCode();
+        result = 31 * result + userId.hashCode();
         result = 31 * result + text.hashCode();
         return result;
     }

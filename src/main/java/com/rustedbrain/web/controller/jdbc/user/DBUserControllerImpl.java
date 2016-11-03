@@ -1,11 +1,11 @@
 package com.rustedbrain.web.controller.jdbc.user;
 
 import com.rustedbrain.web.controller.jdbc.DBConnector;
-import com.rustedbrain.web.controller.jdbc.PostgreSQLDBConnector;
-import com.rustedbrain.web.controller.resource.ConfigurationManager;
+import com.rustedbrain.web.controller.jdbc.util.DBUtil;
 import com.rustedbrain.web.controller.resource.Manager;
 import com.rustedbrain.web.model.jdbc.User;
 
+import javax.xml.bind.JAXBException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,18 +13,41 @@ import java.util.List;
 
 public class DBUserControllerImpl extends DBUserController {
 
-    private Manager configurationManager = ConfigurationManager.getInstance();
-    private DBConnector dbConnector = PostgreSQLDBConnector.getInstance();
+    private Manager configurationManager;
+    private DBConnector dbConnector;
+    private DBUtil dbUtil;
+
+    public DBUserControllerImpl(Manager configurationManager, DBConnector dbConnector, DBUtil dbUtil) {
+        this.configurationManager = configurationManager;
+        this.dbConnector = dbConnector;
+        this.dbUtil = dbUtil;
+    }
 
     @Override
     protected void fillInsertStatement(User user, PreparedStatement insertStatement) throws SQLException {
-        insertStatement.setString(1, user.getName());
-        insertStatement.setString(2, user.getSurname());
-        insertStatement.setString(3, user.getLogin());
-        insertStatement.setString(4, user.getPassword());
-        insertStatement.setString(5, user.getMail());
-        insertStatement.setDate(6, user.getBirthday());
-        insertStatement.setInt(7, user.getCityId());
+        insertStatement.setDate(1, user.getCreationDate());
+        insertStatement.setString(2, user.getName());
+        insertStatement.setString(3, user.getSurname());
+        insertStatement.setString(4, user.getLogin());
+        insertStatement.setString(5, user.getPassword());
+        insertStatement.setString(6, user.getMail());
+        insertStatement.setDate(7, user.getBirthday());
+        insertStatement.setInt(8, user.getCityId());
+    }
+
+    @Override
+    public void checkTableExistence() throws SQLException {
+        Connection connection = dbConnector.getConnection();
+        connection.setAutoCommit(false);
+        try {
+            dbUtil.checkTableExistence("public", "user", connection);
+            connection.commit();
+        } catch (JAXBException e) {
+            connection.rollback();
+            e.printStackTrace();
+        } finally {
+            connection.setAutoCommit(true);
+        }
     }
 
     @Override
@@ -52,14 +75,15 @@ public class DBUserControllerImpl extends DBUserController {
 
     @Override
     protected void fillUpdateStatement(User oldUser, User newUser, PreparedStatement statement) throws SQLException {
-        statement.setString(1, newUser.getName());
-        statement.setString(2, newUser.getSurname());
-        statement.setString(3, newUser.getLogin());
-        statement.setString(4, newUser.getPassword());
-        statement.setString(5, newUser.getMail());
-        statement.setDate(6, newUser.getBirthday());
-        statement.setInt(7, newUser.getCityId());
-        statement.setInt(8, oldUser.getId());
+        statement.setDate(1, newUser.getCreationDate());
+        statement.setString(2, newUser.getName());
+        statement.setString(3, newUser.getSurname());
+        statement.setString(4, newUser.getLogin());
+        statement.setString(5, newUser.getPassword());
+        statement.setString(6, newUser.getMail());
+        statement.setDate(7, newUser.getBirthday());
+        statement.setInt(8, newUser.getCityId());
+        statement.setInt(9, oldUser.getId());
     }
 
     @Override
@@ -94,13 +118,14 @@ public class DBUserControllerImpl extends DBUserController {
         while (resultSet.next()) {
             User user = new User();
             user.setId(resultSet.getInt(1));
-            user.setName(resultSet.getString(2));
-            user.setSurname(resultSet.getString(3));
-            user.setLogin(resultSet.getString(4));
-            user.setPassword(resultSet.getString(5));
-            user.setMail(resultSet.getString(6));
-            user.setBirthday(resultSet.getDate(7));
-            user.setCityId(resultSet.getInt(8));
+            user.setCreationDate(resultSet.getDate(2));
+            user.setName(resultSet.getString(3));
+            user.setSurname(resultSet.getString(4));
+            user.setLogin(resultSet.getString(5));
+            user.setPassword(resultSet.getString(6));
+            user.setMail(resultSet.getString(7));
+            user.setBirthday(resultSet.getDate(8));
+            user.setCityId(resultSet.getInt(9));
             users.add(user);
         }
         return users;
@@ -110,6 +135,7 @@ public class DBUserControllerImpl extends DBUserController {
     protected User mapSelectResultSetToEntity(ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setId(resultSet.getInt(1));
+        user.setCreationDate(resultSet.getDate(2));
         user.setName(resultSet.getString(2));
         user.setSurname(resultSet.getString(3));
         user.setLogin(resultSet.getString(4));

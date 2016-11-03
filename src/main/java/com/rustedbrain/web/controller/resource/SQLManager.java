@@ -1,16 +1,15 @@
 package com.rustedbrain.web.controller.resource;
 
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class MessageManager extends Manager {
+public class SQLManager extends Manager {
 
-    private static final String MESSAGE_PROPERTIES_PATH = "C:\\Work\\IdeaProjects\\lightweight-forum\\resources\\properties\\messages.properties";
-    private static MessageManager ourInstance = new MessageManager();
+    private static final String MESSAGE_PROPERTIES_PATH = "C:\\Work\\IdeaProjects\\lightweight-forum\\resources\\properties\\sql.properties";
+    private static SQLManager ourInstance = new SQLManager();
 
-    private MessageManager() {
+    private SQLManager() {
         try {
             InputStream input = new FileInputStream(MESSAGE_PROPERTIES_PATH);
             super.properties.load(input);
@@ -19,7 +18,7 @@ public class MessageManager extends Manager {
         }
     }
 
-    public static MessageManager getInstance() {
+    public static SQLManager getInstance() {
         return ourInstance;
     }
 }
