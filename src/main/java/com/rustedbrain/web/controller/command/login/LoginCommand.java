@@ -30,11 +30,11 @@ public class LoginCommand implements ActionCommand {
                 page = ConfigurationManager.getInstance().getProperty("path.page.login");
             }
         } catch (IllegalArgumentException e) {
-            requestContent.getRequestAttributes().put("message", e.getMessage());
+            requestContent.getRequestAttributes().put("error", e.getMessage());
             page = ConfigurationManager.getInstance().getProperty("path.page.login");
         } catch (SQLException e) {
             e.printStackTrace();
-            requestContent.getRequestAttributes().put("message", e.getMessage());
+            requestContent.getRequestAttributes().put("error", e.getMessage());
             page = ConfigurationManager.getInstance().getProperty("path.page.error");
         }
 

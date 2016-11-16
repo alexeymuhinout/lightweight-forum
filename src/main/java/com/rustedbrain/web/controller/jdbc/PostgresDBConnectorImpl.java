@@ -1,5 +1,7 @@
 package com.rustedbrain.web.controller.jdbc;
 
+import com.rustedbrain.web.controller.resource.ConfigurationManager;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -20,7 +22,7 @@ public class PostgresDBConnectorImpl implements DBConnector {
 
     public static PostgresDBConnectorImpl getPostgresDBConnector() {
         try {
-            return new PostgresDBConnectorImpl("jdbc:postgresql://127.0.0.1:5432/lightweight-forum", "postgres", "postgres");
+            return new PostgresDBConnectorImpl(ConfigurationManager.getInstance().getProperty("database.postgres.url"), ConfigurationManager.getInstance().getProperty("database.postgres.user"), ConfigurationManager.getInstance().getProperty("database.postgres.password"));
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
