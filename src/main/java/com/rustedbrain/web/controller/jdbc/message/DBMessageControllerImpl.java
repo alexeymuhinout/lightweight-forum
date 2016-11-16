@@ -7,24 +7,24 @@ import com.rustedbrain.web.model.jdbc.Category;
 import com.rustedbrain.web.model.jdbc.Message;
 import com.rustedbrain.web.model.jdbc.Subcategory;
 import com.rustedbrain.web.model.jdbc.User;
+import com.rustedbrain.web.model.servlet.UserMessage;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.xml.bind.JAXBException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 public class DBMessageControllerImpl extends DBMessageController {
 
-    private Manager configurationManager;
+    private Manager sqlManager;
     private DBConnector dbConnector;
     private DBUtil dbUtil;
 
-    public DBMessageControllerImpl(Manager configurationManager, DBConnector dbConnector, DBUtil dbUtil) {
-        this.configurationManager = configurationManager;
+    public DBMessageControllerImpl(Manager sqlManager, DBConnector dbConnector, DBUtil dbUtil) {
+        this.sqlManager = sqlManager;
         this.dbConnector = dbConnector;
         this.dbUtil = dbUtil;
     }
@@ -47,7 +47,7 @@ public class DBMessageControllerImpl extends DBMessageController {
     @Override
     public Message getEntityById(int id) throws SQLException {
         checkTableExistence();
-        String sqlSelect = configurationManager.getProperty("database.sql.select.message.id").replace("%1", String.valueOf(id));
+        String sqlSelect = sqlManager.getProperty("database.sql.select.message.id").replace("%1", String.valueOf(id));
         return executeSelectEntity(dbConnector, sqlSelect);
     }
 
@@ -59,55 +59,39 @@ public class DBMessageControllerImpl extends DBMessageController {
     @Override
     public void insertAll(List<Message> entities) throws SQLException {
         checkTableExistence();
-        String sqlInsert = configurationManager.getProperty("database.sql.insert.messages");
+        String sqlInsert = sqlManager.getProperty("database.sql.insert.messages");
         executePreparedInsert(dbConnector, sqlInsert, entities);
     }
 
     @Override
     public void update(Message oldEntity, Message newEntity) throws SQLException {
         checkTableExistence();
-        String sqlUpdate = configurationManager.getProperty("database.sql.update.messages");
+        String sqlUpdate = sqlManager.getProperty("database.sql.update.messages");
         executePreparedUpdate(dbConnector, oldEntity, newEntity, sqlUpdate);
     }
 
     @Override
-    public void delete(Message entity) throws SQLException {
-        this.deleteAll(Collections.singletonList(entity));
+    public void delete(Message message) throws SQLException {
+        this.deleteAll(Collections.singletonList(message));
     }
 
     @Override
     public void deleteAll(List<Message> entities) throws SQLException {
         checkTableExistence();
-        String sqlDelete = configurationManager.getProperty("database.sql.delete.messages");
+        String sqlDelete = sqlManager.getProperty("database.sql.delete.messages");
         executePreparedDelete(dbConnector, sqlDelete, entities);
     }
 
     @Override
     public List<Message> getAll() throws SQLException {
         checkTableExistence();
-        String sqlSelect = configurationManager.getProperty("database.sql.select.messages");
+        String sqlSelect = sqlManager.getProperty("database.sql.select.messages");
         return executeSelectEntities(dbConnector, sqlSelect);
     }
 
     @Override
-    protected void fillDeleteStatement(Message user, PreparedStatement deleteStatement) throws SQLException {
-        deleteStatement.setInt(1, user.getUserId());
-    }
-
-    @Override
-    protected List<Message> mapSelectResultSetToEntities(ResultSet resultSet) throws SQLException {
-        List<Message> messages = new ArrayList<>();
-        while (resultSet.next()) {
-            Message message = new Message();
-            message.setId(resultSet.getInt(1));
-            message.setCreationDate(resultSet.getDate(2));
-            message.setSubcategoryId(resultSet.getInt(3));
-            message.setUserId(resultSet.getInt(4));
-            message.setReplyToUserId(resultSet.getInt(5));
-            message.setText(resultSet.getString(6));
-            messages.add(message);
-        }
-        return messages;
+    protected void fillDeleteStatement(Message message, PreparedStatement deleteStatement) throws SQLException {
+        deleteStatement.setInt(1, message.getId());
     }
 
     @Override
@@ -117,7 +101,12 @@ public class DBMessageControllerImpl extends DBMessageController {
         message.setCreationDate(resultSet.getDate(2));
         message.setSubcategoryId(resultSet.getInt(3));
         message.setUserId(resultSet.getInt(4));
-        message.setReplyToUserId(resultSet.getInt(5));
+        int replyToUserId = resultSet.getInt(5);
+        if (resultSet.wasNull()) {
+            message.setReplyToUserId(null);
+        } else {
+            message.setReplyToUserId(replyToUserId);
+        }
         message.setText(resultSet.getString(6));
         return message;
     }
@@ -132,7 +121,11 @@ public class DBMessageControllerImpl extends DBMessageController {
         insertStatement.setDate(1, entity.getCreationDate());
         insertStatement.setInt(2, entity.getSubcategoryId());
         insertStatement.setInt(3, entity.getUserId());
-        insertStatement.setInt(4, entity.getReplyToUserId());
+        if (entity.getReplyToUserId() == null) {
+            insertStatement.setNull(4, Types.INTEGER);
+        } else {
+            insertStatement.setInt(4, entity.getReplyToUserId());
+        }
         insertStatement.setString(5, entity.getText());
     }
 
@@ -141,23 +134,57 @@ public class DBMessageControllerImpl extends DBMessageController {
         updateStatement.setDate(1, newEntity.getCreationDate());
         updateStatement.setInt(2, newEntity.getSubcategoryId());
         updateStatement.setInt(3, newEntity.getUserId());
-        updateStatement.setInt(4, newEntity.getReplyToUserId());
+        if (newEntity.getReplyToUserId() == null) {
+            updateStatement.setNull(4, Types.INTEGER);
+        } else {
+            updateStatement.setInt(4, newEntity.getReplyToUserId());
+        }
         updateStatement.setString(5, newEntity.getText());
         updateStatement.setInt(6, oldEntity.getId());
     }
 
     @Override
     public List<Message> getMessages(Category category) {
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override
     public List<Message> getMessages(Subcategory subcategory) {
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override
     public List<Message> getMessages(User user) {
-        return null;
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public List<UserMessage> getUserMessages(Integer subcategoryId) throws SQLException {
+        checkTableExistence();
+        String sqlSelect = sqlManager.getProperty("database.sql.select.messages.user").replace("%1", String.valueOf(subcategoryId));
+
+        Connection connection = dbConnector.getConnection();
+        List<UserMessage> userMessages = new ArrayList<>();
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sqlSelect)) {
+            userMessages.addAll(mapSelectResultSetToUserMessages(resultSet));
+        }
+
+        return userMessages;
+    }
+
+    private Collection<? extends UserMessage> mapSelectResultSetToUserMessages(ResultSet resultSet) throws SQLException {
+        List<UserMessage> subcategories = new ArrayList<>();
+        while (resultSet.next()) {
+            UserMessage userSubcategory = new UserMessage();
+            userSubcategory.setMessage(mapSelectResultSetToEntity(resultSet));
+            userSubcategory.setSubcategoryName(resultSet.getString(7));
+            userSubcategory.setSenderName(resultSet.getString(8));
+            userSubcategory.setSenderRegistrationDate(resultSet.getDate(9));
+            userSubcategory.setReceiverName(resultSet.getString(10));
+            subcategories.add(userSubcategory);
+        }
+        System.out.println(subcategories);
+        return subcategories;
     }
 }

@@ -7,18 +7,17 @@ import com.rustedbrain.web.model.jdbc.User;
 
 import javax.xml.bind.JAXBException;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class DBUserControllerImpl extends DBUserController {
 
-    private Manager configurationManager;
+    private Manager sqlManager;
     private DBConnector dbConnector;
     private DBUtil dbUtil;
 
-    public DBUserControllerImpl(Manager configurationManager, DBConnector dbConnector, DBUtil dbUtil) {
-        this.configurationManager = configurationManager;
+    public DBUserControllerImpl(Manager sqlManager, DBConnector dbConnector, DBUtil dbUtil) {
+        this.sqlManager = sqlManager;
         this.dbConnector = dbConnector;
         this.dbUtil = dbUtil;
     }
@@ -33,6 +32,7 @@ public class DBUserControllerImpl extends DBUserController {
         insertStatement.setString(6, user.getMail());
         insertStatement.setDate(7, user.getBirthday());
         insertStatement.setInt(8, user.getCityId());
+        insertStatement.setBoolean(9, user.isAdmin());
     }
 
     @Override
@@ -52,7 +52,7 @@ public class DBUserControllerImpl extends DBUserController {
 
     @Override
     public User getEntityById(int id) throws SQLException {
-        String sqlSelect = configurationManager.getProperty("database.sql.select.user.id").replace("%1", String.valueOf(id));
+        String sqlSelect = sqlManager.getProperty("database.sql.select.user.id").replace("%1", String.valueOf(id));
         return executeSelectEntity(dbConnector, sqlSelect);
     }
 
@@ -63,13 +63,14 @@ public class DBUserControllerImpl extends DBUserController {
 
     @Override
     public void insertAll(List<User> entities) throws SQLException {
-        String sqlInsert = configurationManager.getProperty("database.sql.insert.users");
+        checkTableExistence();
+        String sqlInsert = sqlManager.getProperty("database.sql.insert.users");
         executePreparedInsert(dbConnector, sqlInsert, entities);
     }
 
     @Override
     public void update(User oldEntity, User newEntity) throws SQLException {
-        String sqlUpdate = configurationManager.getProperty("database.sql.update.users");
+        String sqlUpdate = sqlManager.getProperty("database.sql.update.users");
         executePreparedUpdate(dbConnector, oldEntity, newEntity, sqlUpdate);
     }
 
@@ -83,7 +84,8 @@ public class DBUserControllerImpl extends DBUserController {
         statement.setString(6, newUser.getMail());
         statement.setDate(7, newUser.getBirthday());
         statement.setInt(8, newUser.getCityId());
-        statement.setInt(9, oldUser.getId());
+        statement.setBoolean(9, newUser.isAdmin());
+        statement.setInt(10, oldUser.getId());
     }
 
     @Override
@@ -93,7 +95,8 @@ public class DBUserControllerImpl extends DBUserController {
 
     @Override
     public void deleteAll(List<User> entities) throws SQLException {
-        String sqlDelete = configurationManager.getProperty("database.sql.delete.users");
+        checkTableExistence();
+        String sqlDelete = sqlManager.getProperty("database.sql.delete.users");
         executePreparedDelete(dbConnector, sqlDelete, entities);
     }
 
@@ -103,7 +106,8 @@ public class DBUserControllerImpl extends DBUserController {
     }
 
     public List<User> getAll() throws SQLException {
-        String sqlSelect = configurationManager.getProperty("database.sql.select.users");
+        checkTableExistence();
+        String sqlSelect = sqlManager.getProperty("database.sql.select.users");
         return executeSelectEntities(dbConnector, sqlSelect);
     }
 
@@ -113,43 +117,25 @@ public class DBUserControllerImpl extends DBUserController {
     }
 
     @Override
-    protected List<User> mapSelectResultSetToEntities(ResultSet resultSet) throws SQLException {
-        List<User> users = new ArrayList<>();
-        while (resultSet.next()) {
-            User user = new User();
-            user.setId(resultSet.getInt(1));
-            user.setCreationDate(resultSet.getDate(2));
-            user.setName(resultSet.getString(3));
-            user.setSurname(resultSet.getString(4));
-            user.setLogin(resultSet.getString(5));
-            user.setPassword(resultSet.getString(6));
-            user.setMail(resultSet.getString(7));
-            user.setBirthday(resultSet.getDate(8));
-            user.setCityId(resultSet.getInt(9));
-            users.add(user);
-        }
-        return users;
-    }
-
-    @Override
     protected User mapSelectResultSetToEntity(ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setId(resultSet.getInt(1));
         user.setCreationDate(resultSet.getDate(2));
-        user.setName(resultSet.getString(2));
-        user.setSurname(resultSet.getString(3));
-        user.setLogin(resultSet.getString(4));
-        user.setPassword(resultSet.getString(5));
-        user.setMail(resultSet.getString(6));
-        user.setBirthday(resultSet.getDate(7));
-        user.setCityId(resultSet.getInt(8));
+        user.setName(resultSet.getString(3));
+        user.setSurname(resultSet.getString(4));
+        user.setLogin(resultSet.getString(5));
+        user.setPassword(resultSet.getString(6));
+        user.setMail(resultSet.getString(7));
+        user.setBirthday(resultSet.getDate(8));
+        user.setCityId(resultSet.getInt(9));
+        user.setAdmin(resultSet.getBoolean(10));
         return user;
     }
 
     public User getUserByLogin(String login) throws SQLException {
-        String sqlSelect = configurationManager.getProperty("database.sql.select.user.login").replace("%1", login);
+        checkTableExistence();
+        String sqlSelect = sqlManager.getProperty("database.sql.select.user.login").replace("%1", login);
         Connection connection = dbConnector.getConnection();
-
         try (Statement insertStatement = connection.createStatement();
              ResultSet resultSet = insertStatement.executeQuery(sqlSelect)) {
 
@@ -160,5 +146,29 @@ public class DBUserControllerImpl extends DBUserController {
                 return mapSelectResultSetToEntity(resultSet);
             }
         }
+    }
+
+    @Override
+    public User getUserByMail(String mail) throws SQLException {
+        checkTableExistence();
+        String sqlSelect = sqlManager.getProperty("database.sql.select.user.mail").replace("%1", mail);
+        Connection connection = dbConnector.getConnection();
+        try (Statement insertStatement = connection.createStatement();
+             ResultSet resultSet = insertStatement.executeQuery(sqlSelect)) {
+
+            if (!resultSet.isBeforeFirst()) {
+                return null;
+            } else {
+                resultSet.next();
+                return mapSelectResultSetToEntity(resultSet);
+            }
+        }
+    }
+
+    @Override
+    public List<User> getAdminUsers() throws SQLException {
+        checkTableExistence();
+        String sqlSelect = sqlManager.getProperty("database.sql.select.users.admin");
+        return executeSelectEntities(dbConnector, sqlSelect);
     }
 }

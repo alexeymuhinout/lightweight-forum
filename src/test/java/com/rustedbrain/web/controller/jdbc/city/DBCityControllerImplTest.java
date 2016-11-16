@@ -1,6 +1,6 @@
 package com.rustedbrain.web.controller.jdbc.city;
 
-import com.rustedbrain.web.controller.jdbc.DBConnectorImpl;
+import com.rustedbrain.web.controller.jdbc.PostgresDBConnectorImpl;
 import com.rustedbrain.web.controller.jdbc.util.DBUtil;
 import com.rustedbrain.web.controller.resource.ConfigurationManager;
 import com.rustedbrain.web.controller.resource.MessageManager;
@@ -30,7 +30,7 @@ public class DBCityControllerImplTest extends TestCase {
         String dbPassword = "postgres";
         Parser parser = new JaxbParser();
         DBUtil dbUtil = new DBUtil(ConfigurationManager.getInstance(), MessageManager.getInstance(), SQLManager.getInstance(), parser);
-        this.dbCityController = new DBCityControllerImpl(ConfigurationManager.getInstance(), new DBConnectorImpl(url, dbUser, dbPassword), dbUtil);
+        this.dbCityController = new DBCityControllerImpl(ConfigurationManager.getInstance(), new PostgresDBConnectorImpl(url, dbUser, dbPassword), dbUtil);
         this.city1 = createTestCity(0, "Las Vegas");
         this.city2 = createTestCity(1, "New York");
     }

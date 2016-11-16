@@ -1,6 +1,6 @@
 package com.rustedbrain.web.controller.jdbc.message;
 
-import com.rustedbrain.web.controller.jdbc.DBConnectorImpl;
+import com.rustedbrain.web.controller.jdbc.PostgresDBConnectorImpl;
 import com.rustedbrain.web.controller.jdbc.util.DBUtil;
 import com.rustedbrain.web.controller.resource.ConfigurationManager;
 import com.rustedbrain.web.controller.resource.MessageManager;
@@ -30,7 +30,7 @@ public class DBMessageControllerImplTest {
         DBUtil dbUtil = new DBUtil(ConfigurationManager.getInstance(), MessageManager.getInstance(), SQLManager.getInstance(), parser);
         this.message1 = createTestMessage(0, "Hello", 0, 1, 0);
         this.message1 = createTestMessage(1, "Hello", 1, 0, 0);
-        this.dbMessageController = new DBMessageControllerImpl(ConfigurationManager.getInstance(), new DBConnectorImpl(url, dbUser, dbPassword), dbUtil);
+        this.dbMessageController = new DBMessageControllerImpl(ConfigurationManager.getInstance(), new PostgresDBConnectorImpl(url, dbUser, dbPassword), dbUtil);
     }
 
     @Test

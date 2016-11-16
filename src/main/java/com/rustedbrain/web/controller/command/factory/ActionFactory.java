@@ -11,17 +11,16 @@ public class ActionFactory {
 
         String action = requestContent.getRequestParameters().get("command")[0];
 
-        if (action == null || action.isEmpty())
+        if (action == null || action.isEmpty()) {
             return command;
-
-        try {
-            CommandEnum commandEnum = CommandEnum.valueOf(action.toUpperCase());
-
-            command = commandEnum.getCurrentCommand();
-        } catch (IllegalArgumentException e) {
-
+        } else {
+            try {
+                CommandEnum commandEnum = CommandEnum.valueOf(action.toUpperCase());
+                command = commandEnum.getCurrentCommand();
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
         }
-
         return command;
     }
 

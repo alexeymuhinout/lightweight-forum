@@ -1,6 +1,5 @@
 package com.rustedbrain.web.controller.jdbc.category;
 
-import com.rustedbrain.web.controller.jdbc.DBConnectorImpl;
 import com.rustedbrain.web.controller.jdbc.util.DBUtil;
 import com.rustedbrain.web.controller.resource.ConfigurationManager;
 import com.rustedbrain.web.controller.resource.MessageManager;
@@ -9,6 +8,7 @@ import com.rustedbrain.web.controller.util.jaxb.JaxbParser;
 import com.rustedbrain.web.controller.util.jaxb.Parser;
 import com.rustedbrain.web.model.jdbc.Category;
 import junit.framework.TestCase;
+import org.h2.tools.DeleteDbFiles;
 import org.junit.Assert;
 
 import java.sql.Connection;
@@ -26,12 +26,34 @@ public class DBCategoryControllerImplTest extends TestCase {
 
     @Override
     public void setUp() throws Exception {
-        String url = "jdbc:postgresql://127.0.0.1:5432/lightweight-forum-test";
-        String dbUser = "postgres";
-        String dbPassword = "postgres";
+        DeleteDbFiles.execute("~", "test", true);
+        TestDBConnector dbConnector = new TestDBConnector();
+        String createTableSQL = "CREATE TABLE category("
+                + "id integer NOT NULL, "
+                + "creation DATE NOT NULL, "
+                + "name VARCHAR(20) NOT NULL, "
+                + "user_id integer NOT NULL, "
+                + "PRIMARY KEY (id) "
+                + ")";
+        dbConnector.createTable(createTableSQL);
+
+
+//        CREATE TABLE public.category
+//                (
+//                        id integer NOT NULL DEFAULT nextval('category_id_seq'::regclass),
+//                        name character varying(128) COLLATE pg_catalog."default" NOT NULL,
+//                        user_id integer,
+//                        CONSTRAINT category_pkey PRIMARY KEY (id),
+//                        CONSTRAINT category_name_key UNIQUE (name),
+//                        CONSTRAINT category_user_id_fkey FOREIGN KEY (user_id)
+//                        REFERENCES public."user" (id) MATCH SIMPLE
+//        ON UPDATE SET NULL
+//        ON DELETE SET NULL
+//)
+
         Parser parser = new JaxbParser();
         DBUtil dbUtil = new DBUtil(ConfigurationManager.getInstance(), MessageManager.getInstance(), SQLManager.getInstance(), parser);
-        this.dbCategoryController = new DBCategoryControllerImpl(ConfigurationManager.getInstance(), new DBConnectorImpl(url, dbUser, dbPassword), dbUtil);
+        this.dbCategoryController = new DBCategoryControllerImpl(ConfigurationManager.getInstance(), new TestDBConnector(), dbUtil);
         this.category1 = createTestCategory(0, "C++");
     }
 

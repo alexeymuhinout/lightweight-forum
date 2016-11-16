@@ -11,19 +11,36 @@
 <header>
     <nav class="main-nav">
         <section class="user-block">
-            <div>HOTEL-INFO</div>
-            <div>USER BLOCK</div>
+            <div class="logo-block">Lightweight-forum</div>
+            <div class="login-block">
+                <c:choose>
+                    <c:when test="${empty user}">
+                        <a href="${pageContext.request.contextPath}/jsp/login.jsp">Login</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="${pageContext.request.contextPath}/jsp/home.jsp">Profile</a>
+                        <a href="${pageContext.request.contextPath}/controller?command=logout">Logout[${user.name}]</a>
+                    </c:otherwise>
+                </c:choose>
+                <a href="${pageContext.request.contextPath}/controller?command=registration_show">Registration</a>
+            </div>
         </section>
-        <ul>
-            <li><a href="${pageContext.request.contextPath}/index.jsp">Main</a></li>
-            <li><a href="${pageContext.request.contextPath}/jsp/forum.jsp">Forum</a></li>
-            <li><a href="${pageContext.request.contextPath}/jsp/blog.jsp">Blog</a></li>
-            <li><a href="${pageContext.request.contextPath}/jsp/community.jsp">Community</a></li>
-            <li><a href="${pageContext.request.contextPath}/jsp/find.jsp">Find</a></li>
+        <ul class="main-ul">
+            <li><a href="${pageContext.request.contextPath}/controller?command=index_show">Main</a></li>
+            <li><a href="${pageContext.request.contextPath}/controller?command=categories_show">Forum</a></li>
+            <li><a href="${pageContext.request.contextPath}/controller?command=blog_sho">Blog</a></li>
+            <li><a href="${pageContext.request.contextPath}/controller?command=community_show">Community</a></li>
+            <li><a href="${pageContext.request.contextPath}/controller?command=find_show">Find</a></li>
         </ul>
     </nav>
 </header>
 <main>
+    <c:if test="${not empty error}">
+        <p class="error">${error}</p>
+    </c:if>
+    <c:if test="${not empty message}">
+        <p class="message">${message}</p>
+    </c:if>
     MAIN
 </main>
 <footer>

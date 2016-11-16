@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class DBController<T> {
 
-    public abstract void checkTableExistence() throws SQLException;
+    public abstract void checkTableExistence() throws SQLException, ClassNotFoundException;
 
     public abstract T getEntityById(int id) throws SQLException;
 
@@ -21,6 +21,14 @@ public abstract class DBController<T> {
     public abstract void deleteAll(List<T> entities) throws SQLException;
 
     public abstract List<T> getAll() throws SQLException;
+
+    protected List<T> mapSelectResultSetToEntities(ResultSet resultSet) throws SQLException {
+        List<T> subcategories = new ArrayList<>();
+        while (resultSet.next()) {
+            subcategories.add(mapSelectResultSetToEntity(resultSet));
+        }
+        return subcategories;
+    }
 
     protected void executePreparedDelete(DBConnector dbConnector, String sqlDelete, List<T> entities) throws SQLException {
         Connection connection = dbConnector.getConnection();
@@ -86,9 +94,9 @@ public abstract class DBController<T> {
                     }
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
             connection.rollback();
+            throw e;
         } finally {
             if (insertStatement != null) {
                 insertStatement.close();
@@ -123,7 +131,6 @@ public abstract class DBController<T> {
         return entities;
     }
 
-    protected abstract List<T> mapSelectResultSetToEntities(ResultSet resultSet) throws SQLException;
 
     protected abstract T mapSelectResultSetToEntity(ResultSet resultSet) throws SQLException;
 

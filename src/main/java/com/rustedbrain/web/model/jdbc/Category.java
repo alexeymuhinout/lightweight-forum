@@ -45,4 +45,9 @@ public class Category extends DBEntity {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

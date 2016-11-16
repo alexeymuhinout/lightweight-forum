@@ -4,9 +4,18 @@ import java.util.HashMap;
 
 public class SessionRequestContent {
 
+    private boolean invalidatedSession;
     private HashMap<String, Object> requestAttributes = new HashMap<>();
     private HashMap<String, String[]> requestParameters = new HashMap<>();
     private HashMap<String, Object> sessionAttributes = new HashMap<>();
+
+    public boolean isInvalidatedSession() {
+        return invalidatedSession;
+    }
+
+    public void setInvalidatedSession(boolean invalidatedSession) {
+        this.invalidatedSession = invalidatedSession;
+    }
 
     public HashMap<String, Object> getRequestAttributes() {
         return requestAttributes;
@@ -31,4 +40,5 @@ public class SessionRequestContent {
     public void setSessionAttributes(HashMap<String, Object> sessionAttributes) {
         this.sessionAttributes = sessionAttributes;
     }
+
 }

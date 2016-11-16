@@ -1,8 +1,9 @@
 package com.rustedbrain.web.model.jdbc;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public abstract class DBEntity implements Cloneable {
+public abstract class DBEntity implements Cloneable, Serializable {
 
     private Integer id;
     private Date creationDate;

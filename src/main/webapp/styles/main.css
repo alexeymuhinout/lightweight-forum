@@ -1,19 +1,16 @@
 body {
-    margin: 0;
     display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    margin: 0;
 }
 
 header {
-    background-color: #848484;
+    background-color: #606060;
+    padding-bottom: 10px;
 }
 
 nav.main-nav {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-items: stretch;
 }
 
 div {
@@ -29,15 +26,34 @@ section.user-block {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    background-color: #606060;
+    padding: 0;
+}
+
+div.logo-block {
+    margin: auto;
+}
+
+div.login-block {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0;
+    padding: 0;
+}
+
+div.login-block a:hover {
+    text-decoration: underline;
+}
+
+div.login-block a {
+    margin: 10px;
 }
 
 nav.main-nav ul {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     align-self: center;
+    background-color: #848484;
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
 }
 
 nav.main-nav ul li {
@@ -45,34 +61,34 @@ nav.main-nav ul li {
     justify-content: center;
 }
 
+ul.main-ul li:hover {
+    background-color: orange;
+}
+
 li {
-    padding: 5px;
-    flex-grow: 1;
     flex-basis: 0;
+    flex-grow: 1;
+    padding: 5px;
 }
 
 footer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
     align-items: center;
     background-color: #848484;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
 }
 
 main {
+    background-color: #606060;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 ul {
-    padding: 0;
-    margin: 0;
     list-style-type: none;
-}
-
-li:hover {
-    background-color: orange;
+    margin: 0;
+    padding: 0;
 }
 
 a {
@@ -83,22 +99,13 @@ a {
     background-color: #f09f13;
     border-radius: 12px;
     border-width: 0;
-    cursor: pointer;
     color: #ffffff;
-    padding: 6px 6px;
+    cursor: pointer;
+    padding: 6px;
 }
 
 .social-button:hover {
     background-color: #606160;
-}
-
-section.table-view {
-    width: 100%;
-    background-color: #dfdfdf;
-}
-
-section.table-edit {
-    background-color: #dfdfdf;
 }
 
 table {
@@ -107,9 +114,9 @@ table {
 }
 
 th, td {
+    border-bottom: 1px solid #ddd;
     padding: 10px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
 }
 
 th {
@@ -122,7 +129,73 @@ tr:hover {
 }
 
 form {
-    width: 100%;
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
     background-color: darkgrey;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+li.message {
+    background-color: #848484;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 3px;
+    padding: 0;
+}
+
+div.message-content {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+div.message-content-subcategory {
+    margin: 0;
+    padding: 0;
+    background-color: grey;
+}
+
+div.message-content-subcategory h4 {
+    margin: 0;
+    padding: 3px;
+}
+
+div.message-content-message {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: #959595;
+    height: 100%;
+}
+
+div.message-sender {
+    background-color: darkgrey;
+}
+
+div.message-actions {
+    background-color: orange;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+}
+
+p.message-sender-name {
+
+}
+
+p.error {
+    background-color: indianred;
+    margin: 0;
+    padding: 10px;
+}
+
+p.message {
+    background-color: limegreen;
+    margin: 0;
+    padding: 10px;
 }

@@ -44,10 +44,10 @@ public class DBUtil {
 
     private boolean checkRowsExistence(String sql, Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
+
         ResultSet resultSet = statement.executeQuery(sql);
 
         boolean isExist = resultSet.isBeforeFirst();
-
         statement.close();
         resultSet.close();
         return isExist;

@@ -4,24 +4,23 @@ import com.rustedbrain.web.controller.jdbc.DBConnector;
 import com.rustedbrain.web.controller.jdbc.util.DBUtil;
 import com.rustedbrain.web.controller.resource.Manager;
 import com.rustedbrain.web.model.jdbc.Subcategory;
+import com.rustedbrain.web.model.servlet.UserSubcategory;
 
 import javax.xml.bind.JAXBException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 public class DBSubcategoryControllerImpl extends DBSubcategoryController {
 
-    private Manager configurationManager;
+    private Manager sqlManager;
     private DBConnector dbConnector;
     private DBUtil dbUtil;
 
-    public DBSubcategoryControllerImpl(Manager configurationManager, DBConnector dbConnector, DBUtil dbUtil) {
-        this.configurationManager = configurationManager;
+    public DBSubcategoryControllerImpl(Manager sqlManager, DBConnector dbConnector, DBUtil dbUtil) {
+        this.sqlManager = sqlManager;
         this.dbConnector = dbConnector;
         this.dbUtil = dbUtil;
     }
@@ -44,7 +43,7 @@ public class DBSubcategoryControllerImpl extends DBSubcategoryController {
     @Override
     public Subcategory getEntityById(int id) throws SQLException {
         checkTableExistence();
-        String sqlSelect = configurationManager.getProperty("database.sql.select.subcategory.id").replace("%1", String.valueOf(id));
+        String sqlSelect = sqlManager.getProperty("database.sql.select.subcategory.id").replace("%1", String.valueOf(id));
         return executeSelectEntity(dbConnector, sqlSelect);
     }
 
@@ -56,14 +55,14 @@ public class DBSubcategoryControllerImpl extends DBSubcategoryController {
     @Override
     public void insertAll(List<Subcategory> entities) throws SQLException {
         checkTableExistence();
-        String sqlInsert = configurationManager.getProperty("database.sql.insert.subcategories");
+        String sqlInsert = sqlManager.getProperty("database.sql.insert.subcategories");
         executePreparedInsert(dbConnector, sqlInsert, entities);
     }
 
     @Override
     public void update(Subcategory oldEntity, Subcategory newEntity) throws SQLException {
         checkTableExistence();
-        String sqlUpdate = configurationManager.getProperty("database.sql.update.subcategories");
+        String sqlUpdate = sqlManager.getProperty("database.sql.update.subcategories");
         executePreparedUpdate(dbConnector, oldEntity, newEntity, sqlUpdate);
     }
 
@@ -75,35 +74,20 @@ public class DBSubcategoryControllerImpl extends DBSubcategoryController {
     @Override
     public void deleteAll(List<Subcategory> entities) throws SQLException {
         checkTableExistence();
-        String sqlDelete = configurationManager.getProperty("database.sql.delete.subcategories");
+        String sqlDelete = sqlManager.getProperty("database.sql.delete.subcategories");
         executePreparedDelete(dbConnector, sqlDelete, entities);
     }
 
     @Override
     public List<Subcategory> getAll() throws SQLException {
         checkTableExistence();
-        String sqlSelect = configurationManager.getProperty("database.sql.select.subcategories");
+        String sqlSelect = sqlManager.getProperty("database.sql.select.subcategories");
         return executeSelectEntities(dbConnector, sqlSelect);
     }
 
     @Override
     protected void fillDeleteStatement(Subcategory subcategory, PreparedStatement deleteStatement) throws SQLException {
         deleteStatement.setInt(1, subcategory.getId());
-    }
-
-    @Override
-    protected List<Subcategory> mapSelectResultSetToEntities(ResultSet resultSet) throws SQLException {
-        List<Subcategory> subcategories = new ArrayList<>();
-        while (resultSet.next()) {
-            Subcategory subcategory = new Subcategory();
-            subcategory.setId(resultSet.getInt(1));
-            subcategory.setCreationDate(resultSet.getDate(2));
-            subcategory.setName(resultSet.getString(3));
-            subcategory.setUserId(resultSet.getInt(4));
-            subcategory.setCategoryId(resultSet.getInt(5));
-            subcategories.add(subcategory);
-        }
-        return subcategories;
     }
 
     @Override
@@ -137,5 +121,38 @@ public class DBSubcategoryControllerImpl extends DBSubcategoryController {
         updateStatement.setInt(3, newEntity.getUserId());
         updateStatement.setInt(4, newEntity.getCategoryId());
         updateStatement.setInt(5, oldEntity.getId());
+    }
+
+    @Override
+    public List<Subcategory> getSubcategories(Integer categoryId) throws SQLException {
+        checkTableExistence();
+        String sqlSelect = sqlManager.getProperty("database.sql.select.subcategories.category").replace("%1", String.valueOf(categoryId));
+        return executeSelectEntities(dbConnector, sqlSelect);
+    }
+
+    @Override
+    public List<UserSubcategory> getUserSubcategories(Integer categoryId) throws SQLException {
+        checkTableExistence();
+        String sqlSelect = sqlManager.getProperty("database.sql.select.subcategories.user").replace("%1", String.valueOf(categoryId));
+
+        Connection connection = dbConnector.getConnection();
+        List<UserSubcategory> userSubcategories = new ArrayList<>();
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sqlSelect)) {
+            userSubcategories.addAll(mapSelectResultSetToUserSubcategories(resultSet));
+        }
+
+        return userSubcategories;
+    }
+
+    private Collection<? extends UserSubcategory> mapSelectResultSetToUserSubcategories(ResultSet resultSet) throws SQLException {
+        List<UserSubcategory> subcategories = new ArrayList<>();
+        while (resultSet.next()) {
+            UserSubcategory userSubcategory = new UserSubcategory();
+            userSubcategory.setSubcategory(mapSelectResultSetToEntity(resultSet));
+            userSubcategory.setUserName(resultSet.getString(6));
+            subcategories.add(userSubcategory);
+        }
+        return subcategories;
     }
 }

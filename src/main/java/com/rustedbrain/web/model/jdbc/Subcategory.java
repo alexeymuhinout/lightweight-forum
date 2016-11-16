@@ -11,4 +11,9 @@ public class Subcategory extends Category {
     public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

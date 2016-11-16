@@ -17,6 +17,14 @@ public class SessionRequestContentUtil {
         return ourInstance;
     }
 
+    public static void setAttribute(SessionRequestContent requestContent, String key, Object value) {
+        requestContent.getRequestAttributes().put(key, value);
+    }
+
+    public static void setSessionAttribute(SessionRequestContent requestContent, String key, Object value) {
+        requestContent.getSessionAttributes().put(key, value);
+    }
+
     public SessionRequestContent newSessionRequestContent(HttpServletRequest request) {
         if (request == null)
             throw new IllegalArgumentException("HttpServletRequest can not be null");
@@ -45,6 +53,7 @@ public class SessionRequestContentUtil {
         requestContent.setRequestAttributes(requestAttributes);
         requestContent.setRequestParameters(requestParameters);
         requestContent.setSessionAttributes(sessionAttributes);
+
         return requestContent;
     }
 
@@ -59,7 +68,11 @@ public class SessionRequestContentUtil {
         }
         HashMap<String, Object> sessionAttributes = requestContent.getSessionAttributes();
         for (Map.Entry<String, Object> entry : sessionAttributes.entrySet()) {
-            servletRequest.setAttribute(entry.getKey(), entry.getValue());
+            servletRequest.getSession().setAttribute(entry.getKey(), entry.getValue());
+        }
+
+        if (requestContent.isInvalidatedSession()) {
+            servletRequest.getSession().invalidate();
         }
     }
 }

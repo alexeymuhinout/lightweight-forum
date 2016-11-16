@@ -1,7 +1,7 @@
 package com.rustedbrain.web.controller.jdbc.user;
 
 
-import com.rustedbrain.web.controller.jdbc.DBConnectorImpl;
+import com.rustedbrain.web.controller.jdbc.PostgresDBConnectorImpl;
 import com.rustedbrain.web.controller.jdbc.util.DBUtil;
 import com.rustedbrain.web.controller.resource.ConfigurationManager;
 import com.rustedbrain.web.controller.resource.MessageManager;
@@ -33,7 +33,7 @@ public class DBUserControllerImplTest extends TestCase {
         String dbPassword = "postgres";
         Parser parser = new JaxbParser();
         DBUtil dbUtil = new DBUtil(ConfigurationManager.getInstance(), MessageManager.getInstance(), SQLManager.getInstance(), parser);
-        this.dbUserController = new DBUserControllerImpl(ConfigurationManager.getInstance(), new DBConnectorImpl(url, dbUser, dbPassword), dbUtil);
+        this.dbUserController = new DBUserControllerImpl(ConfigurationManager.getInstance(), new PostgresDBConnectorImpl(url, dbUser, dbPassword), dbUtil);
         this.user1 = createTestUser(null, "John", "Coleman", "Johny", "jing$bing", "jhncmn@gmail.com", Date.valueOf(LocalDate.now()), 0);
         this.user2 = createTestUser(null, "Jack", "Jerido", "likant", "234lilian", "kolgun@gmail.com", Date.valueOf(LocalDate.now()), 1);
     }
