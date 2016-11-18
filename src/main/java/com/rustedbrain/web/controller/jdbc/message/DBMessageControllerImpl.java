@@ -174,17 +174,16 @@ public class DBMessageControllerImpl extends DBMessageController {
     }
 
     private Collection<? extends UserMessage> mapSelectResultSetToUserMessages(ResultSet resultSet) throws SQLException {
-        List<UserMessage> subcategories = new ArrayList<>();
+        List<UserMessage> userMessages = new ArrayList<>();
         while (resultSet.next()) {
-            UserMessage userSubcategory = new UserMessage();
-            userSubcategory.setMessage(mapSelectResultSetToEntity(resultSet));
-            userSubcategory.setSubcategoryName(resultSet.getString(7));
-            userSubcategory.setSenderName(resultSet.getString(8));
-            userSubcategory.setSenderRegistrationDate(resultSet.getDate(9));
-            userSubcategory.setReceiverName(resultSet.getString(10));
-            subcategories.add(userSubcategory);
+            UserMessage userMessage = new UserMessage();
+            userMessage.setMessage(mapSelectResultSetToEntity(resultSet));
+            userMessage.setSubcategoryName(resultSet.getString(7));
+            userMessage.setSenderName(resultSet.getString(8));
+            userMessage.setSenderRegistrationDate(resultSet.getDate(9));
+            userMessage.setReceiverName(resultSet.getString(10));
+            userMessages.add(userMessage);
         }
-        System.out.println(subcategories);
-        return subcategories;
+        return userMessages;
     }
 }
