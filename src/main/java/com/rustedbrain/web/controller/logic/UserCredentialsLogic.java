@@ -149,4 +149,9 @@ public class UserCredentialsLogic {
         List<User> users = dbUserController.getAdminUsers();
         return createProxyUsers(users);
     }
+
+    public void deleteUser(Integer userId) throws SQLException {
+        User user = this.dbUserController.getEntityById(userId);
+        this.dbUserController.delete(user);
+    }
 }

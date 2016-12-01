@@ -27,15 +27,15 @@ public class DBCityControllerImpl extends DBCityController {
 
     @Override
     public void checkTableExistence() throws SQLException {
-        Connection connection = dbConnector.getConnection();
-        connection.setAutoCommit(false);
-        try {
-            dbUtil.checkTableExistence("public", "city", connection);
+        try (Connection connection = dbConnector.getConnection()) {
+            connection.setAutoCommit(false);
+            try {
+                dbUtil.checkTableExistence("public", "city", connection);
+            } catch (JAXBException e) {
+                connection.rollback();
+                e.printStackTrace();
+            }
             connection.commit();
-        } catch (JAXBException e) {
-            connection.rollback();
-            e.printStackTrace();
-        } finally {
             connection.setAutoCommit(true);
         }
     }

@@ -7,16 +7,13 @@ public class IndexShowCommand implements ActionCommand {
 
     @Override
     public String execute(SessionRequestContent requestContent) {
-
-        String page = null;
-
+        String page;
         try {
             page = ConfigurationManager.getInstance().getProperty("path.page.index");
         } catch (Exception e) {
             requestContent.getRequestAttributes().put("message", e.getMessage());
             page = ConfigurationManager.getInstance().getProperty("path.page.categories.show");
         }
-
         return page;
     }
 }

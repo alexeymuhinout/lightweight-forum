@@ -5,6 +5,8 @@ import com.rustedbrain.web.controller.jdbc.category.DBCategoryController;
 import com.rustedbrain.web.controller.jdbc.category.DBCategoryControllerImpl;
 import com.rustedbrain.web.controller.jdbc.message.DBMessageController;
 import com.rustedbrain.web.controller.jdbc.message.DBMessageControllerImpl;
+import com.rustedbrain.web.controller.jdbc.message.DBSwearWordController;
+import com.rustedbrain.web.controller.jdbc.message.DBSwearWordControllerImpl;
 import com.rustedbrain.web.controller.jdbc.subcategory.DBSubcategoryController;
 import com.rustedbrain.web.controller.jdbc.subcategory.DBSubcategoryControllerImpl;
 import com.rustedbrain.web.controller.jdbc.util.DBUtil;
@@ -12,9 +14,11 @@ import com.rustedbrain.web.controller.resource.ConfigurationManager;
 import com.rustedbrain.web.controller.resource.MessageManager;
 import com.rustedbrain.web.controller.resource.SQLManager;
 import com.rustedbrain.web.controller.util.jaxb.JaxbParser;
+import com.rustedbrain.web.model.exception.SwearWordException;
 import com.rustedbrain.web.model.jdbc.Category;
 import com.rustedbrain.web.model.jdbc.Message;
 import com.rustedbrain.web.model.jdbc.Subcategory;
+import com.rustedbrain.web.model.jdbc.SwearWord;
 import com.rustedbrain.web.model.servlet.ModeratedCategory;
 import com.rustedbrain.web.model.servlet.UserMessage;
 import com.rustedbrain.web.model.servlet.UserSubcategory;
@@ -42,6 +46,12 @@ public class ForumLogic {
 
     private DBMessageController dbMessageController =
             new DBMessageControllerImpl(
+                    SQLManager.getInstance(),
+                    PostgresDBConnectorImpl.getPostgresDBConnector(),
+                    new DBUtil(ConfigurationManager.getInstance(), MessageManager.getInstance(), SQLManager.getInstance(), new JaxbParser()));
+
+    private DBSwearWordController dbSwearWordController =
+            new DBSwearWordControllerImpl(
                     SQLManager.getInstance(),
                     PostgresDBConnectorImpl.getPostgresDBConnector(),
                     new DBUtil(ConfigurationManager.getInstance(), MessageManager.getInstance(), SQLManager.getInstance(), new JaxbParser()));
@@ -128,6 +138,14 @@ public class ForumLogic {
     }
 
     public void createMessage(Integer senderId, Integer receiverId, String text, Integer subcategoryId) throws SQLException {
+        List<SwearWord> swearWords = dbSwearWordController.getAll();
+
+        for (SwearWord swearWord : swearWords) {
+            if (text.contains(swearWord.getText())) {
+                throw new SwearWordException();
+            }
+        }
+
         Message message = new Message();
         message.setCreationDate(Date.valueOf(LocalDate.now()));
         message.setUserId(senderId);
@@ -147,6 +165,14 @@ public class ForumLogic {
     }
 
     public void updateMessage(Integer messageId, String text) throws SQLException, CloneNotSupportedException {
+        List<SwearWord> swearWords = dbSwearWordController.getAll();
+
+        for (SwearWord swearWord : swearWords) {
+            if (text.contains(swearWord.getText())) {
+                throw new SwearWordException();
+            }
+        }
+
         Message oldMessage = this.dbMessageController.getEntityById(messageId);
         Message newMessage = (Message) oldMessage.clone();
         newMessage.setText(text);

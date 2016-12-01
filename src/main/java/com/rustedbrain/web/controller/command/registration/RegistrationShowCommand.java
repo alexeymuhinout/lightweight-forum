@@ -22,11 +22,11 @@ public class RegistrationShowCommand implements ActionCommand {
         try {
             List<City> cities = logic.getAllCities();
             requestContent.getRequestAttributes().put("cities", cities);
-            page = ConfigurationManager.getInstance().getProperty("path.page.registration");
+            page = ConfigurationManager.getInstance().getProperty("path.page.profile-create");
         } catch (SQLException e) {
             e.printStackTrace();
             requestContent.getRequestAttributes().put("error", e.getMessage());
-            page = ConfigurationManager.getInstance().getProperty("path.page.registration");
+            page = ConfigurationManager.getInstance().getProperty("path.page.profile-create");
         }
         return page;
     }

@@ -18,7 +18,7 @@
                         <a href="${pageContext.request.contextPath}/jsp/login.jsp">Login</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="${pageContext.request.contextPath}/jsp/home.jsp">Profile</a>
+                        <a href="${pageContext.request.contextPath}/controller?command=profile_show">Profile</a>
                         <a href="${pageContext.request.contextPath}/controller?command=logout">Logout[${user.name}]</a>
                     </c:otherwise>
                 </c:choose>

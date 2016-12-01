@@ -5,6 +5,7 @@ import com.rustedbrain.web.controller.command.util.CommandUtil;
 import com.rustedbrain.web.controller.logic.ForumLogic;
 import com.rustedbrain.web.controller.resource.ConfigurationManager;
 import com.rustedbrain.web.controller.resource.MessageManager;
+import com.rustedbrain.web.model.exception.SwearWordException;
 import com.rustedbrain.web.model.servlet.SessionRequestContent;
 
 public class MessageCreateCommand implements ActionCommand {
@@ -13,7 +14,7 @@ public class MessageCreateCommand implements ActionCommand {
 
     public String execute(SessionRequestContent requestContent) {
 
-        String page = null;
+        String page;
 
         try {
             String text = CommandUtil.Message.getText(requestContent);
@@ -31,6 +32,9 @@ public class MessageCreateCommand implements ActionCommand {
             requestContent.getRequestAttributes().put("message", MessageManager.getInstance().getProperty("message.creation.success"));
 
             page = new MessagesShowCommand().execute(requestContent);
+        } catch (SwearWordException ex) {
+            requestContent.getRequestAttributes().put("error", "We found STRONG LANGUAGE in your message, please don't use bad words.");
+            page = new MessageCreateShowCommand().execute(requestContent);
         } catch (Exception e) {
             e.printStackTrace();
             requestContent.getRequestAttributes().put("error", e.getMessage());

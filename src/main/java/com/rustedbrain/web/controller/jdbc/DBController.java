@@ -31,24 +31,19 @@ public abstract class DBController<T> {
     }
 
     protected void executePreparedDelete(DBConnector dbConnector, String sqlDelete, List<T> entities) throws SQLException {
-        Connection connection = dbConnector.getConnection();
-        PreparedStatement deleteStatement = null;
 
-        try {
+        try (Connection connection = dbConnector.getConnection(); PreparedStatement deleteStatement = connection.prepareStatement(sqlDelete)) {
             connection.setAutoCommit(false);
-            deleteStatement = connection.prepareStatement(sqlDelete);
-            for (T entity : entities) {
-                fillDeleteStatement(entity, deleteStatement);
-                deleteStatement.executeUpdate();
-                connection.commit();
+            try {
+                for (T entity : entities) {
+                    fillDeleteStatement(entity, deleteStatement);
+                    deleteStatement.executeUpdate();
+                }
+            } catch (SQLException e) {
+                connection.rollback();
+                throw e;
             }
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            if (deleteStatement != null) {
-                deleteStatement.close();
-            }
+            connection.commit();
             connection.setAutoCommit(true);
         }
     }
@@ -56,75 +51,63 @@ public abstract class DBController<T> {
     protected abstract void fillDeleteStatement(T user, PreparedStatement deleteStatement) throws SQLException;
 
     protected void executePreparedUpdate(DBConnector dbConnector, T oldEntity, T newEntity, String sqlUpdate) throws SQLException {
-
-        PreparedStatement updateStatement = null;
-        Connection connection = dbConnector.getConnection();
-        try {
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement updateStatement = connection.prepareStatement(sqlUpdate)) {
             connection.setAutoCommit(false);
-            updateStatement = connection.prepareStatement(sqlUpdate);
-            fillUpdateStatement(oldEntity, newEntity, updateStatement);
-            updateStatement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            if (updateStatement != null) {
-                updateStatement.close();
+            try {
+                fillUpdateStatement(oldEntity, newEntity, updateStatement);
+                updateStatement.executeUpdate();
+            } catch (SQLException e) {
+                connection.rollback();
+                throw e;
             }
+            connection.commit();
             connection.setAutoCommit(true);
         }
     }
 
     protected void executePreparedInsert(DBConnector dbConnector, String sqlInsert, List<T> entities) throws SQLException {
-        Connection connection = dbConnector.getConnection();
-        PreparedStatement insertStatement = null;
-        try {
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement insertStatement = connection.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS)) {
             connection.setAutoCommit(false);
-            insertStatement = connection.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
-            for (T entity : entities) {
-                fillInsertStatement(entity, insertStatement);
-                insertStatement.executeUpdate();
-                connection.commit();
-                try (ResultSet generatedKeys = insertStatement.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        fillGeneratedEntityId(entity, generatedKeys);
-                    } else {
-                        throw new SQLException("Creating user failed, no ID obtained.");
+            try {
+                for (T entity : entities) {
+                    fillInsertStatement(entity, insertStatement);
+                    insertStatement.executeUpdate();
+                    try (ResultSet generatedKeys = insertStatement.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            fillGeneratedEntityId(entity, generatedKeys);
+                        } else {
+                            throw new SQLException("Creating user failed, no ID obtained.");
+                        }
                     }
                 }
+            } catch (SQLException e) {
+                connection.rollback();
+                throw e;
             }
-        } catch (Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            if (insertStatement != null) {
-                insertStatement.close();
-            }
+            connection.commit();
             connection.setAutoCommit(true);
         }
     }
 
     protected T executeSelectEntity(DBConnector dbConnector, String sqlSelect) throws SQLException {
-        Connection connection = dbConnector.getConnection();
-        T entity = null;
-
-        try (Statement statement = connection.createStatement();
+        try (Connection connection = dbConnector.getConnection();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sqlSelect)) {
             if (!resultSet.isBeforeFirst()) {
                 return null;
             } else {
                 resultSet.next();
-                entity = mapSelectResultSetToEntity(resultSet);
+                return mapSelectResultSetToEntity(resultSet);
             }
         }
-        return entity;
     }
 
     protected List<T> executeSelectEntities(DBConnector dbConnector, String sqlSelect) throws SQLException {
-        Connection connection = dbConnector.getConnection();
         List<T> entities = new ArrayList<>();
-        try (Statement insertStatement = connection.createStatement();
+        try (Connection connection = dbConnector.getConnection();
+             Statement insertStatement = connection.createStatement();
              ResultSet resultSet = insertStatement.executeQuery(sqlSelect)) {
             entities.addAll(mapSelectResultSetToEntities(resultSet));
         }

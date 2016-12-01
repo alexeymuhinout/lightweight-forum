@@ -31,15 +31,15 @@ public class DBMessageControllerImpl extends DBMessageController {
 
     @Override
     public void checkTableExistence() throws SQLException {
-        Connection connection = dbConnector.getConnection();
-        connection.setAutoCommit(false);
-        try {
-            dbUtil.checkTableExistence("public", "message", connection);
+        try (Connection connection = dbConnector.getConnection()) {
+            connection.setAutoCommit(false);
+            try {
+                dbUtil.checkTableExistence("public", "message", connection);
+            } catch (SQLException | JAXBException e) {
+                connection.rollback();
+                e.printStackTrace();
+            }
             connection.commit();
-        } catch (JAXBException e) {
-            connection.rollback();
-            e.printStackTrace();
-        } finally {
             connection.setAutoCommit(true);
         }
     }
@@ -130,7 +130,8 @@ public class DBMessageControllerImpl extends DBMessageController {
     }
 
     @Override
-    protected void fillUpdateStatement(Message oldEntity, Message newEntity, PreparedStatement updateStatement) throws SQLException {
+    protected void fillUpdateStatement(Message oldEntity, Message newEntity, PreparedStatement updateStatement) throws
+            SQLException {
         updateStatement.setDate(1, newEntity.getCreationDate());
         updateStatement.setInt(2, newEntity.getSubcategoryId());
         updateStatement.setInt(3, newEntity.getUserId());
@@ -163,9 +164,9 @@ public class DBMessageControllerImpl extends DBMessageController {
         checkTableExistence();
         String sqlSelect = sqlManager.getProperty("database.sql.select.messages.user").replace("%1", String.valueOf(subcategoryId));
 
-        Connection connection = dbConnector.getConnection();
         List<UserMessage> userMessages = new ArrayList<>();
-        try (Statement statement = connection.createStatement();
+        try (Connection connection = dbConnector.getConnection();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sqlSelect)) {
             userMessages.addAll(mapSelectResultSetToUserMessages(resultSet));
         }
@@ -173,7 +174,8 @@ public class DBMessageControllerImpl extends DBMessageController {
         return userMessages;
     }
 
-    private Collection<? extends UserMessage> mapSelectResultSetToUserMessages(ResultSet resultSet) throws SQLException {
+    private Collection<? extends UserMessage> mapSelectResultSetToUserMessages(ResultSet resultSet) throws
+            SQLException {
         List<UserMessage> userMessages = new ArrayList<>();
         while (resultSet.next()) {
             UserMessage userMessage = new UserMessage();

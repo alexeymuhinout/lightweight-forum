@@ -27,15 +27,15 @@ public class DBCategoryControllerImpl extends DBCategoryController {
 
     @Override
     public void checkTableExistence() throws SQLException {
-        Connection connection = dbConnector.getConnection();
-        connection.setAutoCommit(false);
-        try {
-            dbUtil.checkTableExistence("public", "category", connection);
+        try (Connection connection = dbConnector.getConnection()) {
+            try {
+                connection.setAutoCommit(false);
+                dbUtil.checkTableExistence("public", "category", connection);
+            } catch (SQLException | JAXBException ex) {
+                connection.rollback();
+                ex.printStackTrace();
+            }
             connection.commit();
-        } catch (JAXBException e) {
-            connection.rollback();
-            e.printStackTrace();
-        } finally {
             connection.setAutoCommit(true);
         }
     }
@@ -143,9 +143,9 @@ public class DBCategoryControllerImpl extends DBCategoryController {
         checkTableExistence();
         String sqlSelect = sqlManager.getProperty("database.sql.select.categories.users");
 
-        Connection connection = dbConnector.getConnection();
         List<ModeratedCategory> moderatedCategories = new ArrayList<>();
-        try (Statement statement = connection.createStatement();
+        try (Connection connection = dbConnector.getConnection();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sqlSelect)) {
             moderatedCategories.addAll(mapSelectResultSetToModeratedCategories(resultSet));
         }

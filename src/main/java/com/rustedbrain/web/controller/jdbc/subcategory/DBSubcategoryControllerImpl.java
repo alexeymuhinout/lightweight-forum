@@ -27,15 +27,15 @@ public class DBSubcategoryControllerImpl extends DBSubcategoryController {
 
     @Override
     public void checkTableExistence() throws SQLException {
-        Connection connection = dbConnector.getConnection();
-        connection.setAutoCommit(false);
-        try {
-            dbUtil.checkTableExistence("public", "subcategory", connection);
+        try (Connection connection = dbConnector.getConnection()) {
+            connection.setAutoCommit(false);
+            try {
+                dbUtil.checkTableExistence("public", "subcategory", connection);
+            } catch (JAXBException e) {
+                connection.rollback();
+                e.printStackTrace();
+            }
             connection.commit();
-        } catch (JAXBException e) {
-            connection.rollback();
-            e.printStackTrace();
-        } finally {
             connection.setAutoCommit(true);
         }
     }
@@ -135,9 +135,9 @@ public class DBSubcategoryControllerImpl extends DBSubcategoryController {
         checkTableExistence();
         String sqlSelect = sqlManager.getProperty("database.sql.select.subcategories.user").replace("%1", String.valueOf(categoryId));
 
-        Connection connection = dbConnector.getConnection();
         List<UserSubcategory> userSubcategories = new ArrayList<>();
-        try (Statement statement = connection.createStatement();
+        try (Connection connection = dbConnector.getConnection();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sqlSelect)) {
             userSubcategories.addAll(mapSelectResultSetToUserSubcategories(resultSet));
         }

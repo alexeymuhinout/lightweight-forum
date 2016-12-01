@@ -2,14 +2,14 @@ package com.rustedbrain.web.model.jdbc;
 
 public class SwearWord extends DBEntity {
 
-    private String word;
+    private String text;
 
-    public String getWord() {
-        return word;
+    public String getText() {
+        return text;
     }
 
-    public void setWord(String word) {
-        this.word = word;
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
@@ -19,12 +19,12 @@ public class SwearWord extends DBEntity {
 
         SwearWord swearWord = (SwearWord) o;
 
-        return word.equals(swearWord.word);
+        return text.equals(swearWord.text);
 
     }
 
     @Override
     public int hashCode() {
-        return word.hashCode();
+        return text.hashCode();
     }
 }

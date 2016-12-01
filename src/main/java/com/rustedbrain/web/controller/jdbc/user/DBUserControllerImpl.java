@@ -6,7 +6,10 @@ import com.rustedbrain.web.controller.resource.Manager;
 import com.rustedbrain.web.model.jdbc.User;
 
 import javax.xml.bind.JAXBException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,15 +40,15 @@ public class DBUserControllerImpl extends DBUserController {
 
     @Override
     public void checkTableExistence() throws SQLException {
-        Connection connection = dbConnector.getConnection();
-        connection.setAutoCommit(false);
-        try {
-            dbUtil.checkTableExistence("public", "user", connection);
+        try (Connection connection = dbConnector.getConnection()) {
+            connection.setAutoCommit(false);
+            try {
+                dbUtil.checkTableExistence("public", "user", connection);
+            } catch (JAXBException e) {
+                connection.rollback();
+                e.printStackTrace();
+            }
             connection.commit();
-        } catch (JAXBException e) {
-            connection.rollback();
-            e.printStackTrace();
-        } finally {
             connection.setAutoCommit(true);
         }
     }
@@ -135,34 +138,14 @@ public class DBUserControllerImpl extends DBUserController {
     public User getUserByLogin(String login) throws SQLException {
         checkTableExistence();
         String sqlSelect = sqlManager.getProperty("database.sql.select.user.login").replace("%1", login);
-        Connection connection = dbConnector.getConnection();
-        try (Statement insertStatement = connection.createStatement();
-             ResultSet resultSet = insertStatement.executeQuery(sqlSelect)) {
-
-            if (!resultSet.isBeforeFirst()) {
-                return null;
-            } else {
-                resultSet.next();
-                return mapSelectResultSetToEntity(resultSet);
-            }
-        }
+        return super.executeSelectEntity(dbConnector, sqlSelect);
     }
 
     @Override
     public User getUserByMail(String mail) throws SQLException {
         checkTableExistence();
         String sqlSelect = sqlManager.getProperty("database.sql.select.user.mail").replace("%1", mail);
-        Connection connection = dbConnector.getConnection();
-        try (Statement insertStatement = connection.createStatement();
-             ResultSet resultSet = insertStatement.executeQuery(sqlSelect)) {
-
-            if (!resultSet.isBeforeFirst()) {
-                return null;
-            } else {
-                resultSet.next();
-                return mapSelectResultSetToEntity(resultSet);
-            }
-        }
+        return super.executeSelectEntity(dbConnector, sqlSelect);
     }
 
     @Override

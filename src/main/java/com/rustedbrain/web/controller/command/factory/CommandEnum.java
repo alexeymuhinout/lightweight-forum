@@ -5,6 +5,8 @@ import com.rustedbrain.web.controller.command.IndexShowCommand;
 import com.rustedbrain.web.controller.command.category.*;
 import com.rustedbrain.web.controller.command.login.LoginCommand;
 import com.rustedbrain.web.controller.command.login.LogoutCommand;
+import com.rustedbrain.web.controller.command.login.ProfileDeleteCommand;
+import com.rustedbrain.web.controller.command.login.ProfileShowCommand;
 import com.rustedbrain.web.controller.command.message.*;
 import com.rustedbrain.web.controller.command.registration.RegisterCommand;
 import com.rustedbrain.web.controller.command.registration.RegistrationShowCommand;
@@ -33,6 +35,18 @@ public enum CommandEnum {
     REGISTRATION_SHOW {
         {
             this.action = new RegistrationShowCommand();
+        }
+    },
+
+    PROFILE_SHOW {
+        {
+            this.action = new ProfileShowCommand();
+        }
+    },
+
+    PROFILE_DELETE {
+        {
+            this.action = new ProfileDeleteCommand();
         }
     },
 
