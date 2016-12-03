@@ -11,29 +11,29 @@
 <jsp:include page="${pageContext.request.contextPath}/jsp/header.jsp"/>
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
-    <form action="${pageContext.request.contextPath}/controller" method="post">
+    <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
         <label>Name:<br>
-            <input type="text" name="user_name" title="User name">
+            <input class="input_text" type="text" name="user_name" title="User name">
         </label>
         <br>
         <label>Surname:<br>
-            <input type="text" name="user_surname" title="User surname">
+            <input class="input_text" type="text" name="user_surname" title="User surname">
         </label>
         <br>
         <label>Login:<br>
-            <input type="text" name="user_login" title="User login">
+            <input class="input_text" type="text" name="user_login" title="User login">
         </label>
         <br>
         <label>Password:<br>
-            <input type="password" name="user_password" title="User password">
+            <input class="input_text" type="password" name="user_password" title="User password">
         </label>
         <br>
         <label>Mail:<br>
-            <input type="email" name="user_mail" title="User mail">
+            <input class="input_text" type="email" name="user_mail" title="User mail">
         </label>
         <br>
         <label>Birthday:<br>
-            <input type="date" name="user_birthday" title="User birthday">
+            <input class="input_text" type="date" name="user_birthday" title="User birthday">
         </label>
         <br>
         <label>City:<br>
@@ -45,10 +45,10 @@
         </label>
         <br>
         <label>If was not found, write city name here:<br>
-            <input type="text" name="city_name" title="City name">
+            <input class="input_text" type="text" name="city_name" title="City name">
         </label>
         <br>
-        <input type="submit" name="create" value="Register">
+        <input class="button_reg" type="submit" name="create" value="Register">
         <input type="hidden" name="command" value="register">
     </form>
 </main>

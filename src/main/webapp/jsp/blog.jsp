@@ -48,9 +48,9 @@
         +38(095)3132563
     </div>
     <div>
-        <button class="social-button">VK</button>
-        <button class="social-button">TWITTER</button>
-        <button class="social-button">FB</button>
+        <a href="http://vk.com" target="_blank"><input type="button" class="social-button" type="button" value ="VK" ></a>
+        <a href="http://twitter.com" target="_blank"><input type="button" class="social-button" type="button" value ="TW"></a>
+        <a href="http://facebook.com" target="_blank"><input type="button" class="social-button" type="button" value ="FB"></a>
     </div>
     <div>
         Programmed by <br>

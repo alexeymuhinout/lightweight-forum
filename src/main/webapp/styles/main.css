@@ -1,15 +1,16 @@
 body {
+    align-items: stretch;
     display: flex;
     flex-flow: column nowrap;
-    align-items: stretch;
     margin: 0;
 }
 
 header {
-    background-color: #606060;
     padding-bottom: 10px;
 }
-
+footer{
+    padding-top: 10px;
+}
 nav.main-nav {
 }
 
@@ -21,36 +22,49 @@ section {
     padding: 8px;
 }
 
+.info p{
+    border-bottom: 1px solid #b22222;
+    padding: 10px;
+    text-align: left;
+
+}
+.info p:hover{
+    color:firebrick;
+    cursor:pointer;
+}
+
 section.user-block {
-    color: orange;
+    color: black;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 0;
+
 }
 
 div.logo-block {
+    font-size: 20px;
+    letter-spacing: 1px;
     margin: auto;
+
 }
 
-div.login-block {
-    display: flex;
-    flex-flow: row wrap;
-    margin: 0;
-    padding: 0;
+div.login-block a {
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    border-width: 0px;
+    color: black;
+    padding: 6px;
 }
 
 div.login-block a:hover {
     text-decoration: underline;
 }
 
-div.login-block a {
-    margin: 10px;
-}
-
 nav.main-nav ul {
     align-self: center;
-    background-color: #848484;
+    background-color: gray;
     display: flex;
     flex-flow: row wrap;
     width: 100%;
@@ -59,28 +73,29 @@ nav.main-nav ul {
 nav.main-nav ul li {
     display: flex;
     justify-content: center;
+
 }
 
 ul.main-ul li:hover {
-    background-color: orange;
+    background-color: firebrick;
 }
 
 li {
     flex-basis: 0;
     flex-grow: 1;
     padding: 5px;
+
 }
 
 footer {
     align-items: center;
-    background-color: #848484;
+    background-color: gray;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
 }
 
 main {
-    background-color: #606060;
     display: flex;
     flex-direction: column;
 }
@@ -95,45 +110,32 @@ a {
     text-decoration: none;
 }
 
-.social-button {
-    background-color: #f09f13;
-    border-radius: 12px;
-    border-width: 0;
-    color: #ffffff;
-    cursor: pointer;
-    padding: 6px;
-}
-
-.social-button:hover {
-    background-color: #606160;
-}
-
 table {
     background-color: white;
     width: 100%;
 }
 
 th, td {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #dddddd;
     padding: 10px;
     text-align: left;
 }
 
 th {
-    background-color: darkgray;
+    background-color: gray;
 }
 
 tr:hover {
-    background-color: orange;
+    background-color: firebrick;
     cursor: pointer;
 }
 
 form {
+    background-color: dimgray;
     display: flex;
     flex-direction: column;
-    background-color: darkgrey;
-    padding: 0;
     margin: 0;
+    padding: 0;
     width: 100%;
 }
 
@@ -146,18 +148,18 @@ li.message {
 }
 
 div.message-content {
-    margin: 0;
-    padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin: 0;
+    padding: 0;
     width: 100%;
 }
 
 div.message-content-subcategory {
+    background-color: gray;
     margin: 0;
     padding: 0;
-    background-color: grey;
 }
 
 div.message-content-subcategory h4 {
@@ -166,26 +168,29 @@ div.message-content-subcategory h4 {
 }
 
 div.message-content-message {
+    border: 1px solid firebrick;
+    background-color: white;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    background-color: #959595;
+    flex-flow: row wrap;
     height: 100%;
 }
 
+
 div.message-sender {
-    background-color: darkgrey;
+    background-color: gray;
+    height: 100%;
+    width:  15%
 }
 
+
 div.message-actions {
-    background-color: orange;
     display: flex;
     flex-direction: row;
     padding: 0;
 }
 
-p.message-sender-name {
-
+p.message-sender-name:hover {
+    background-color: firebrick;
 }
 
 p.error {
@@ -198,4 +203,122 @@ p.message {
     background-color: limegreen;
     margin: 0;
     padding: 10px;
+}
+
+select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 1px solid firebrick;
+    background-color: white;
+    box-sizing: border-box;
+    text-indent: 1px;
+    font-size: 18px;
+    max-height: 50px;
+    min-height: 30px;
+    width: 245px;
+    margin-left: 1px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.input_text{
+    border: 1px solid firebrick;
+    box-sizing: border-box;
+    text-indent: 10px;
+    font-size: 18px;
+    max-height: 50px;
+    min-height: 30px;
+    max-width: 245px;
+    min-width:200px;
+    margin-left: 1px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.button, .button_login, .button_reg, .button_forum_create ,.button_del{
+    display: flex;
+    flex-direction: row-reverse;
+    cursor: pointer;
+    border-color: transparent;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 18px;
+    height: 45px;
+    margin-bottom: 20px;
+    margin-left:1px;
+    margin-top: 10px;
+    padding: 0 24px;
+    max-width: 245px;
+    min-width:200px;
+}
+
+.button_message_update,.button_message_delete,.button_message_reply{
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    cursor: pointer;
+    border-color: transparent;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 16px;
+    height: 30px;
+    margin: 10px;
+}
+ .tdbutton {
+    background:  firebrick none repeat scroll 0 0;
+    border-color: transparent;
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row-reverse;
+    font-size: 18px;
+     margin: 4px;
+}
+
+.button_message_update{
+    background: blue none repeat scroll 0 0;
+}
+.button_message_update:hover{
+    background: darkblue none repeat scroll 0 0;
+}
+.button_login, .button_message_delete,.button_del {
+    background: crimson none repeat scroll 0 0;
+}
+.button_login:hover, .button_message_delete:hover, .tdbutton:hover, .button_del:hover{
+    background: darkred none repeat scroll 0 0;
+}
+
+.button_reg, .button_message_reply{
+    background: green none repeat scroll 0 0;
+}
+.button_reg:hover, .button_message_reply:hover{
+    background: darkgreen none repeat scroll 0 0;
+}
+.button_forum_create{
+    background: gray none repeat scroll 0 0;
+}
+.button_forum_create:hover{
+    background: dimgray none repeat scroll 0 0;
+}
+ .text_for_msg{
+     width: 30%;
+     height: 200px;
+     border: 1px solid firebrick;
+     text-indent: 10px;
+     font-size: 16px;
+ }
+
+
+.social-button {
+    border-radius: 50%;
+    border-width: 0;
+    cursor: pointer;
+    padding: 6px;
+}
+
+.social-button:hover {
+    background-color: firebrick;
+}
+.login_page, .profile_page{
+    background-color: white;
+}
+
+.login_page{
+    padding: 40%;
 }

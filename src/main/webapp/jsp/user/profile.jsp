@@ -11,7 +11,7 @@
 <jsp:include page="${pageContext.request.contextPath}/jsp/header.jsp"/>
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
-    <section>
+    <section class="info">
         <p>Registered: ${user.registrationDate}</p>
         <p>Name: ${user.name}</p>
         <p>Surname: ${user.surname}</p>
@@ -20,15 +20,15 @@
         <p>Birthday: ${user.birthday}</p>
         <p>City: ${user.city}</p>
         <c:if test="${not empty user}">
-            <form action="${pageContext.request.contextPath}/controller" method="post">
+            <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
                 <input type="hidden" name="user_id" value="${user.id}"/>
                 <input type="hidden" name="command" value="user_delete"/>
-                <input type="submit" value="Delete"/>
+                <input  class="button_del" type="submit" value="Delete"/>
             </form>
-            <form action="${pageContext.request.contextPath}/controller" method="post">
+            <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
                 <input type="hidden" name="user_id" value="${user.id}"/>
                 <input type="hidden" name="command" value="user_update_show"/>
-                <input type="submit" value="Edit"/>
+                <input class="button_reg" type="submit" value="Edit"/>
             </form>
         </c:if>
     </section>

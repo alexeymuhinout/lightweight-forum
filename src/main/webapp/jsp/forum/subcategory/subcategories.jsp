@@ -12,10 +12,10 @@
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
     <c:if test="${not empty user}">
-        <form action="${pageContext.request.contextPath}/controller" method="post">
+        <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
             <input type="hidden" name="category_id" value="${param.category_id}"/>
             <input type="hidden" name="command" value="subcategory_create_show"/>
-            <input type="submit" value="Create new subcategory"/>
+            <input class="button_forum_create" type="submit" value="Create new subcategory"/>
         </form>
     </c:if>
     <table>
@@ -48,14 +48,14 @@
                 </td>
                 <c:if test="${not empty user}">
                     <td>
-                        <form action="${pageContext.request.contextPath}/controller" method="post">
-                            <input type="submit" value="Edit"/>
+                        <form action="${pageContext.request.contextPath}/controller" method="post" >
+                            <input class="tdbutton" type="submit" value="Edit"/>
                             <input type="hidden" name="command" value="subcategory_update_show"/>
                             <input type="hidden" name="category_id" value="${userSubcategory.subcategory.categoryId}">
                             <input type="hidden" name="subcategory_id" value="${userSubcategory.subcategory.id}"/>
                         </form>
-                        <form action="${pageContext.request.contextPath}/controller" method="post">
-                            <input type="submit" value="Delete"/>
+                        <form action="${pageContext.request.contextPath}/controller" method="post" >
+                            <input class="tdbutton" type="submit" value="Delete"/>
                             <input type="hidden" name="command" value="subcategory_delete"/>
                             <input type="hidden" name="category_id" value="${userSubcategory.subcategory.categoryId}">
                             <input type="hidden" name="subcategory_id" value="${userSubcategory.subcategory.id}"/>

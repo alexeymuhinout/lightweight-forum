@@ -11,9 +11,9 @@
 <jsp:include page="${pageContext.request.contextPath}/jsp/header.jsp"/>
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
-    <form action="${pageContext.request.contextPath}/controller" method="post">
+    <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
         <label>Category name:
-            <input type="text" name="category_name" title="Category name" value="${category.name}">
+            <input class="input_text" type="text" name="category_name" title="Category name" value="${category.name}">
         </label>
         <label>Moderator:<br>
             <select name="user_id">
@@ -24,7 +24,7 @@
         </label>
         <input type="hidden" name="category_id" value="${category.id}">
         <input type="hidden" name="command" value="category_update">
-        <input type="submit" value="Update">
+        <input class="button_forum_create" type="submit" value="Update">
     </form>
 </main>
 <jsp:include page="${pageContext.request.contextPath}/jsp/footer.jsp"/>

@@ -11,11 +11,11 @@
 <jsp:include page="${pageContext.request.contextPath}/jsp/header.jsp"/>
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
-    <form action="${pageContext.request.contextPath}/controller" method="post">
+    <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
         <label>Write message:<br>
-            <textarea name="message_text"></textarea>
+            <textarea class="text_for_msg" name="message_text"></textarea>
         </label>
-        <input type="submit" name="create" value="Create">
+        <input class="button_forum_create" type="submit" name="create" value="Create">
         <input type="hidden" name="reply_to_user_id" value="${param.reply_to_user_id}">
         <input type="hidden" name="subcategory_id" value="${param.subcategory_id}">
         <input type="hidden" name="command" value="message_create">

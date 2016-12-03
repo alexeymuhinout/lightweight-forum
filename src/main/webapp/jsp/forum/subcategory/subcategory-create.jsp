@@ -11,11 +11,11 @@
 <jsp:include page="${pageContext.request.contextPath}/jsp/header.jsp"/>
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
-    <form action="${pageContext.request.contextPath}/controller" method="post">
+    <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
         <label>Subcategory name:
-            <input type="text" name="subcategory_name" title="Subcategory name">
+            <input class="input_text" type="text" name="subcategory_name" title="Subcategory name">
         </label>
-        <input type="submit" name="create" value="Create">
+        <input class="button_forum_create" type="submit" name="create" value="Create">
         <input type="hidden" name="category_id" value="${param.category_id}">
         <input type="hidden" name="command" value="subcategory_create">
     </form>

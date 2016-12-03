@@ -22,8 +22,8 @@
             the Reactions (the little icons under every comment) to share your positive feedback with users. This will
             help
             reinforce the proper behavior which we expect by all community members.</p>
-        <h5>Here are some rules that we ask you to follow:</h5>
-        <ul>
+        <h4>Here are some rules that we ask you to follow:</h4>
+        <ol>
             <li>
                 Keep your posts relevant to the forum category.
             </li>
@@ -52,15 +52,15 @@
                 Do not question moderators in the open forum. Moderation can be stressful, use private messages to chat
                 with moderators.
             </li>
-        </ul>
+        </ol>
         <p>In summary, use your common sense, treat others are you expect to be treated and help us build a great
             community
             experience for everyone. Getting the most out of this forum.</p>
     </section>
     <section>
-        <h5>Here are some tips and tricks on using this forum:</h5>
+        <h4>Here are some tips and tricks on using this forum:</h4>
 
-        <ul>
+        <ol>
             <li>
                 Use the reactions to share how you feel about other’s comments. The most liked content shows up on the
                 Best of page.
@@ -105,7 +105,7 @@
             <li>
                 Most important of all, have fun and be kind to one another!
             </li>
-        </ul>
+        </ol>
     </section>
 </main>
 <jsp:include page="${pageContext.request.contextPath}/jsp/footer.jsp"/>

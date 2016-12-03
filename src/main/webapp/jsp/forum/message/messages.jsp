@@ -36,7 +36,7 @@
                                        value="${userMessage.message.subcategoryId}"/>
                                 <input type="hidden" name="reply_to_user_id"
                                        value="${userMessage.message.userId}"/>
-                                <input type="submit" value="Reply"/>
+                                <input  class="button_message_reply" type="submit" value="Reply"/>
                             </form>
                         </c:if>
                         <c:if test="${not empty user && (userMessage.message.userId eq user.id || user.admin != false)}">
@@ -45,16 +45,16 @@
                                 <input type="hidden" name="subcategory_id"
                                        value="${userMessage.message.subcategoryId}"/>
                                 <input type="hidden" name="message_id" value="${userMessage.message.id}"/>
-                                <input type="submit" value="Delete"/>
+                                <input  class="button_message_delete" type="submit" value="Delete"/>
                             </form>
                         </c:if>
                         <c:if test="${not empty user && (userMessage.message.userId eq user.id || user.admin != false)}">
-                            <form action="${pageContext.request.contextPath}/controller" method="post">
+                            <form action="${pageContext.request.contextPath}/controller" method="post" >
                                 <input type="hidden" name="command" value="message_update_show"/>
                                 <input type="hidden" name="subcategory_id"
                                        value="${userMessage.message.subcategoryId}"/>
                                 <input type="hidden" name="message_id" value="${userMessage.message.id}"/>
-                                <input type="submit" value="Update"/>
+                                <input  class="button_message_update" type="submit" value="Update"/>
                             </form>
                         </c:if>
                     </div>
@@ -63,10 +63,10 @@
         </c:forEach>
     </ul>
     <c:if test="${not empty user}">
-        <form action="${pageContext.request.contextPath}/controller" method="post">
+        <form action="${pageContext.request.contextPath}/controller" method="post"  class="profile_page">
             <input type="hidden" name="command" value="message_create_show"/>
             <input type="hidden" name="subcategory_id" value="${param.subcategory_id}"/>
-            <input type="submit" value="Create new message"/>
+            <input class="button_forum_create" type="submit" value="Create new message"/>
         </form>
     </c:if>
 </main>

@@ -12,9 +12,9 @@
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
     <c:if test="${not empty user && user.admin != false}">
-        <form action="${pageContext.request.contextPath}/controller" method="post">
+        <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
             <input type="hidden" name="command" value="category_create_show"/>
-            <input type="submit" value="Create new category"/>
+            <input class="button_forum_create" type="submit" value="Create new category"/>
         </form>
     </c:if>
     <table>
@@ -47,13 +47,13 @@
                 </td>
                 <c:if test="${not empty user && user.admin != false}">
                     <td>
-                        <form action="${pageContext.request.contextPath}/controller" method="post">
-                            <input type="submit" value="Edit"/>
+                        <form action="${pageContext.request.contextPath}/controller" method="post" >
+                            <input class="tdbutton" type="submit" value="Edit"/>
                             <input type="hidden" name="command" value="category_update_show"/>
                             <input type="hidden" name="category_id" value="${category.category.id}"/>
                         </form>
                         <form action="${pageContext.request.contextPath}/controller" method="post">
-                            <input type="submit" value="Delete"/>
+                            <input class="tdbutton" type="submit" value="Delete"/>
                             <input type="hidden" name="command" value="category_delete"/>
                             <input type="hidden" name="category_id" value="${category.category.id}"/>
                         </form>

@@ -11,12 +11,12 @@
 <jsp:include page="${pageContext.request.contextPath}/jsp/header.jsp"/>
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
-    <form action="${pageContext.request.contextPath}/controller" method="post">
-        <label>Name:<br><input type="text" name="user_name" value="${user.name}" title="Your name"></label>
-        <label>Surname:<br><input type="text" name="user_surname" value="${user.surname}" title="Your surname"></label>
-        <label>Login:<br><input type="text" name="user_login" value="${user.login}" title="Your login"></label>
-        <label>Mail:<br><input type="email" name="user_mail" value="${user.mail}" title="Your mail"></label>
-        <label>Birthday:<br><input type="date" name="user_birthday" value="${user.birthday}"
+    <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
+        <label>Name:<br><input class="input_text" type="text" name="user_name" value="${user.name}" title="Your name"></label>
+        <label>Surname:<br><input class="input_text" type="text" name="user_surname" value="${user.surname}" title="Your surname"></label>
+        <label>Login:<br><input class="input_text" type="text" name="user_login" value="${user.login}" title="Your login"></label>
+        <label>Mail:<br><input class="input_text" type="email" name="user_mail" value="${user.mail}" title="Your mail"></label>
+        <label>Birthday:<br><input class="input_text" type="date" name="user_birthday" value="${user.birthday}"
                                    title="Your birthday date"></label>
         <label>City:<br>
             <select name="city_id">
@@ -31,11 +31,11 @@
         </label>
         <br>
         <label>If was not found, write city name here:<br>
-            <input type="text" name="city_name" title="City name">
+            <input class="input_text" type="text" name="city_name" title="City name">
         </label>
         <input type="hidden" name="user_id" value="${user.id}">
         <input type="hidden" name="command" value="user_update">
-        <input type="submit" name="update" value="Update">
+        <input class="button_reg" type="submit" name="update" value="Update">
     </form>
 </main>
 <jsp:include page="${pageContext.request.contextPath}/jsp/footer.jsp"/>

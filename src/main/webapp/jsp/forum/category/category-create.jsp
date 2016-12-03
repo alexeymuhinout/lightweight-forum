@@ -11,12 +11,12 @@
 <jsp:include page="${pageContext.request.contextPath}/jsp/header.jsp"/>
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
-    <form action="${pageContext.request.contextPath}/controller" method="post">
+    <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
         <label>Category name:
-            <input type="text" name="category_name" title="Category name">
+            <input class="input_text" type="text" name="category_name" title="Category name">
         </label>
         <input type="hidden" name="command" value="category_create">
-        <input type="submit" value="Create">
+        <input  class="button_forum_create" type="submit" value="Create">
     </form>
 </main>
 <jsp:include page="${pageContext.request.contextPath}/jsp/footer.jsp"/>
