@@ -15,7 +15,7 @@
             <div class="login-block">
                 <c:choose>
                     <c:when test="${empty user}">
-                        <a href="${pageContext.request.contextPath}/jsp/login.jsp">Login</a>
+                        <a href="${pageContext.request.contextPath}/jsp/user/login.jsp">Login</a>
                     </c:when>
                     <c:otherwise>
                         <a href="${pageContext.request.contextPath}/jsp/home.jsp">Profile</a>
@@ -48,12 +48,17 @@
         <p>Login: ${user.login}</p>
         <p>Mail: ${user.mail}</p>
         <p>Birthday: ${user.birthday}</p>
-        <p> City: ${user.city}</p>
+        <p>City: ${user.city}</p>
         <c:if test="${not empty user}">
             <form action="${pageContext.request.contextPath}/controller" method="post">
                 <input type="hidden" name="user_id" value="${user.id}"/>
-                <input type="hidden" name="command" value="profile_delete"/>
+                <input type="hidden" name="command" value="user_delete"/>
                 <input type="submit" value="Delete"/>
+            </form>
+            <form action="${pageContext.request.contextPath}/controller" method="post">
+                <input type="hidden" name="user_id" value="${user.id}"/>
+                <input type="hidden" name="command" value="user_update_show"/>
+                <input type="submit" value="Edit"/>
             </form>
         </c:if>
     </section>

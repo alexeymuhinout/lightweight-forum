@@ -3,7 +3,6 @@ package com.rustedbrain.web.controller.command.subcategory;
 import com.rustedbrain.web.controller.command.ActionCommand;
 import com.rustedbrain.web.controller.command.util.CommandUtil;
 import com.rustedbrain.web.controller.logic.ForumLogic;
-import com.rustedbrain.web.controller.resource.ConfigurationManager;
 import com.rustedbrain.web.controller.resource.MessageManager;
 import com.rustedbrain.web.model.servlet.SessionRequestContent;
 
@@ -17,17 +16,15 @@ public class SubcategoryUpdateCommand implements ActionCommand {
         String page;
 
         try {
-            Integer subcategoryId = CommandUtil.Subcategory.getId(requestContent);
             String newName = CommandUtil.Subcategory.getName(requestContent);
-
+            Integer subcategoryId = CommandUtil.Subcategory.getId(requestContent);
             logic.updateSubcategory(subcategoryId, newName);
             requestContent.getRequestAttributes().put("message", MessageManager.getInstance().getProperty("subcategory.update.success"));
-
             page = new SubcategoriesShowCommand().execute(requestContent);
         } catch (Exception e) {
             e.printStackTrace();
             requestContent.getRequestAttributes().put("error", e.getMessage());
-            page = ConfigurationManager.getInstance().getProperty("path.page.error");
+            page = new SubcategoryUpdateShowCommand().execute(requestContent);
         }
         return page;
     }

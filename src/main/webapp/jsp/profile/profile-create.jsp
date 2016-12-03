@@ -15,7 +15,7 @@
             <div class="login-block">
                 <c:choose>
                     <c:when test="${empty user}">
-                        <a href="${pageContext.request.contextPath}/jsp/login.jsp">Login</a>
+                        <a href="${pageContext.request.contextPath}/jsp/user/login.jsp">Login</a>
                     </c:when>
                     <c:otherwise>
                         <a href="${pageContext.request.contextPath}/jsp/home.jsp">Profile</a>
@@ -47,29 +47,29 @@
         </label>
         <br>
         <label>Surname:<br>
-            <input type="text" name="surname" title="User surname">
+            <input type="text" name="user_surname" title="User surname">
         </label>
         <br>
         <label>Login:<br>
-            <input type="text" name="login" title="User login">
+            <input type="text" name="user_login" title="User login">
         </label>
         <br>
         <label>Password:<br>
-            <input type="password" name="password" title="User password">
+            <input type="password" name="user_password" title="User password">
         </label>
         <br>
         <label>Mail:<br>
-            <input type="email" name="mail" title="User mail">
+            <input type="email" name="user_mail" title="User mail">
         </label>
         <br>
         <label>Birthday:<br>
-            <input type="date" name="birthday" title="User birthday">
+            <input type="date" name="user_birthday" title="User birthday">
         </label>
         <br>
         <label>City:<br>
-            <select>
-                <c:forEach items="${cities}" var="cities">
-                    <option name="city_id" value="${cities.id}">${cities.name}</option>
+            <select name="city_id">
+                <c:forEach items="${cities}" var="city">
+                    <option value="${city.id}">${city.name}</option>
                 </c:forEach>
             </select>
         </label>

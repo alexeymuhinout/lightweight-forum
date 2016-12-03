@@ -2,13 +2,8 @@ package com.rustedbrain.web.controller.command.category;
 
 import com.rustedbrain.web.controller.command.util.CommandUtil;
 import com.rustedbrain.web.controller.logic.ForumLogic;
-import com.rustedbrain.web.controller.resource.ConfigurationManager;
 import com.rustedbrain.web.controller.resource.MessageManager;
-import com.rustedbrain.web.model.servlet.ModeratedCategory;
 import com.rustedbrain.web.model.servlet.SessionRequestContent;
-
-import java.sql.SQLException;
-import java.util.List;
 
 
 public class CategoryCreateCommand implements com.rustedbrain.web.controller.command.ActionCommand {
@@ -24,17 +19,11 @@ public class CategoryCreateCommand implements com.rustedbrain.web.controller.com
             String categoryName = CommandUtil.Category.getName(requestContent);
             logic.createCategory(creatorId, categoryName);
             requestContent.getRequestAttributes().put("message", MessageManager.getInstance().getProperty("category.creation.success"));
-            List<ModeratedCategory> moderatedCategories = logic.getModeratedCategories();
-            requestContent.getRequestAttributes().put("categories", moderatedCategories);
-            page = ConfigurationManager.getInstance().getProperty("path.page.categories");
-        } catch (IllegalArgumentException | SQLException e) {
-            e.printStackTrace();
-            requestContent.getRequestAttributes().put("error", e.getMessage());
-            page = ConfigurationManager.getInstance().getProperty("path.page.category.create");
+            page = new CategoriesShowCommand().execute(requestContent);
         } catch (Exception e) {
             e.printStackTrace();
             requestContent.getRequestAttributes().put("error", e.getMessage());
-            page = ConfigurationManager.getInstance().getProperty("path.page.error");
+            page = new CategoryCreateShowCommand().execute(requestContent);
         }
         return page;
     }

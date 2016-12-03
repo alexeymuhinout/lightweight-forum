@@ -15,7 +15,7 @@
             <div class="login-block">
                 <c:choose>
                     <c:when test="${empty user}">
-                        <a href="${pageContext.request.contextPath}/jsp/login.jsp">Login</a>
+                        <a href="${pageContext.request.contextPath}/jsp/user/user-login.jsp">Login</a>
                     </c:when>
                     <c:otherwise>
                         <a href="${pageContext.request.contextPath}/jsp/home.jsp">Profile</a>
@@ -46,6 +46,7 @@
             <input type="text" name="subcategory_name" title="Subcategory name" value="${subcategory.name}">
         </label>
         <input type="submit" name="create" value="Update">
+        <input type="hidden" name="category_id" value="${subcategory.categoryId}">
         <input type="hidden" name="subcategory_id" value="${subcategory.id}">
         <input type="hidden" name="command" value="subcategory_update">
     </form>

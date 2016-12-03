@@ -1,4 +1,4 @@
-package com.rustedbrain.web.controller.command.registration;
+package com.rustedbrain.web.controller.command.user;
 
 import com.rustedbrain.web.controller.command.ActionCommand;
 import com.rustedbrain.web.controller.logic.UserCredentialsLogic;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-public class RegistrationShowCommand implements ActionCommand {
+public class UserCreateShowCommand implements ActionCommand {
 
     private UserCredentialsLogic logic = UserCredentialsLogic.getInstance();
 
@@ -22,11 +22,11 @@ public class RegistrationShowCommand implements ActionCommand {
         try {
             List<City> cities = logic.getAllCities();
             requestContent.getRequestAttributes().put("cities", cities);
-            page = ConfigurationManager.getInstance().getProperty("path.page.profile-create");
+            page = ConfigurationManager.getInstance().getProperty("path.page.profile.create");
         } catch (SQLException e) {
             e.printStackTrace();
             requestContent.getRequestAttributes().put("error", e.getMessage());
-            page = ConfigurationManager.getInstance().getProperty("path.page.profile-create");
+            page = ConfigurationManager.getInstance().getProperty("path.page.profile.create");
         }
         return page;
     }

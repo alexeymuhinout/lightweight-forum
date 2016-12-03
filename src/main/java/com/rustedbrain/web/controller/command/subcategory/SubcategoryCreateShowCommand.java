@@ -19,7 +19,7 @@ public class SubcategoryCreateShowCommand implements ActionCommand {
         } catch (Exception e) {
             e.printStackTrace();
             requestContent.getSessionAttributes().put("error", e.getMessage());
-            page = ConfigurationManager.getInstance().getProperty("path.page.error");
+            page = new SubcategoriesShowCommand().execute(requestContent);
         }
         return page;
     }

@@ -1,4 +1,4 @@
-package com.rustedbrain.web.controller.command.login;
+package com.rustedbrain.web.controller.command.user;
 
 import com.rustedbrain.web.controller.command.ActionCommand;
 import com.rustedbrain.web.controller.command.IndexShowCommand;
@@ -8,7 +8,7 @@ import com.rustedbrain.web.controller.resource.ConfigurationManager;
 import com.rustedbrain.web.controller.resource.MessageManager;
 import com.rustedbrain.web.model.servlet.SessionRequestContent;
 
-public class ProfileDeleteCommand implements ActionCommand {
+public class UserDeleteCommand implements ActionCommand {
 
     private UserCredentialsLogic logic = UserCredentialsLogic.getInstance();
 

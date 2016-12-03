@@ -53,7 +53,7 @@ public class UserCredentialsLogic {
         if (user != null) {
             return user.getPassword().equals(password);
         }
-        throw new IllegalArgumentException("User with this login was not found");
+        throw new IllegalArgumentException("User with this user was not found");
 
     }
 
@@ -125,7 +125,7 @@ public class UserCredentialsLogic {
         if (user != null) {
             return createProxyUser(user);
         }
-        throw new IllegalArgumentException("User with this login was not found");
+        throw new IllegalArgumentException("User with this credentials was not found");
     }
 
     private ProxyUser createProxyUser(User user) throws SQLException {
@@ -153,5 +153,26 @@ public class UserCredentialsLogic {
     public void deleteUser(Integer userId) throws SQLException {
         User user = this.dbUserController.getEntityById(userId);
         this.dbUserController.delete(user);
+    }
+
+    public void updateUser(Integer userId, String name, String surname, String login, String mail, Date birthday, Integer cityId) throws SQLException, CloneNotSupportedException {
+        User oldUser = this.dbUserController.getEntityById(userId);
+        User newUser = oldUser.clone();
+        newUser.setName(name);
+        newUser.setSurname(surname);
+        newUser.setLogin(login);
+        newUser.setMail(mail);
+        newUser.setBirthday(birthday);
+        newUser.setCityId(cityId);
+
+        this.dbUserController.update(oldUser, newUser);
+    }
+
+    public void updateUser(Integer userId, String name, String surname, String login, String mail, Date birthday, String cityName) throws SQLException, CloneNotSupportedException {
+        City city = dbCityController.getCityByName(cityName);
+        if (city == null) {
+            createNewCity(cityName);
+        }
+        this.updateUser(userId, name, surname, login, mail, birthday, dbCityController.getCityByName(cityName).getId());
     }
 }

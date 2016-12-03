@@ -1,11 +1,11 @@
-package com.rustedbrain.web.controller.command.login;
+package com.rustedbrain.web.controller.command.user;
 
 import com.rustedbrain.web.controller.command.ActionCommand;
 import com.rustedbrain.web.controller.resource.ConfigurationManager;
 import com.rustedbrain.web.controller.resource.MessageManager;
 import com.rustedbrain.web.model.servlet.SessionRequestContent;
 
-public class LogoutCommand implements ActionCommand {
+public class UserLogoutCommand implements ActionCommand {
 
     @Override
     public String execute(SessionRequestContent requestContent) {

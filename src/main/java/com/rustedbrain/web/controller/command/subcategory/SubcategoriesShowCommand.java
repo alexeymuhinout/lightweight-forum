@@ -20,7 +20,6 @@ public class SubcategoriesShowCommand implements ActionCommand {
 
         try {
             Integer categoryId = CommandUtil.Category.getId(requestContent);
-            requestContent.getRequestAttributes().put("category_id", categoryId);
             List<UserSubcategory> subcategories = forumLogic.getUserSubcategories(categoryId);
             requestContent.getRequestAttributes().put("subcategories", subcategories);
             page = ConfigurationManager.getInstance().getProperty("path.page.subcategories");

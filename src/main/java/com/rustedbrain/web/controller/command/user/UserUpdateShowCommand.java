@@ -1,13 +1,15 @@
-package com.rustedbrain.web.controller.command.message;
+package com.rustedbrain.web.controller.command.user;
 
 import com.rustedbrain.web.controller.command.ActionCommand;
-import com.rustedbrain.web.controller.command.util.CommandUtil;
 import com.rustedbrain.web.controller.logic.ForumLogic;
 import com.rustedbrain.web.controller.logic.UserCredentialsLogic;
 import com.rustedbrain.web.controller.resource.ConfigurationManager;
+import com.rustedbrain.web.model.jdbc.City;
 import com.rustedbrain.web.model.servlet.SessionRequestContent;
 
-public class MessageUpdateShowCommand implements ActionCommand {
+import java.util.List;
+
+public class UserUpdateShowCommand implements ActionCommand {
 
     private ForumLogic logic = ForumLogic.getInstance();
     private UserCredentialsLogic userCredentialsLogic = UserCredentialsLogic.getInstance();
@@ -18,14 +20,15 @@ public class MessageUpdateShowCommand implements ActionCommand {
         String page;
 
         try {
-            Integer messageId = CommandUtil.Message.getId(requestContent);
-            requestContent.getRequestAttributes().put("userMessage", logic.getMessage(messageId));
-            page = ConfigurationManager.getInstance().getProperty("path.page.message.update");
+            List<City> cities = userCredentialsLogic.getAllCities();
+            requestContent.getRequestAttributes().put("cities", cities);
+            page = ConfigurationManager.getInstance().getProperty("path.page.profile.update");
         } catch (Exception e) {
             e.printStackTrace();
             requestContent.getSessionAttributes().put("error", e.getMessage());
-            page = new MessagesShowCommand().execute(requestContent);
+            page = ConfigurationManager.getInstance().getProperty("path.page.error");
         }
         return page;
     }
+
 }

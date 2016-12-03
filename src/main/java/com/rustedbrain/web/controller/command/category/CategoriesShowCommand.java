@@ -3,10 +3,7 @@ package com.rustedbrain.web.controller.command.category;
 import com.rustedbrain.web.controller.command.ActionCommand;
 import com.rustedbrain.web.controller.logic.ForumLogic;
 import com.rustedbrain.web.controller.resource.ConfigurationManager;
-import com.rustedbrain.web.model.servlet.ModeratedCategory;
 import com.rustedbrain.web.model.servlet.SessionRequestContent;
-
-import java.util.List;
 
 public class CategoriesShowCommand implements ActionCommand {
 
@@ -17,12 +14,11 @@ public class CategoriesShowCommand implements ActionCommand {
         String page;
 
         try {
-            List<ModeratedCategory> categories = logic.getModeratedCategories();
-            requestContent.getRequestAttributes().put("categories", categories);
+            requestContent.getRequestAttributes().put("categories", logic.getModeratedCategories());
             page = ConfigurationManager.getInstance().getProperty("path.page.categories");
         } catch (Exception e) {
             e.printStackTrace();
-            requestContent.getRequestAttributes().put("message", e.getMessage());
+            requestContent.getRequestAttributes().put("error", e.getMessage());
             page = ConfigurationManager.getInstance().getProperty("path.page.error");
         }
 

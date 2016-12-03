@@ -15,10 +15,10 @@
             <div class="login-block">
                 <c:choose>
                     <c:when test="${empty user}">
-                        <a href="${pageContext.request.contextPath}/jsp/login.jsp">Login</a>
+                        <a href="${pageContext.request.contextPath}/controller?command=user_login_show">Login</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="${pageContext.request.contextPath}/controller?command=profile_show">Profile</a>
+                        <a href="${pageContext.request.contextPath}/controller?command=user_show">Profile</a>
                         <a href="${pageContext.request.contextPath}/controller?command=logout">Logout[${user.name}]</a>
                     </c:otherwise>
                 </c:choose>

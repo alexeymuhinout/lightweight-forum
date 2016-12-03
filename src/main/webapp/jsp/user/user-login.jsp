@@ -15,7 +15,7 @@
             <div class="login-block">
                 <c:choose>
                     <c:when test="${empty user}">
-                        <a href="${pageContext.request.contextPath}/jsp/login.jsp">Login</a>
+                        <a href="${pageContext.request.contextPath}/jsp/user/login.jsp">Login</a>
                     </c:when>
                     <c:otherwise>
                         <a href="${pageContext.request.contextPath}/jsp/home.jsp">Profile</a>
@@ -43,11 +43,11 @@
     </c:if>
     <form action="${pageContext.request.contextPath}/controller" method="post">
         <label>Login:<br>
-            <input type="text" name="login" title="User login or mail address">
+            <input type="text" name="user_login" title="User login or mail address">
         </label>
         <br>
         <label>Password:<br>
-            <input type="password" name="password" title="User password">
+            <input type="password" name="user_password" title="User password">
         </label>
         <br>
         <input type="submit" name="login" value="Login">

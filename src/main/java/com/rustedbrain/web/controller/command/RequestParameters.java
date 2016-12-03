@@ -2,23 +2,25 @@ package com.rustedbrain.web.controller.command;
 
 public enum RequestParameters {
 
-    USER_NAME_PARAMETER("user_name"),
-    MAIL_PARAMETER("mail"),
-    LOGIN_PARAMETER("login"),
-    SURNAME_PARAMETER("surname"),
-    BIRTHDAY_PARAMETER("birthday"),
-    PASSWORD_PARAMETER("password"),
-    CITY_ID_PARAMETER("city_id"),
-    CITY_NAME_PARAMETER("city_name"),
-    CATEGORY_NAME_PARAMETER("category_name"),
-    USER_PARAMETER("user"),
-    USER_ID_PARAMETER("user_id"),
-    CATEGORY_ID_PARAMETER("category_id"),
-    SUBCATEGORY_NAME_PARAMETER("subcategory_name"),
-    SUBCATEGORY_ID_PARAMETER("subcategory_id"),
-    MESSAGE_TEXT_PARAMETER("message_text"),
-    MESSAGE_RECEIVER_ID_PARAMETER("reply_to_user_id"),
-    MESSAGE_ID_PARAMETER("message_id");
+    USER("user"),
+    USER_ID("user_id"),
+    USER_NAME("user_name"),
+    USER_MAIL("user_mail"),
+    USER_LOGIN("user_login"),
+    USER_SURNAME("user_surname"),
+    USER_BIRTHDAY("user_birthday"),
+    USER_PASSWORD("user_password"),
+    USER_REGISTRATION("user_registration"),
+    CITY_ID("city_id"),
+    CITY_NAME("city_name"),
+    CATEGORY_NAME("category_name"),
+    CATEGORY_ID("category_id"),
+    SUBCATEGORY("subcategory"),
+    SUBCATEGORY_NAME("subcategory_name"),
+    SUBCATEGORY_ID("subcategory_id"),
+    MESSAGE_TEXT("message_text"),
+    MESSAGE_RECEIVER_ID("reply_to_user_id"),
+    MESSAGE_ID("message_id");
 
     private final String parameterName;
 
