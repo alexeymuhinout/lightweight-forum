@@ -248,7 +248,8 @@ select, .select_reg{
     max-width: 245px;
     min-width: 200px;
 }
-.button_reg, .input_text_reg, select{
+
+.button_reg, .input_text_reg, .select_reg{
     width: 80%;
 }
 .button_message_update,.button_message_delete,.button_message_reply{
