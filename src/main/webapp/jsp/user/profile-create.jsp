@@ -39,14 +39,14 @@
         </label>
         <br>
         <label>City:<br>
-            <select name="city_id">
+            <select class="select_reg" name="city_id">
                 <c:forEach items="${cities}" var="city">
                     <option value="${city.id}">${city.name}</option>
                 </c:forEach>
             </select>
         </label>
         <br>
-        <label>If was not found, write city name here:<br>
+        <label>If was not found, write city here:<br>
             <input class="input_text_reg" type="text" name="city_name" title="City name">
         </label>
         <br>
