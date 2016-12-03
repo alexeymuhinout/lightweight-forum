@@ -5,9 +5,14 @@ import com.rustedbrain.web.controller.command.IndexShowCommand;
 import com.rustedbrain.web.controller.command.category.*;
 import com.rustedbrain.web.controller.command.message.*;
 import com.rustedbrain.web.controller.command.subcategory.*;
+import com.rustedbrain.web.controller.command.swearwords.SwearWordCreateCommand;
+import com.rustedbrain.web.controller.command.swearwords.SwearWordDeleteCommand;
+import com.rustedbrain.web.controller.command.swearwords.SwearWordUpdateCommand;
+import com.rustedbrain.web.controller.command.swearwords.SwearWordsShowCommand;
 import com.rustedbrain.web.controller.command.user.*;
 
-public enum CommandEnum {
+@SuppressWarnings("unused")
+enum CommandEnum {
 
     INDEX_SHOW {
         {
@@ -176,6 +181,30 @@ public enum CommandEnum {
     MESSAGES_SHOW {
         {
             this.action = new MessagesShowCommand();
+        }
+    },
+
+    SWEARWORDS_SHOW {
+        {
+            this.action = new SwearWordsShowCommand();
+        }
+    },
+
+    SWEARWORD_UPDATE {
+        {
+            this.action = new SwearWordUpdateCommand();
+        }
+    },
+
+    SWEARWORD_DELETE {
+        {
+            this.action = new SwearWordDeleteCommand();
+        }
+    },
+
+    SWEARWORD_CREATE {
+        {
+            this.action = new SwearWordCreateCommand();
         }
     };
 
