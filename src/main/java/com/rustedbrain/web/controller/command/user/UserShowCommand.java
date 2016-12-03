@@ -12,7 +12,7 @@ public class UserShowCommand implements ActionCommand {
         String page;
 
         try {
-            page = ConfigurationManager.getInstance().getProperty("path.page.profile");
+            page = ConfigurationManager.getInstance().getProperty("path.page.user");
         } catch (Exception e) {
             e.printStackTrace();
             requestContent.getRequestAttributes().put("error", e.getMessage());

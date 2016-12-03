@@ -33,7 +33,7 @@ public class UserUpdateCommand implements ActionCommand {
                 logic.updateUser(userId, name, surname, login, mail, birthday, cityName);
             }
             requestContent.getRequestAttributes().put("message", MessageManager.getInstance().getProperty("profile.update.success"));
-            page = new UserShowCommand().execute(requestContent);
+            page = new UserLogoutCommand().execute(requestContent);
         } catch (Exception e) {
             e.printStackTrace();
             requestContent.getRequestAttributes().put("error", e.getMessage());

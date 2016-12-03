@@ -22,11 +22,11 @@ public class UserUpdateShowCommand implements ActionCommand {
         try {
             List<City> cities = userCredentialsLogic.getAllCities();
             requestContent.getRequestAttributes().put("cities", cities);
-            page = ConfigurationManager.getInstance().getProperty("path.page.profile.update");
+            page = ConfigurationManager.getInstance().getProperty("path.page.user.update");
         } catch (Exception e) {
             e.printStackTrace();
             requestContent.getSessionAttributes().put("error", e.getMessage());
-            page = ConfigurationManager.getInstance().getProperty("path.page.error");
+            page = new UserShowCommand().execute(requestContent);
         }
         return page;
     }

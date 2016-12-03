@@ -21,7 +21,7 @@ public enum CommandEnum {
         }
     },
 
-    LOGIN {
+    USER_LOGIN {
         {
             this.action = new UserLoginCommand();
         }
@@ -64,7 +64,7 @@ public enum CommandEnum {
     },
 
 
-    LOGOUT {
+    USER_LOGOUT {
         {
             this.action = new UserLogoutCommand();
         }
