@@ -32,6 +32,14 @@
             </form>
         </c:if>
     </section>
+    <c:if test="${not empty user && user.admin != false}">
+        <section class="admin-panel">
+            <form action="${pageContext.request.contextPath}/controller" method="post">
+                <input type="hidden" name="command" value="swearwords_show"/>
+                <input type="submit" value="Configure swearwords"/>
+            </form>
+        </section>
+    </c:if>
 </main>
 <jsp:include page="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 </body>
