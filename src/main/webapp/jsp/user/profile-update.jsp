@@ -35,7 +35,7 @@
         </label>
         <input type="hidden" name="user_id" value="${user.id}">
         <input type="hidden" name="command" value="user_update">
-        <input class="button_reg" type="submit" name="update" value="Update">
+        <input class="button_green" type="submit" name="update" value="Update">
     </form>
 </main>
 <jsp:include page="${pageContext.request.contextPath}/jsp/footer.jsp"/>

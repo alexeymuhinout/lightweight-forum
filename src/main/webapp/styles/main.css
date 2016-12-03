@@ -11,15 +11,13 @@ header {
 footer{
     padding-top: 10px;
 }
-nav.main-nav {
-}
-
-div {
-    padding: 8px;
-}
 
 section {
     padding: 8px;
+}
+div{
+    padding: 8px;
+    float: left;
 }
 
 .info p{
@@ -215,25 +213,27 @@ select{
     font-size: 18px;
     max-height: 50px;
     min-height: 30px;
-    width: 245px;
+    width: 80%;
     margin-left: 1px;
     margin-top: 5px;
     margin-bottom: 5px;
 }
-.input_text{
+.input_text, .input_text_reg{
     border: 1px solid firebrick;
     box-sizing: border-box;
     text-indent: 10px;
     font-size: 18px;
     max-height: 50px;
     min-height: 30px;
-    max-width: 245px;
-    min-width:200px;
     margin-left: 1px;
     margin-top: 5px;
     margin-bottom: 5px;
 }
-.button, .button_login, .button_reg, .button_forum_create ,.button_del{
+.input_text {
+    max-width: 245px;
+    min-width: 200px;
+}
+.button, .button_login, .button_reg, .button_forum_create ,.button_del, .button_green{
     display: flex;
     flex-direction: row-reverse;
     cursor: pointer;
@@ -246,10 +246,14 @@ select{
     margin-left:1px;
     margin-top: 10px;
     padding: 0 24px;
-    max-width: 245px;
-    min-width:200px;
 }
-
+.button, .button_login, .button_forum_create ,.button_del,.button_green {
+    max-width: 245px;
+    min-width: 200px;
+}
+.button_reg, .input_text_reg{
+    width: 80%;
+}
 .button_message_update,.button_message_delete,.button_message_reply{
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     cursor: pointer;
@@ -284,10 +288,10 @@ select{
     background: darkred none repeat scroll 0 0;
 }
 
-.button_reg, .button_message_reply{
+.button_reg, .button_message_reply, .button_green{
     background: green none repeat scroll 0 0;
 }
-.button_reg:hover, .button_message_reply:hover{
+.button_reg:hover, .button_message_reply:hover ,.button_green:hover{
     background: darkgreen none repeat scroll 0 0;
 }
 .button_forum_create{
@@ -304,7 +308,6 @@ select{
      font-size: 16px;
  }
 
-
 .social-button {
     border-radius: 50%;
     border-width: 0;
@@ -315,10 +318,11 @@ select{
 .social-button:hover {
     background-color: firebrick;
 }
+
 .login_page, .profile_page{
     background-color: white;
 }
 
 .login_page{
-    padding: 40%;
+    padding: 35%;
 }

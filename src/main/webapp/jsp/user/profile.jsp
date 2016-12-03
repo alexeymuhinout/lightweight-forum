@@ -28,7 +28,7 @@
             <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
                 <input type="hidden" name="user_id" value="${user.id}"/>
                 <input type="hidden" name="command" value="user_update_show"/>
-                <input class="button_reg" type="submit" value="Edit"/>
+                <input class="button_green" type="submit" value="Edit"/>
             </form>
         </c:if>
     </section>
