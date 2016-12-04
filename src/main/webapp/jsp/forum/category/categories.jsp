@@ -12,6 +12,7 @@
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
     <c:if test="${not empty user && user.admin != false}">
+
         <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
             <input type="hidden" name="command" value="category_create_show"/>
             <input class="button_forum_create" type="submit" value="Create new category"/>
@@ -37,26 +38,32 @@
         <c:forEach items="${categories}" var="category">
             <tr>
                 <td>
-                    <a href="${pageContext.request.contextPath}/controller?command=subcategories_show&amp;category_id=${category.category.id}">${category.category.name}</a><br>
+                    <a class="href" href="${pageContext.request.contextPath}/controller?command=subcategories_show&amp;category_id=${category.category.id}">${category.category.name}</a><br>
                 </td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/controller?command=subcategories_show&amp;category_id=${category.category.id}">${category.moderator}</a><br>
+                    <a class="href" href="${pageContext.request.contextPath}/controller?command=subcategories_show&amp;category_id=${category.category.id}">${category.moderator}</a><br>
                 </td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/controller?command=subcategories_show&amp;category_id=${category.category.id}">${category.category.creationDate}</a><br>
+                    <a class="href" href="${pageContext.request.contextPath}/controller?command=subcategories_show&amp;category_id=${category.category.id}">${category.category.creationDate}</a><br>
                 </td>
                 <c:if test="${not empty user && user.admin != false}">
-                    <td>
+                    <td class="table_td">
+                        <div style="width: 100%;">
+                            <div class="forum_div_button_one">
                         <form action="${pageContext.request.contextPath}/controller" method="post" >
                             <input class="tdbutton" type="submit" value="Edit"/>
                             <input type="hidden" name="command" value="category_update_show"/>
                             <input type="hidden" name="category_id" value="${category.category.id}"/>
                         </form>
+                                </div>
+                            <div class="forum_div_button_two">
                         <form action="${pageContext.request.contextPath}/controller" method="post">
                             <input class="tdbutton" type="submit" value="Delete"/>
                             <input type="hidden" name="command" value="category_delete"/>
                             <input type="hidden" name="category_id" value="${category.category.id}"/>
                         </form>
+                                </div>
+                            </div>
                     </td>
                 </c:if>
             </tr>
