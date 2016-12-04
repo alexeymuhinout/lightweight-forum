@@ -14,7 +14,7 @@ public class UserLoginCommand implements ActionCommand {
 
     public String execute(SessionRequestContent requestContent) {
 
-        String page = null;
+        String page;
 
         try {
             String login = CommandUtil.User.getLogin(requestContent);
@@ -25,7 +25,7 @@ public class UserLoginCommand implements ActionCommand {
                 requestContent.getRequestAttributes().put("message", MessageManager.getInstance().getProperty("login.success"));
                 page = ConfigurationManager.getInstance().getProperty("path.page.index");
             } else {
-                String loginErrorMessage = "Wrong user or password";
+                String loginErrorMessage = "Wrong login or password";
                 requestContent.getRequestAttributes().put("error", loginErrorMessage);
                 page = ConfigurationManager.getInstance().getProperty("path.page.login");
             }

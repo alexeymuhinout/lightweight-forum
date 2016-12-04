@@ -92,7 +92,7 @@ public class CommandUtil {
             if (requestContent.getRequestParameters().containsKey(RequestParameters.USER_LOGIN.getParameterName())) {
                 return requestContent.getRequestParameters().get(RequestParameters.USER_LOGIN.getParameterName())[0];
             } else {
-                throw new IllegalArgumentException(MessageManager.getInstance().getProperty("request.user.user.not.found"));
+                throw new IllegalArgumentException(MessageManager.getInstance().getProperty("request.user.login.not.found"));
             }
         }
 
@@ -145,6 +145,14 @@ public class CommandUtil {
                 throw new IllegalArgumentException(MessageManager.getInstance().getProperty("request.user.password.not.found"));
             }
         }
+
+        public static String getAdminToken(SessionRequestContent requestContent) {
+            if (requestContent.getRequestParameters().containsKey(RequestParameters.USER_ADMIN_TOKEN.getParameterName())) {
+                return requestContent.getRequestParameters().get(RequestParameters.USER_ADMIN_TOKEN.getParameterName())[0];
+            } else {
+                throw new IllegalArgumentException(MessageManager.getInstance().getProperty("request.user.admin-token.not.found"));
+            }
+        }
     }
 
     public static class City {
@@ -163,6 +171,25 @@ public class CommandUtil {
                 return requestContent.getRequestParameters().get(RequestParameters.CITY_NAME.getParameterName())[0];
             } else {
                 throw new IllegalArgumentException(MessageManager.getInstance().getProperty("request.city.name.not.found"));
+            }
+        }
+    }
+
+    public static class SwearWord {
+        public static String getText(SessionRequestContent requestContent) {
+            if (requestContent.getRequestParameters().containsKey(RequestParameters.SWEAR_WORD_TEXT.getParameterName())
+                    && !requestContent.getRequestParameters().get(RequestParameters.SWEAR_WORD_TEXT.getParameterName())[0].isEmpty()) {
+                return requestContent.getRequestParameters().get(RequestParameters.SWEAR_WORD_TEXT.getParameterName())[0];
+            } else {
+                throw new IllegalArgumentException(MessageManager.getInstance().getProperty("request.swear-word.text.not.found"));
+            }
+        }
+
+        public static Integer getId(SessionRequestContent requestContent) {
+            if (requestContent.getRequestParameters().containsKey(RequestParameters.SWEAR_WORD_ID.getParameterName())) {
+                return Integer.parseInt(requestContent.getRequestParameters().get(RequestParameters.SWEAR_WORD_ID.getParameterName())[0]);
+            } else {
+                throw new IllegalArgumentException(MessageManager.getInstance().getProperty("request.swear-word.id.not.found"));
             }
         }
     }

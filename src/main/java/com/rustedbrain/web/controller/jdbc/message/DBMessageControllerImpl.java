@@ -180,10 +180,10 @@ public class DBMessageControllerImpl extends DBMessageController {
         while (resultSet.next()) {
             UserMessage userMessage = new UserMessage();
             userMessage.setMessage(mapSelectResultSetToEntity(resultSet));
-            userMessage.setSubcategoryName(resultSet.getString(7));
-            userMessage.setSenderName(resultSet.getString(8));
-            userMessage.setSenderRegistrationDate(resultSet.getDate(9));
-            userMessage.setReceiverName(resultSet.getString(10));
+            userMessage.setSubcategoryName(resultSet.getString(10));
+            userMessage.setSenderName(resultSet.getString(7));
+            userMessage.setSenderRegistrationDate(resultSet.getDate(8));
+            userMessage.setReceiverName(resultSet.getString(9));
             userMessages.add(userMessage);
         }
         return userMessages;

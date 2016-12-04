@@ -22,7 +22,7 @@ public abstract class DBController<T> {
 
     public abstract List<T> getAll() throws SQLException;
 
-    protected List<T> mapSelectResultSetToEntities(ResultSet resultSet) throws SQLException {
+    private List<T> mapSelectResultSetToEntities(ResultSet resultSet) throws SQLException {
         List<T> subcategories = new ArrayList<>();
         while (resultSet.next()) {
             subcategories.add(mapSelectResultSetToEntity(resultSet));

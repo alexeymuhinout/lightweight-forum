@@ -12,7 +12,7 @@
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
     <div style="width: 100%;">
-        <div class="reg_div_section_one">
+        <div style="width: 25%;">
             <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
                 <label>Name:<br>
                     <input class="input_text_reg" type="text" name="user_name" title="User name">
@@ -50,12 +50,16 @@
                     <input class="input_text_reg" type="text" name="city_name" title="City name">
                 </label>
                 <br>
+                <label>Admin token:
+                    <input class="input_text_reg" type="password" name="user_admin_token" value=""
+                           title="Write your admin token or leave empty">
+                </label>
                 <input class="button_reg" type="submit" name="create" value="Register">
                 <input type="hidden" name="command" value="register">
             </form>
         </div>
 
-        <div class="reg_div_section_two">
+        <div style="width: 65%;">
             <form class="profile_page">
                 <h4>Here are some rules that we ask you to follow:</h4>
                 <ol>
@@ -66,15 +70,16 @@
                         Please be respectful of others and don’t sweat the small stuff. We’re not all English majors.
                     </li>
                     <li>
-                        Please do not post any personal information (or photos) of yourself that you wouldn’t want to disclose
+                        Please do not post any personal information (or photos) of yourself that you wouldn’t want to
+                        disclose
                         to the public at large.
                     </li>
                     <li>
                         Do not post hateful racist, or illegal content. Do not post copyrighted material without proper
                         attribution.
                     </li>
-                    Please do not use the
-                    <li>forum for self-promotion, solicitation, or advertising. SPAM will not be
+                    <li>
+                        Please do not use the forum for self-promotion, solicitation, or advertising. SPAM will not be
                         tolerated.
                     </li>
                     <li>
@@ -84,7 +89,8 @@
                         Rudeness, personal attacks, bullying, threats or inflammatory posts will not be tolerated.
                     </li>
                     <li>
-                        Do not question moderators in the open forum. Moderation can be stressful, use private messages to chat
+                        Do not question moderators in the open forum. Moderation can be stressful, use private messages
+                        to chat
                         with moderators.
                     </li>
                 </ol>

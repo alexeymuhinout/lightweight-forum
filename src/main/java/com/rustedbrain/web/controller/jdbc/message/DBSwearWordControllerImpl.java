@@ -116,7 +116,7 @@ public class DBSwearWordControllerImpl extends DBSwearWordController {
 
     @Override
     public boolean isSwearWord(String word) throws SQLException {
-        String sqlSelect = sqlManager.getProperty("database.sql.select.swear-word.word").replace("?", word);
+        String sqlSelect = sqlManager.getProperty("database.sql.select.swear-word.word").replace("%1", word);
         try (Connection connection = dbConnector.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sqlSelect)) {
