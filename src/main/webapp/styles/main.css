@@ -23,8 +23,15 @@ footer{
 }
 
 section {
-    padding: 8px;
+    padding-bottom: 6px;
 }
+
+.section_main_page{
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    margin: 16px 10px;
+    padding: 10px;
+}
+
 div{
     padding: 8px;
     float: left;
@@ -54,6 +61,7 @@ div.logo-block {
     font-size: 20px;
     letter-spacing: 1px;
     margin: auto;
+    text-shadow: 1px 1px 2px black, 0 0 1em grey;
 
 }
 
@@ -330,6 +338,7 @@ select, .select_reg{
 .reg_div_section_one{
     width: 25%;
 }
+
 .reg_div_section_two{
     width: 71%;
     background-color: gainsboro;

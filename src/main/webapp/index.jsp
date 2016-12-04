@@ -11,7 +11,7 @@
 <jsp:include page="${pageContext.request.contextPath}/jsp/header.jsp"/>
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
-    <section>
+    <section class="section_main_page">
         <p>This forum has been created so that you can exchange ideas, converse and meet with others who share a common
             interest in a safe environment.
 
@@ -54,8 +54,6 @@
         <p>In summary, use your common sense, treat others are you expect to be treated and help us build a great
             community
             experience for everyone. Getting the most out of this forum.</p>
-    </section>
-    <section>
         <h4>Here are some tips and tricks on using this forum:</h4>
 
         <ol>
