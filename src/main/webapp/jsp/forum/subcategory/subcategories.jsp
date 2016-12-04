@@ -38,28 +38,34 @@
         <c:forEach items="${subcategories}" var="userSubcategory">
             <tr>
                 <td>
-                    <a href="${pageContext.request.contextPath}/controller?command=messages_show&amp;subcategory_id=${userSubcategory.subcategory.id}">${userSubcategory.subcategory.name}</a>
+                    <a class="href" href="${pageContext.request.contextPath}/controller?command=messages_show&amp;subcategory_id=${userSubcategory.subcategory.id}">${userSubcategory.subcategory.name}</a>
                 </td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/controller?command=messages_show&amp;subcategory_id=${userSubcategory.subcategory.id}">${userSubcategory.userName}</a>
+                    <a class="href" href="${pageContext.request.contextPath}/controller?command=messages_show&amp;subcategory_id=${userSubcategory.subcategory.id}">${userSubcategory.userName}</a>
                 </td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/controller?command=messages_show&amp;subcategory_id=${userSubcategory.subcategory.id}">${userSubcategory.subcategory.creationDate}</a>
+                    <a class="href" href="${pageContext.request.contextPath}/controller?command=messages_show&amp;subcategory_id=${userSubcategory.subcategory.id}">${userSubcategory.subcategory.creationDate}</a>
                 </td>
                 <c:if test="${not empty user}">
-                    <td>
-                        <form action="${pageContext.request.contextPath}/controller" method="post" >
-                            <input class="tdbutton" type="submit" value="Edit"/>
-                            <input type="hidden" name="command" value="subcategory_update_show"/>
-                            <input type="hidden" name="category_id" value="${userSubcategory.subcategory.categoryId}">
-                            <input type="hidden" name="subcategory_id" value="${userSubcategory.subcategory.id}"/>
-                        </form>
-                        <form action="${pageContext.request.contextPath}/controller" method="post" >
-                            <input class="tdbutton" type="submit" value="Delete"/>
-                            <input type="hidden" name="command" value="subcategory_delete"/>
-                            <input type="hidden" name="category_id" value="${userSubcategory.subcategory.categoryId}">
-                            <input type="hidden" name="subcategory_id" value="${userSubcategory.subcategory.id}"/>
-                        </form>
+                    <td class="table_td">
+                        <div style="width: 100%;">
+                            <div class="forum_div_button_one">
+                                <form action="${pageContext.request.contextPath}/controller" method="post" >
+                                    <input class="tdbutton" type="submit" value="Edit"/>
+                                    <input type="hidden" name="command" value="subcategory_update_show"/>
+                                    <input type="hidden" name="category_id" value="${userSubcategory.subcategory.categoryId}">
+                                    <input type="hidden" name="subcategory_id" value="${userSubcategory.subcategory.id}"/>
+                                </form>
+                            </div>
+                            <div class="forum_div_button_two">
+                                <form action="${pageContext.request.contextPath}/controller" method="post" >
+                                    <input class="tdbutton" type="submit" value="Delete"/>
+                                    <input type="hidden" name="command" value="subcategory_delete"/>
+                                    <input type="hidden" name="category_id" value="${userSubcategory.subcategory.categoryId}">
+                                    <input type="hidden" name="subcategory_id" value="${userSubcategory.subcategory.id}"/>
+                                </form>
+                            </div>
+                        </div>
                     </td>
                 </c:if>
             </tr>

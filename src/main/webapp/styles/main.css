@@ -16,7 +16,7 @@ header {
 footer{
     padding-top: 10px;
     align-items: center;
-    background-color: lightgrey;
+    background-color: #959595;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
@@ -36,7 +36,6 @@ div{
     padding: 8px;
     float: left;
 }
-
 .info p{
     border-bottom: 1px solid #b22222;
     padding: 10px;
@@ -80,7 +79,7 @@ div.login-block a:hover {
 
 nav.main-nav ul {
     align-self: center;
-    background-color: lightgrey;
+    background-color: #959595;
     display: flex;
     flex-flow: row wrap;
     width: 100%;
@@ -128,13 +127,15 @@ table {
 }
 
 th, td {
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid lightgrey;
     padding: 10px;
     text-align: left;
 }
-
+.table_td{
+    padding: 0;
+}
 th {
-    background-color: gray;
+    background-color: lightgrey;
 }
 
 tr:hover {
@@ -254,17 +255,31 @@ select, .select_reg{
     font-size: 18px;
     height: 35px;
     margin-bottom: 20px;
-    margin-left:1px;
+    margin-left:7px;
     margin-top: 10px;
+}
+.button_login{
+    margin-left:0;
+}
+.button, .button_login, .button_reg,.button_del, .button_green{
+    font-size: 18px;
     padding: 0 24px;
 }
-.button, .button_login, .button_forum_create ,.button_del,.button_green,.input_text,select {
+.button_forum_create {
+    font-size: 16px;
+}
+.button, .button_login, .button_forum_create ,.button_del,.button_green,.input_text{
     max-width: 200px;
     min-width: 150px;
 }
 
-.button_reg, .input_text_reg, .select_reg{
-    width: 80%;
+.button_reg, .input_text_reg{
+    max-width: 73%;
+    min-width: 150px;
+}
+
+.select_reg, select {
+    width: 245px;
 }
 .button_message_update,.button_message_delete,.button_message_reply{
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
@@ -277,14 +292,12 @@ select, .select_reg{
     margin: 10px;
 }
 .tdbutton {
-    background:  firebrick none repeat scroll 0 0;
+    background: rgba(0, 0, 0, 0) none repeat scroll 0px 0px;
     border-color: transparent;
     color: #ffffff;
     cursor: pointer;
-    display: flex;
-    flex-direction: row-reverse;
-    font-size: 18px;
-    margin: 4px;
+    font-size: 15px;
+    margin: 1px;
 }
 
 .button_message_update{
@@ -318,6 +331,7 @@ select, .select_reg{
     border: 1px solid firebrick;
     text-indent: 10px;
     font-size: 16px;
+    margin: 10px;
 }
 
 .social-button {
@@ -343,4 +357,13 @@ select, .select_reg{
     width: 71%;
     background-color: gainsboro;
     margin-top:30px;
+}
+
+.login_div{
+    margin: 0 auto;
+    width: 20%;
+    padding: 60px;
+}
+.forum_div_button_one,.forum_div_button_two {
+    width: 46%;
 }

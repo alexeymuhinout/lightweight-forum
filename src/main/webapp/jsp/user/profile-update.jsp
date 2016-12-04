@@ -19,7 +19,7 @@
         <label>Birthday:<br><input class="input_text" type="date" name="user_birthday" value="${user.birthday}"
                                    title="Your birthday date"></label>
         <label>City:<br>
-            <select name="city_id">
+            <select class="select_reg" name="city_id">
                 <c:forEach items="${cities}" var="city">
                     <option
                             <c:if test="${user.city eq city.name}">
@@ -30,7 +30,7 @@
             </select>
         </label>
         <br>
-        <label>If was not found, write city name here:<br>
+        <label>If was not found, write city here:<br>
             <input class="input_text" type="text" name="city_name" title="City name">
         </label>
         <input type="hidden" name="user_id" value="${user.id}">

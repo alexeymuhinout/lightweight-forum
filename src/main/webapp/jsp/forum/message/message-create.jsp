@@ -12,7 +12,7 @@
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
     <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
-        <label>Write message:<br>
+        <label><br>Write message:<br>
             <textarea class="text_for_msg" name="message_text"></textarea>
         </label>
         <input class="button_forum_create" type="submit" name="create" value="Create">
