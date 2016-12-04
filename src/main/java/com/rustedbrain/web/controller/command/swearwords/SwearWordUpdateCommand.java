@@ -15,7 +15,7 @@ public class SwearWordUpdateCommand implements com.rustedbrain.web.controller.co
 
         try {
             Integer swearWordId = CommandUtil.SwearWord.getId(requestContent);
-            String text = CommandUtil.SwearWord.getText(requestContent);
+            String text = CommandUtil.SwearWord.getText(requestContent).trim();
             logic.updateSwearWord(swearWordId, text);
             requestContent.getRequestAttributes().put("message", MessageManager.getInstance().getProperty("swear-word.update.success"));
         } catch (Exception e) {

@@ -18,11 +18,10 @@ public class SubcategoryCreateCommand implements ActionCommand {
         try {
             Integer creatorId = CommandUtil.User.getUser(requestContent).getId();
             Integer categoryId = CommandUtil.Category.getId(requestContent);
-            String subcategoryName = CommandUtil.Subcategory.getName(requestContent);
+            String subcategoryName = CommandUtil.Subcategory.getName(requestContent).trim();
 
             logic.createSubcategory(creatorId, categoryId, subcategoryName);
             requestContent.getRequestAttributes().put("message", MessageManager.getInstance().getProperty("subcategory.creation.success"));
-
             page = new SubcategoriesShowCommand().execute(requestContent);
         } catch (Exception e) {
             e.printStackTrace();

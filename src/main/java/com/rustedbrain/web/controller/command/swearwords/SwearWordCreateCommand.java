@@ -14,7 +14,7 @@ public class SwearWordCreateCommand implements com.rustedbrain.web.controller.co
         String page;
 
         try {
-            String text = CommandUtil.SwearWord.getText(requestContent);
+            String text = CommandUtil.SwearWord.getText(requestContent).trim();
             logic.createSwearWord(text);
             requestContent.getRequestAttributes().put("message", MessageManager.getInstance().getProperty("message.creation.success"));
             page = new SwearWordsShowCommand().execute(requestContent);

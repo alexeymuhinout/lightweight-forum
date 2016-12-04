@@ -103,6 +103,11 @@ public class ForumLogic {
 
     public void updateCategory(Integer categoryId, String newName, Integer newAdmin) throws SQLException, CloneNotSupportedException {
         Category oldCategory = dbCategoryController.getEntityById(categoryId);
+
+        if (oldCategory.getName().equals(newName)) {
+            throw new IllegalArgumentException(MessageManager.getInstance().getProperty("category.update.already.exist"));
+        }
+
         Category newCategory = (Category) oldCategory.clone();
         newCategory.setName(newName);
         newCategory.setUserId(newAdmin);
