@@ -73,8 +73,8 @@
                 Do not post hateful racist, or illegal content. Do not post copyrighted material without proper
                 attribution.
             </li>
-            <li>
-                Please do not use the forum for self-promotion, solicitation, or advertising. SPAM will not be
+                Please do not use the
+            <li>forum for self-promotion, solicitation, or advertising. SPAM will not be
                 tolerated.
             </li>
             <li>
@@ -90,6 +90,7 @@
         </ol>
     </form>
             </div>
+        </div>
 </main>
 <jsp:include page="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 </body>
