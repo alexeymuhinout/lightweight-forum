@@ -19,11 +19,11 @@
             </div>
         </section>
         <ul class="main-ul">
-            <li><a href="${pageContext.request.contextPath}/controller?command=index_show">Main</a></li>
-            <li><a href="${pageContext.request.contextPath}/controller?command=categories_show">Forum</a></li>
-            <li><a href="${pageContext.request.contextPath}/controller?command=blog_show">Blog</a></li>
-            <li><a href="${pageContext.request.contextPath}/controller?command=community_show">Community</a></li>
-            <li><a href="${pageContext.request.contextPath}/controller?command=find_show">Find</a></li>
+            <li><a class="href" href="${pageContext.request.contextPath}/controller?command=index_show">Main</a></li>
+            <li><a class="href" href="${pageContext.request.contextPath}/controller?command=categories_show">Forum</a></li>
+            <li><a class="href" href="${pageContext.request.contextPath}/controller?command=blog_show">Blog</a></li>
+            <li><a class="href" href="${pageContext.request.contextPath}/controller?command=community_show">Community</a></li>
+            <li><a class="href" href="${pageContext.request.contextPath}/controller?command=find_show">Find</a></li>
         </ul>
     </nav>
 </header>

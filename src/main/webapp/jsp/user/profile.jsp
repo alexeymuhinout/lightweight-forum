@@ -36,7 +36,7 @@
         <section class="admin-panel">
             <form action="${pageContext.request.contextPath}/controller" method="post" class = "profile_page">
                 <input type="hidden" name="command" value="swearwords_show"/>
-                <input class="button_forum_create" type="submit" value="Configure swearwords"/>
+                <input class="button_forum_create" type="submit" value="Edit swearwords"/>
             </form>
         </section>
     </c:if>

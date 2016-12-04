@@ -12,7 +12,7 @@
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
     <div style="width: 100%;">
-        <div style="width: 25%;">
+        <div class="reg_div_section_one">
     <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
         <label>Name:<br>
             <input class="input_text_reg" type="text" name="user_name" title="User name">
@@ -55,7 +55,7 @@
     </form>
             </div>
 
-        <div style="width: 65%;">
+        <div class="reg_div_section_two">
     <form class="profile_page">
         <h4>Here are some rules that we ask you to follow:</h4>
         <ol>

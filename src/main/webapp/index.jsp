@@ -8,9 +8,7 @@
     <link rel='StyleSheet' type='text/css' href='${pageContext.request.contextPath}/styles/main.css'/>
 </head>
 <body>
-
 <jsp:include page="${pageContext.request.contextPath}/jsp/header.jsp"/>
-
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
     <section>
