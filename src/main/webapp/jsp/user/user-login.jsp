@@ -11,7 +11,6 @@
 <jsp:include page="${pageContext.request.contextPath}/jsp/header.jsp"/>
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
-    <section class="section_main_page">
     <div class="login_div">
         <form action="${pageContext.request.contextPath}/controller" method="post" class="login_page">
             <label>Login:<br>
@@ -26,7 +25,6 @@
             <input type="hidden" name="command" value="user_login">
         </form>
     </div>
-        </section>
 </main>
 <jsp:include page="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 </body>

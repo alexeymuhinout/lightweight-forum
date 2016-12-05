@@ -17,11 +17,11 @@
         <c:forEach items="${swear_words}" var="swear_word">
             <li>
                 <c:if test="${not empty user && user.admin != false}">
-                    <form action="${pageContext.request.contextPath}/controller" method="post">
-                        <input type="text" name="swear_word_text" value="${swear_word.text}" title="Swear word">
+                    <form action="${pageContext.request.contextPath}/controller" method="post" class="swearwords_page">
+                        <input class ="input_text_swearwords" type="text" name="swear_word_text" value="${swear_word.text}" title="Swear word">
                         <input type="hidden" name="swear_word_id" value="${swear_word.id}"/>
-                        <button name="command" type="submit" value="swear_word_update">Update</button>
-                        <button name="command" type="submit" value="swear_word_delete">Delete</button>
+                        <button class="button_swearwords" name="command" type="submit" value="swear_word_update">Update</button>
+                        <button class="button_swearwords" name="command" type="submit" value="swear_word_delete">Delete</button>
                     </form>
                 </c:if>
             </li>
@@ -30,7 +30,7 @@
     <c:if test="${not empty user && user.admin != false}">
         <form action="${pageContext.request.contextPath}/controller" method="post" class="profile_page">
             <label>Word:
-                <input type="text" name="swear_word_text" value="">
+                <input class="input_text" type="text" name="swear_word_text" value="">
             </label>
             <input type="hidden" name="command" value="swear_word_create"/>
             <input class="button_forum_create" type="submit" value="Add"/>
