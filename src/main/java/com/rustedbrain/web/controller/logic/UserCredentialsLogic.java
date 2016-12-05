@@ -53,7 +53,7 @@ public class UserCredentialsLogic {
         if (user != null) {
             return user.getPassword().equals(password);
         }
-        throw new IllegalArgumentException("User with this user was not found");
+        throw new IllegalArgumentException(MessageManager.getInstance().getProperty("login.not.success"));
 
     }
 
@@ -66,15 +66,7 @@ public class UserCredentialsLogic {
         }
     }
 
-    public void registerUser(String name, String surname, String login, String password, String mail, Date birthday, String cityName) throws SQLException {
-        registerUser(name, surname, login, password, mail, birthday, cityName, false);
-    }
-
-    public void registerUser(String name, String surname, String login, String password, String mail, Date birthday, Integer cityId) throws SQLException {
-        registerUser(name, surname, login, password, mail, birthday, cityId, false);
-    }
-
-    public void registerUser(String name, String surname, String login, String password, String mail, Date birthday, Integer cityId, Boolean isAdmin) throws SQLException {
+    public void registerUser(String name, String surname, String login, String password, String mail, Date birthday, Integer cityId, String userAdminToken) throws SQLException {
         User user = new User();
         user.setCreationDate(Date.valueOf(LocalDate.now()));
         user.setName(name);
@@ -84,11 +76,16 @@ public class UserCredentialsLogic {
         user.setBirthday(birthday);
         user.setMail(mail);
         user.setCityId(cityId);
-        user.setAdmin(isAdmin);
+        user.setAdmin(isValidAdminToken(userAdminToken));
         dbUserController.insert(user);
     }
 
-    public void registerUser(String name, String surname, String login, String password, String mail, Date birthday, String cityName, Boolean isAdmin) throws SQLException {
+    private boolean isValidAdminToken(String userAdminToken) {
+        String adminToken = ConfigurationManager.getInstance().getProperty("user.admin.token");
+        return adminToken.equals(userAdminToken.trim());
+    }
+
+    public void registerUser(String name, String surname, String login, String password, String mail, Date birthday, String cityName, String userAdminToken) throws SQLException {
         User user = new User();
         user.setCreationDate(Date.valueOf(LocalDate.now()));
         user.setName(name);
@@ -102,6 +99,7 @@ public class UserCredentialsLogic {
             createNewCity(cityName);
         }
         user.setCityId(dbCityController.getCityByName(cityName).getId());
+        user.setAdmin(isValidAdminToken(userAdminToken));
         dbUserController.insert(user);
     }
 

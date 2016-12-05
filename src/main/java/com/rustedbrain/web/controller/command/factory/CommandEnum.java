@@ -184,25 +184,25 @@ enum CommandEnum {
         }
     },
 
-    SWEARWORDS_SHOW {
+    SWEAR_WORDS_SHOW {
         {
             this.action = new SwearWordsShowCommand();
         }
     },
 
-    SWEARWORD_UPDATE {
+    SWEAR_WORD_UPDATE {
         {
             this.action = new SwearWordUpdateCommand();
         }
     },
 
-    SWEARWORD_DELETE {
+    SWEAR_WORD_DELETE {
         {
             this.action = new SwearWordDeleteCommand();
         }
     },
 
-    SWEARWORD_CREATE {
+    SWEAR_WORD_CREATE {
         {
             this.action = new SwearWordCreateCommand();
         }

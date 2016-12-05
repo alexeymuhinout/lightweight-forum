@@ -103,6 +103,11 @@ public class ForumLogic {
 
     public void updateCategory(Integer categoryId, String newName, Integer newAdmin) throws SQLException, CloneNotSupportedException {
         Category oldCategory = dbCategoryController.getEntityById(categoryId);
+
+        if (oldCategory.getName().equals(newName)) {
+            throw new IllegalArgumentException(MessageManager.getInstance().getProperty("category.update.already.exist"));
+        }
+
         Category newCategory = (Category) oldCategory.clone();
         newCategory.setName(newName);
         newCategory.setUserId(newAdmin);
@@ -138,14 +143,9 @@ public class ForumLogic {
     }
 
     public void createMessage(Integer senderId, Integer receiverId, String text, Integer subcategoryId) throws SQLException {
-        List<SwearWord> swearWords = dbSwearWordController.getAll();
-
-        for (SwearWord swearWord : swearWords) {
-            if (text.contains(swearWord.getText())) {
-                throw new SwearWordException();
-            }
+        if (isTextContainSwearWord(text)) {
+            throw new SwearWordException(MessageManager.getInstance().getProperty("message.create.swear-word"));
         }
-
         Message message = new Message();
         message.setCreationDate(Date.valueOf(LocalDate.now()));
         message.setUserId(senderId);
@@ -165,17 +165,60 @@ public class ForumLogic {
     }
 
     public void updateMessage(Integer messageId, String text) throws SQLException, CloneNotSupportedException {
+        Message oldMessage = this.dbMessageController.getEntityById(messageId);
+        if (oldMessage.getText().equals(text)) {
+            throw new IllegalArgumentException(MessageManager.getInstance().getProperty("message.update.already.exist"));
+        }
+
+        if (isTextContainSwearWord(text)) {
+            throw new SwearWordException(MessageManager.getInstance().getProperty("message.update.swear-word"));
+        }
+
+        Message newMessage = (Message) oldMessage.clone();
+        newMessage.setText(text);
+        this.dbMessageController.update(oldMessage, newMessage);
+    }
+
+    private boolean isTextContainSwearWord(String text) throws SQLException {
         List<SwearWord> swearWords = dbSwearWordController.getAll();
 
         for (SwearWord swearWord : swearWords) {
             if (text.contains(swearWord.getText())) {
-                throw new SwearWordException();
+                return true;
             }
         }
 
-        Message oldMessage = this.dbMessageController.getEntityById(messageId);
-        Message newMessage = (Message) oldMessage.clone();
-        newMessage.setText(text);
-        this.dbMessageController.update(oldMessage, newMessage);
+        return false;
+    }
+
+    public List<SwearWord> getSwearWords() throws SQLException {
+        return this.dbSwearWordController.getAll();
+    }
+
+    public void createSwearWord(String text) throws SQLException {
+        if (!dbSwearWordController.isSwearWord(text)) {
+            SwearWord swearWord = new SwearWord();
+            swearWord.setCreationDate(Date.valueOf(LocalDate.now()));
+            swearWord.setText(text);
+            this.dbSwearWordController.insert(swearWord);
+        } else {
+            throw new IllegalArgumentException(MessageManager.getInstance().getProperty("swear-word.creation.already.exist"));
+        }
+    }
+
+    public void deleteSwearWord(Integer id) throws SQLException {
+        SwearWord swearWord = this.dbSwearWordController.getEntityById(id);
+        this.dbSwearWordController.delete(swearWord);
+    }
+
+    public void updateSwearWord(Integer swearWordId, String text) throws SQLException, CloneNotSupportedException {
+        SwearWord oldSwearWord = this.dbSwearWordController.getEntityById(swearWordId);
+        if (oldSwearWord.getText().equals(text)) {
+            throw new IllegalArgumentException(MessageManager.getInstance().getProperty("swear-word.updating.already.exist"));
+        }
+        SwearWord newSwearWord = (SwearWord) oldSwearWord.clone();
+        newSwearWord.setText(text);
+
+        this.dbSwearWordController.update(oldSwearWord, newSwearWord);
     }
 }

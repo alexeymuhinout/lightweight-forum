@@ -16,7 +16,7 @@ public class CategoryCreateCommand implements com.rustedbrain.web.controller.com
 
         try {
             Integer creatorId = CommandUtil.User.getUser(requestContent).getId();
-            String categoryName = CommandUtil.Category.getName(requestContent);
+            String categoryName = CommandUtil.Category.getName(requestContent).trim();
             logic.createCategory(creatorId, categoryName);
             requestContent.getRequestAttributes().put("message", MessageManager.getInstance().getProperty("category.creation.success"));
             page = new CategoriesShowCommand().execute(requestContent);

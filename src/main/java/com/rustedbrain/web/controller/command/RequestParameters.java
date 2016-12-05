@@ -20,7 +20,10 @@ public enum RequestParameters {
     SUBCATEGORY_ID("subcategory_id"),
     MESSAGE_TEXT("message_text"),
     MESSAGE_RECEIVER_ID("reply_to_user_id"),
-    MESSAGE_ID("message_id");
+    MESSAGE_ID("message_id"),
+    USER_ADMIN_TOKEN("user_admin_token"),
+    SWEAR_WORD_TEXT("swear_word_text"),
+    SWEAR_WORD_ID("swear_word_id");
 
     private final String parameterName;
 

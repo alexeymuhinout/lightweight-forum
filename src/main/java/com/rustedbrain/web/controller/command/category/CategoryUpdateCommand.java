@@ -16,7 +16,7 @@ public class CategoryUpdateCommand implements com.rustedbrain.web.controller.com
 
         try {
             Integer categoryId = CommandUtil.Category.getId(requestContent);
-            String newName = CommandUtil.Category.getName(requestContent);
+            String newName = CommandUtil.Category.getName(requestContent).trim();
             Integer newAdminId = CommandUtil.User.getId(requestContent);
             logic.updateCategory(categoryId, newName, newAdminId);
             requestContent.getRequestAttributes().put("message", MessageManager.getInstance().getProperty("category.update.success"));

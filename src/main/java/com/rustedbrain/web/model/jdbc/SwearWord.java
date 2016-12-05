@@ -27,4 +27,9 @@ public class SwearWord extends DBEntity {
     public int hashCode() {
         return text.hashCode();
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

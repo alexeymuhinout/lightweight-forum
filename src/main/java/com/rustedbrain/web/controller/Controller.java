@@ -30,28 +30,16 @@ public class Controller extends HttpServlet {
         processRequest(req, resp);
     }
 
-    @Override
-    public void init() throws ServletException {
-        super.init();
-    }
-
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // Before all operations
         SessionRequestContent requestContent = requestContentUtil.newSessionRequestContent(req);
 
-//        System.out.println();
-//        for (Map.Entry<String, String[]> entry : requestContent.getRequestParameters().entrySet()) {
-//            System.out.println(entry.getKey() + ": " + Arrays.toString(entry.getValue()));
-//        }
-
-        String page = null;
-
         ActionFactory actionFactory = new ActionFactory();
 
         ActionCommand command = actionFactory.defineCommand(requestContent);
 
-        page = command.execute(requestContent);
+        String page = command.execute(requestContent);
 
         // After all operations
         requestContentUtil.extractValuesToRequest(req, requestContent);

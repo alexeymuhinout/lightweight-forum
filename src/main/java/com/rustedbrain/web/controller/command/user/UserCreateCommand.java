@@ -21,20 +21,26 @@ public class UserCreateCommand implements ActionCommand {
         String page;
 
         try {
-            String name = CommandUtil.User.getName(requestContent);
-            String surname = CommandUtil.User.getSurname(requestContent);
-            String login = CommandUtil.User.getLogin(requestContent);
-            String password = CommandUtil.User.getPassword(requestContent);
-            String mail = CommandUtil.User.getMail(requestContent);
+            String name = CommandUtil.User.getName(requestContent).trim();
+            String surname = CommandUtil.User.getSurname(requestContent).trim();
+            String login = CommandUtil.User.getLogin(requestContent).trim();
+            String password = CommandUtil.User.getPassword(requestContent).trim();
+            String mail = CommandUtil.User.getMail(requestContent).trim();
             Date birthday = CommandUtil.User.getBirthday(requestContent);
             Integer cityId = getUserCityId(requestContent);
             String cityName = getUserCityName(requestContent);
-            if (cityName != null) {
-                logic.registerUser(name, surname, login, password, mail, birthday, cityName);
-            } else {
-                logic.registerUser(name, surname, login, password, mail, birthday, cityId);
+            String userAdminToken = null;
+            try {
+                userAdminToken = CommandUtil.User.getAdminToken(requestContent);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
             }
-            requestContent.getSessionAttributes().put("message", MessageManager.getInstance().getProperty("registration.success"));
+            if (cityName != null) {
+                logic.registerUser(name, surname, login, password, mail, birthday, cityName, userAdminToken);
+            } else {
+                logic.registerUser(name, surname, login, password, mail, birthday, cityId, userAdminToken);
+            }
+            requestContent.getRequestAttributes().put("message", MessageManager.getInstance().getProperty("registration.success"));
             page = ConfigurationManager.getInstance().getProperty("path.page.login");
         } catch (IllegalArgumentException | SQLException | ParseException e) {
             e.printStackTrace();
@@ -56,8 +62,9 @@ public class UserCreateCommand implements ActionCommand {
 
     private String getUserCityName(SessionRequestContent requestContent) throws NumberFormatException {
         if (requestContent.getRequestParameters().get(RequestParameters.CITY_NAME.getParameterName()) != null
-                && requestContent.getRequestParameters().get(RequestParameters.CITY_NAME.getParameterName()).length >= 1) {
-            return requestContent.getRequestParameters().get(RequestParameters.CITY_NAME.getParameterName())[0];
+                && requestContent.getRequestParameters().get(RequestParameters.CITY_NAME.getParameterName()).length >= 1
+                && !requestContent.getRequestParameters().get(RequestParameters.CITY_NAME.getParameterName())[0].isEmpty()) {
+            return requestContent.getRequestParameters().get(RequestParameters.CITY_NAME.getParameterName())[0].trim();
         } else {
             return null;
         }
