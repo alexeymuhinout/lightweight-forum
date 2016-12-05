@@ -60,7 +60,7 @@ div.logo-block {
     font-size: 20px;
     letter-spacing: 1px;
     margin: auto;
-    text-shadow: 1px 1px 2px black, 0 0 1em grey;
+    text-shadow: 1px 1px 1px darkgrey, 0 0 1em grey;
 
 }
 
@@ -170,7 +170,7 @@ div.message-content {
 }
 
 div.message-content-subcategory {
-    background-color: gray;
+    background-color: dimgray;
     margin: 0;
     padding: 0;
 }
@@ -181,8 +181,7 @@ div.message-content-subcategory h4 {
 }
 
 div.message-content-message {
-    border: 1px solid firebrick;
-    background-color: white;
+    background-color: lightgray;
     display: flex;
     flex-flow: row wrap;
     height: 100%;
@@ -192,7 +191,7 @@ div.message-content-message {
 div.message-sender {
     background-color: gray;
     height: 100%;
-    width:  15%
+    width: 15%;
 }
 
 
@@ -203,7 +202,8 @@ div.message-actions {
 }
 
 p.message-sender-name:hover {
-    background-color: firebrick;
+    color: #b22222;
+    cursor: pointer;
 }
 
 p.error {
@@ -233,7 +233,7 @@ select, .select_reg{
     margin-bottom: 5px;
 }
 
-.input_text, .input_text_reg{
+.input_text, .input_text_reg,.input_text_login{
     border: 1px solid firebrick;
     box-sizing: border-box;
     text-indent: 10px;
@@ -268,7 +268,7 @@ select, .select_reg{
 .button_forum_create {
     font-size: 16px;
 }
-.button, .button_login, .button_forum_create ,.button_del,.button_green,.input_text{
+.button, .button_forum_create ,.button_del,.button_green,.input_text{
     max-width: 200px;
     min-width: 150px;
 }
@@ -278,21 +278,28 @@ select, .select_reg{
     min-width: 150px;
 }
 
+.input_text_login, .button_login{
+    max-width: 73%;
+}
+
 .select_reg, select {
     width: 245px;
 }
 .button_message_update,.button_message_delete,.button_message_reply{
-    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    background: gray none repeat scroll 0 0;
     cursor: pointer;
     border-color: transparent;
-    border-radius: 3px;
     color: #fff;
     font-size: 16px;
-    height: 30px;
+    height: 60px;
     margin: 10px;
 }
+
+.button_message_update:hover,.button_message_delete:hover,.button_message_reply:hover{
+    background-color: firebrick;
+}
 .tdbutton {
-    background: rgba(0, 0, 0, 0) none repeat scroll 0px 0px;
+    background: grey none repeat scroll 0 0;
     border-color: transparent;
     color: #ffffff;
     cursor: pointer;
@@ -300,23 +307,21 @@ select, .select_reg{
     margin: 1px;
 }
 
-.button_message_update{
-    background: blue none repeat scroll 0 0;
-}
-.button_message_update:hover{
-    background: darkblue none repeat scroll 0 0;
-}
-.button_login, .button_message_delete,.button_del {
+.button_login,.button_del {
     background: crimson none repeat scroll 0 0;
 }
-.button_login:hover, .button_message_delete:hover, .tdbutton:hover, .button_del:hover{
+.button_login:hover, .button_del:hover{
     background: darkred none repeat scroll 0 0;
 }
+.tdbutton:hover{
+    background: firebrick none repeat scroll 0 0;
+    border-color: firebrick;
+}
 
-.button_reg, .button_message_reply, .button_green{
+.button_reg, .button_green{
     background: green none repeat scroll 0 0;
 }
-.button_reg:hover, .button_message_reply:hover ,.button_green:hover{
+.button_reg:hover,.button_green:hover{
     background: darkgreen none repeat scroll 0 0;
 }
 .button_forum_create{
@@ -360,9 +365,10 @@ select, .select_reg{
 }
 
 .login_div{
-    margin: 0 auto;
+    padding: 40px;
     width: 20%;
-    padding: 60px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    margin: 10px auto;
 }
 .forum_div_button_one,.forum_div_button_two {
     width: 46%;

@@ -14,7 +14,6 @@
     <section class="section_main_page">
         <p>This forum has been created so that you can exchange ideas, converse and meet with others who share a common
             interest in a safe environment.
-
             Every community has its own culture and boundaries. To share how you feel about content, we encourage you to
             use
             the Reactions (the little icons under every comment) to share your positive feedback with users. This will

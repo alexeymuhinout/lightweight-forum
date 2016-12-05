@@ -11,20 +11,22 @@
 <jsp:include page="${pageContext.request.contextPath}/jsp/header.jsp"/>
 <main>
     <jsp:include page="${pageContext.request.contextPath}/jsp/message.jsp"/>
+    <section class="section_main_page">
     <div class="login_div">
         <form action="${pageContext.request.contextPath}/controller" method="post" class="login_page">
             <label>Login:<br>
-                <input  class="input_text_reg" type="text" name="user_login" title="User login or mail address">
+                <input  class="input_text_login" type="text" name="user_login" title="User login or mail address">
             </label>
             <br>
             <label>Password:<br>
-                <input class="input_text_reg" type="password" name="user_password" title="User password">
+                <input class="input_text_login" type="password" name="user_password" title="User password">
             </label>
             <br>
             <input class="button_login" type="submit" name="login" value="Login">
             <input type="hidden" name="command" value="user_login">
         </form>
     </div>
+        </section>
 </main>
 <jsp:include page="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 </body>
