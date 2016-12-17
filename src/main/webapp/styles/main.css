@@ -375,7 +375,7 @@ select, .select_reg {
     margin: 10px;
 }
 
-.social-button {
+.social_button {
     border-radius: 50%;
     border-width: 0;
     cursor: pointer;
