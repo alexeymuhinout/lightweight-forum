@@ -2,8 +2,8 @@ package com.rustedbrain.web.controller.command.util;
 
 import com.rustedbrain.web.controller.command.RequestParameters;
 import com.rustedbrain.web.controller.resource.MessageManager;
-import com.rustedbrain.web.model.servlet.ProxyUser;
 import com.rustedbrain.web.model.servlet.SessionRequestContent;
+import com.rustedbrain.web.model.servlet.user.ProxyUser;
 
 import java.sql.Date;
 import java.text.ParseException;
@@ -151,6 +151,25 @@ public class CommandUtil {
                 return requestContent.getRequestParameters().get(RequestParameters.USER_ADMIN_TOKEN.getParameterName())[0];
             } else {
                 throw new IllegalArgumentException(MessageManager.getInstance().getProperty("request.user.admin-token.not.found"));
+            }
+        }
+
+        public static Date getBlockUntilDate(SessionRequestContent requestContent) throws ParseException {
+            if (requestContent.getRequestParameters().get(RequestParameters.USER_BLOCK_UNTIL_DATE.getParameterName()) != null
+                    && requestContent.getRequestParameters().get(RequestParameters.USER_BLOCK_UNTIL_DATE.getParameterName()).length >= 1) {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                return new Date(format.parse(requestContent.getRequestParameters().get(RequestParameters.USER_BLOCK_UNTIL_DATE.getParameterName())[0]).getTime());
+            } else {
+                throw new IllegalArgumentException("User block date cannot be empty");
+            }
+        }
+
+        public static String getBlockReason(SessionRequestContent requestContent) {
+            if (requestContent.getRequestParameters().containsKey(RequestParameters.USER_BLOCK_REASON.getParameterName())
+                    && !requestContent.getRequestParameters().get(RequestParameters.USER_BLOCK_REASON.getParameterName())[0].isEmpty()) {
+                return requestContent.getRequestParameters().get(RequestParameters.USER_BLOCK_REASON.getParameterName())[0];
+            } else {
+                throw new IllegalArgumentException(MessageManager.getInstance().getProperty("request.user.block.reason.not.found"));
             }
         }
     }

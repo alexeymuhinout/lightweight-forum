@@ -85,8 +85,16 @@
                 <data-type>integer</data-type>
             </column>
             <column>
-                <column-name>admin</column-name>
+                <column-name>is_admin</column-name>
                 <data-type>boolean</data-type>
+            </column>
+            <column>
+                <column-name>blocked_until_date</column-name>
+                <data-type>date</data-type>
+            </column>
+            <column>
+                <column-name>block_reason</column-name>
+                <data-type>character varying(64)</data-type>
             </column>
         </columns>
         <table-constraints>

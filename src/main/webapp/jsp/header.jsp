@@ -12,7 +12,7 @@
                     </c:when>
                     <c:otherwise>
                         <a href="${pageContext.request.contextPath}/controller?command=user_show">Profile</a>
-                        <a href="${pageContext.request.contextPath}/controller?command=user_logout">Logout[${user.name}]</a>
+                        <a href="${pageContext.request.contextPath}/controller?command=user_logout">Logout[${user.login}]</a>
                     </c:otherwise>
                 </c:choose>
                 <a href="${pageContext.request.contextPath}/controller?command=registration_show">Registration</a>

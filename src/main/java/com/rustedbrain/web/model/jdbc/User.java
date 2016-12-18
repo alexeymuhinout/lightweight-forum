@@ -13,6 +13,24 @@ public class User extends DBEntity {
     private Date birthday;
     private Integer cityId;
     private boolean isAdmin;
+    private Date blockUntilDate;
+    private String blockReason;
+
+    public String getBlockReason() {
+        return blockReason;
+    }
+
+    public void setBlockReason(String blockReason) {
+        this.blockReason = blockReason;
+    }
+
+    public Date getBlockUntilDate() {
+        return blockUntilDate;
+    }
+
+    public void setBlockUntilDate(Date blockedUntilDate) {
+        this.blockUntilDate = blockedUntilDate;
+    }
 
     public boolean isAdmin() {
         return isAdmin;
@@ -111,6 +129,9 @@ public class User extends DBEntity {
     public User clone() throws CloneNotSupportedException {
         User clonedUser = (User) super.clone();
         clonedUser.birthday = (Date) this.birthday.clone();
+        if (this.blockUntilDate != null) {
+            clonedUser.blockUntilDate = (Date) this.blockUntilDate.clone();
+        }
         return clonedUser;
     }
 }

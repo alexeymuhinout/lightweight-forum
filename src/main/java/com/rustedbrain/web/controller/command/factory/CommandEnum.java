@@ -50,6 +50,25 @@ enum CommandEnum {
         }
     },
 
+    USER_BLOCK {
+        {
+            this.action = new UserBlockCommand();
+        }
+    },
+
+    USER_UNBLOCK {
+        {
+            this.action = new UserUnblockCommand();
+        }
+    },
+
+
+    USER_PREVIEW_SHOW {
+        {
+            this.action = new UserPreviewShowCommand();
+        }
+    },
+
     USER_DELETE {
         {
             this.action = new UserDeleteCommand();

@@ -9,9 +9,9 @@ public class UserMessage implements Serializable {
 
     private Message message;
     private String subcategoryName;
-    private String senderName;
+    private String senderLogin;
     private Date senderRegistrationDate;
-    private String receiverName;
+    private String receiverLogin;
 
     public Message getMessage() {
         return message;
@@ -21,20 +21,20 @@ public class UserMessage implements Serializable {
         this.message = message;
     }
 
-    public String getSenderName() {
-        return senderName;
+    public String getSenderLogin() {
+        return senderLogin;
     }
 
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
+    public void setSenderLogin(String senderLogin) {
+        this.senderLogin = senderLogin;
     }
 
-    public String getReceiverName() {
-        return receiverName;
+    public String getReceiverLogin() {
+        return receiverLogin;
     }
 
-    public void setReceiverName(String receiverName) {
-        this.receiverName = receiverName;
+    public void setReceiverLogin(String receiverLogin) {
+        this.receiverLogin = receiverLogin;
     }
 
     public Date getSenderRegistrationDate() {
@@ -58,9 +58,9 @@ public class UserMessage implements Serializable {
         return "UserMessage{" +
                 "message=" + message +
                 ", subcategoryName='" + subcategoryName + '\'' +
-                ", senderName='" + senderName + '\'' +
+                ", senderLogin='" + senderLogin + '\'' +
                 ", senderRegistrationDate=" + senderRegistrationDate +
-                ", receiverName='" + receiverName + '\'' +
+                ", receiverLogin='" + receiverLogin + '\'' +
                 '}';
     }
 }

@@ -1,12 +1,12 @@
 package com.rustedbrain.web.controller.command.user;
 
 import com.rustedbrain.web.controller.command.ActionCommand;
+import com.rustedbrain.web.controller.command.IndexShowCommand;
 import com.rustedbrain.web.controller.command.util.CommandUtil;
 import com.rustedbrain.web.controller.logic.UserCredentialsLogic;
-import com.rustedbrain.web.controller.resource.ConfigurationManager;
 import com.rustedbrain.web.controller.resource.MessageManager;
-import com.rustedbrain.web.model.servlet.ProxyUser;
 import com.rustedbrain.web.model.servlet.SessionRequestContent;
+import com.rustedbrain.web.model.servlet.user.ProxyUser;
 
 public class UserLoginCommand implements ActionCommand {
 
@@ -23,11 +23,10 @@ public class UserLoginCommand implements ActionCommand {
                 ProxyUser user = logic.getProxyUserByLogin(login);
                 requestContent.getSessionAttributes().put("user", user);
                 requestContent.getRequestAttributes().put("message", MessageManager.getInstance().getProperty("login.success"));
-                page = ConfigurationManager.getInstance().getProperty("path.page.index");
+                page = new IndexShowCommand().execute(requestContent);
             } else {
-                String loginErrorMessage = "Wrong login or password";
-                requestContent.getRequestAttributes().put("error", loginErrorMessage);
-                page = ConfigurationManager.getInstance().getProperty("path.page.login");
+                requestContent.getRequestAttributes().put("error", MessageManager.getInstance().getProperty("login.not.success"));
+                page = new UserLoginShowCommand().execute(requestContent);
             }
         } catch (Exception e) {
             e.printStackTrace();

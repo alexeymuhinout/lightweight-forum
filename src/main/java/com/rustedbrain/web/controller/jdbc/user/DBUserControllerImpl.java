@@ -6,10 +6,7 @@ import com.rustedbrain.web.controller.resource.Manager;
 import com.rustedbrain.web.model.jdbc.User;
 
 import javax.xml.bind.JAXBException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,6 +33,16 @@ public class DBUserControllerImpl extends DBUserController {
         insertStatement.setDate(7, user.getBirthday());
         insertStatement.setInt(8, user.getCityId());
         insertStatement.setBoolean(9, user.isAdmin());
+        if (user.getBlockUntilDate() == null) {
+            insertStatement.setNull(10, Types.DATE);
+        } else {
+            insertStatement.setDate(10, user.getBlockUntilDate());
+        }
+        if (user.getBlockReason() == null) {
+            insertStatement.setNull(11, Types.VARCHAR);
+        } else {
+            insertStatement.setString(11, user.getBlockReason());
+        }
     }
 
     @Override
@@ -88,7 +95,17 @@ public class DBUserControllerImpl extends DBUserController {
         statement.setDate(7, newUser.getBirthday());
         statement.setInt(8, newUser.getCityId());
         statement.setBoolean(9, newUser.isAdmin());
-        statement.setInt(10, oldUser.getId());
+        if (newUser.getBlockUntilDate() == null) {
+            statement.setNull(10, Types.DATE);
+        } else {
+            statement.setDate(10, newUser.getBlockUntilDate());
+        }
+        if (newUser.getBlockReason() == null) {
+            statement.setNull(11, Types.VARCHAR);
+        } else {
+            statement.setString(11, newUser.getBlockReason());
+        }
+        statement.setInt(12, oldUser.getId());
     }
 
     @Override
@@ -132,6 +149,8 @@ public class DBUserControllerImpl extends DBUserController {
         user.setBirthday(resultSet.getDate(8));
         user.setCityId(resultSet.getInt(9));
         user.setAdmin(resultSet.getBoolean(10));
+        user.setBlockUntilDate(resultSet.getDate(11));
+        user.setBlockReason(resultSet.getString(12));
         return user;
     }
 

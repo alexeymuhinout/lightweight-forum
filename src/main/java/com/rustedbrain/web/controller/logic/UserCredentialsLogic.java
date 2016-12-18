@@ -12,7 +12,8 @@ import com.rustedbrain.web.controller.resource.SQLManager;
 import com.rustedbrain.web.controller.util.jaxb.JaxbParser;
 import com.rustedbrain.web.model.jdbc.City;
 import com.rustedbrain.web.model.jdbc.User;
-import com.rustedbrain.web.model.servlet.ProxyUser;
+import com.rustedbrain.web.model.servlet.user.PreviewUser;
+import com.rustedbrain.web.model.servlet.user.ProxyUser;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -47,14 +48,26 @@ public class UserCredentialsLogic {
 
         User user = dbUserController.getUserByLogin(login);
         if (user != null) {
+            checkBlockedUser(user);
             return user.getPassword().equals(password);
         }
         user = dbUserController.getUserByMail(login);
         if (user != null) {
+            checkBlockedUser(user);
             return user.getPassword().equals(password);
         }
         throw new IllegalArgumentException(MessageManager.getInstance().getProperty("login.not.success"));
+    }
 
+    private void checkBlockedUser(User user) {
+        if (user.getBlockUntilDate() != null && !Date.valueOf(LocalDate.now()).after(user.getBlockUntilDate())) {
+            String message = MessageManager.getInstance().getProperty("login.not.success.blocked");
+            String formattedMessage = message
+                    .replace("%1", user.getLogin())
+                    .replace("%2", user.getBlockUntilDate().toString())
+                    .replace("%3", user.getBlockReason());
+            throw new IllegalArgumentException(formattedMessage);
+        }
     }
 
     private void checkLoginPassword(String login, String password) throws IllegalArgumentException {
@@ -153,7 +166,7 @@ public class UserCredentialsLogic {
         this.dbUserController.delete(user);
     }
 
-    public void updateUser(Integer userId, String name, String surname, String login, String mail, Date birthday, Integer cityId) throws SQLException, CloneNotSupportedException {
+    public void updateUserCredentials(Integer userId, String name, String surname, String login, String mail, Date birthday, Integer cityId) throws SQLException, CloneNotSupportedException {
         User oldUser = this.dbUserController.getEntityById(userId);
         User newUser = oldUser.clone();
         newUser.setName(name);
@@ -166,11 +179,42 @@ public class UserCredentialsLogic {
         this.dbUserController.update(oldUser, newUser);
     }
 
-    public void updateUser(Integer userId, String name, String surname, String login, String mail, Date birthday, String cityName) throws SQLException, CloneNotSupportedException {
+    public void updateUserCredentials(Integer userId, String name, String surname, String login, String mail, Date birthday, String cityName) throws SQLException, CloneNotSupportedException {
         City city = dbCityController.getCityByName(cityName);
         if (city == null) {
             createNewCity(cityName);
         }
-        this.updateUser(userId, name, surname, login, mail, birthday, dbCityController.getCityByName(cityName).getId());
+        this.updateUserCredentials(userId, name, surname, login, mail, birthday, dbCityController.getCityByName(cityName).getId());
+    }
+
+    public PreviewUser getPreviewUser(String userName) throws SQLException {
+        User user = this.dbUserController.getUserByLogin(userName);
+
+        PreviewUser previewUser = new PreviewUser();
+        previewUser.setName(user.getName());
+        previewUser.setSurname(user.getSurname());
+        previewUser.setLogin(user.getLogin());
+        previewUser.setBirthday(user.getBirthday());
+        previewUser.setMail(user.getMail());
+        previewUser.setCity(this.dbCityController.getEntityById(user.getCityId()).getName());
+        previewUser.setBirthday(user.getBirthday());
+        previewUser.setRegistrationDate(user.getCreationDate());
+
+        return previewUser;
+    }
+
+    public void unblockUser(String login) throws SQLException, CloneNotSupportedException {
+        User oldUser = dbUserController.getUserByLogin(login);
+        User newUser = oldUser.clone();
+        newUser.setBlockUntilDate(null);
+        dbUserController.update(oldUser, newUser);
+    }
+
+    public void blockUser(String login, String blockReason, Date blockUntilDate) throws SQLException, CloneNotSupportedException {
+        User oldUser = dbUserController.getUserByLogin(login);
+        User newUser = oldUser.clone();
+        newUser.setBlockReason(blockReason);
+        newUser.setBlockUntilDate(blockUntilDate);
+        dbUserController.update(oldUser, newUser);
     }
 }

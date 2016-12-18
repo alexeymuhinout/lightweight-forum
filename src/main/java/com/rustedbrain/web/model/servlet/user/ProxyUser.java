@@ -1,4 +1,4 @@
-package com.rustedbrain.web.model.servlet;
+package com.rustedbrain.web.model.servlet.user;
 
 import java.io.Serializable;
 import java.sql.Date;

@@ -25,12 +25,12 @@ public class UserUpdateCommand implements ActionCommand {
             String mail = CommandUtil.User.getMail(requestContent);
             Date birthday = CommandUtil.User.getBirthday(requestContent);
             try {
-                Integer cityId = CommandUtil.City.getId(requestContent);
-                logic.updateUser(userId, name, surname, login, mail, birthday, cityId);
+                String cityName = CommandUtil.City.getName(requestContent);
+                logic.updateUserCredentials(userId, name, surname, login, mail, birthday, cityName);
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
-                String cityName = CommandUtil.City.getName(requestContent);
-                logic.updateUser(userId, name, surname, login, mail, birthday, cityName);
+                Integer cityId = CommandUtil.City.getId(requestContent);
+                logic.updateUserCredentials(userId, name, surname, login, mail, birthday, cityId);
             }
             requestContent.getRequestAttributes().put("message", MessageManager.getInstance().getProperty("profile.update.success"));
             page = new UserLogoutCommand().execute(requestContent);

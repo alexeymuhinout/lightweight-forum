@@ -9,8 +9,6 @@ import com.rustedbrain.web.controller.resource.MessageManager;
 import com.rustedbrain.web.model.servlet.SessionRequestContent;
 
 import java.sql.Date;
-import java.sql.SQLException;
-import java.text.ParseException;
 
 public class UserCreateCommand implements ActionCommand {
 
@@ -41,8 +39,8 @@ public class UserCreateCommand implements ActionCommand {
                 logic.registerUser(name, surname, login, password, mail, birthday, cityId, userAdminToken);
             }
             requestContent.getRequestAttributes().put("message", MessageManager.getInstance().getProperty("registration.success"));
-            page = ConfigurationManager.getInstance().getProperty("path.page.login");
-        } catch (IllegalArgumentException | SQLException | ParseException e) {
+            page = ConfigurationManager.getInstance().getProperty("path.page.user.login");
+        } catch (Exception e) {
             e.printStackTrace();
             requestContent.getRequestAttributes().put("error", e.getMessage());
             page = new UserCreateShowCommand().execute(requestContent);
