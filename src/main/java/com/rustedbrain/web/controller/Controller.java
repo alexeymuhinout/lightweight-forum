@@ -1,6 +1,5 @@
 package com.rustedbrain.web.controller;
 
-import com.rustedbrain.web.controller.command.ActionCommand;
 import com.rustedbrain.web.controller.command.factory.ActionFactory;
 import com.rustedbrain.web.controller.resource.ConfigurationManager;
 import com.rustedbrain.web.controller.resource.MessageManager;
@@ -32,27 +31,29 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        // Before all operations
-        SessionRequestContent requestContent = requestContentUtil.newSessionRequestContent(req);
+        boolean ajax = "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
 
-        ActionFactory actionFactory = new ActionFactory();
-
-        ActionCommand command = actionFactory.defineCommand(requestContent);
-
-        String page = command.execute(requestContent);
-
-        // After all operations
-        requestContentUtil.extractValuesToRequest(req, requestContent);
-
-        if (page != null) {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-            dispatcher.forward(req, resp);
+        if (ajax) {
+            // Handle ajax (JSON or XML) response.
         } else {
-            page = ConfigurationManager.getInstance().getProperty("path.page.index");
-            req.getSession().setAttribute("nullPage",
-                    MessageManager.getInstance().getProperty("message.nullpage"));
-            resp.sendRedirect(req.getContextPath() + page);
+            // Before all operations
+            SessionRequestContent requestContent = requestContentUtil.newSessionRequestContent(req);
+
+            ActionFactory actionFactory = new ActionFactory();
+
+            String page = actionFactory.defineCommand(requestContent).execute(requestContent);
+
+            // After all operations
+            requestContentUtil.extractValuesToRequest(req, requestContent);
+
+            if (page != null) {
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+                dispatcher.forward(req, resp);
+            } else {
+                page = ConfigurationManager.getInstance().getProperty("path.page.index");
+                req.getSession().setAttribute("nullPage", MessageManager.getInstance().getProperty("message.nullpage"));
+                resp.sendRedirect(req.getContextPath() + page);
+            }
         }
     }
-
 }
