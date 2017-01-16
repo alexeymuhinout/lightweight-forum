@@ -1,6 +1,7 @@
 package com.rustedbrain.web.controller;
 
-import com.rustedbrain.web.controller.command.factory.ActionFactory;
+import com.rustedbrain.web.controller.command.factory.AsynchronousActionFactory;
+import com.rustedbrain.web.controller.command.factory.SynchronousActionFactory;
 import com.rustedbrain.web.controller.resource.ConfigurationManager;
 import com.rustedbrain.web.controller.resource.MessageManager;
 import com.rustedbrain.web.controller.util.SessionRequestContentUtil;
@@ -17,6 +18,8 @@ import java.io.IOException;
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
 
+    private AsynchronousActionFactory asynchronousActionFactory = AsynchronousActionFactory.getInstance();
+    private SynchronousActionFactory synchronousActionFactory = SynchronousActionFactory.getInstance();
     private SessionRequestContentUtil requestContentUtil = SessionRequestContentUtil.getInstance();
 
     @Override
@@ -31,18 +34,12 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        SessionRequestContent requestContent = requestContentUtil.newSessionRequestContent(req);
         boolean ajax = "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
 
-        if (ajax) {
-            // Handle ajax (JSON or XML) response.
-        } else {
+        if (!ajax) {
             // Before all operations
-            SessionRequestContent requestContent = requestContentUtil.newSessionRequestContent(req);
-
-            ActionFactory actionFactory = new ActionFactory();
-
-            String page = actionFactory.defineCommand(requestContent).execute(requestContent);
-
+            String page = synchronousActionFactory.defineCommand(requestContent).execute(requestContent);
             // After all operations
             requestContentUtil.extractValuesToRequest(req, requestContent);
 
@@ -54,6 +51,8 @@ public class Controller extends HttpServlet {
                 req.getSession().setAttribute("nullPage", MessageManager.getInstance().getProperty("message.nullpage"));
                 resp.sendRedirect(req.getContextPath() + page);
             }
+        } else {
+            asynchronousActionFactory.defineCommand(requestContent).execute(requestContent);
         }
     }
 }

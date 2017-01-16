@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 
 public class DBUtil {
 
@@ -28,6 +29,56 @@ public class DBUtil {
         this.messageManager = messageManager;
         this.sqlManager = sqlManager;
         this.parser = parser;
+    }
+
+    public static void main(String[] args) {
+        int matrix[][] = new int[][]{{0, 1, -1}, {4, -2, 0}, {3, 1, 1}, {0, 0, 1}};
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                System.out.print(matrix[i][j]);
+            }
+            System.out.println();
+        }
+
+        int arrayLength = matrix.length * matrix[0].length;
+        int[] array = new int[arrayLength];
+
+        int k = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                array[k++] = matrix[i][j];
+            }
+        }
+
+        System.out.println(Arrays.toString(array));
+
+        for (int i = 0; i < array.length - 1; i++) {
+            for (int j = i + 1; j < array.length; j++) {
+                if (array[i] == 0) {
+                    int temp = array[j];
+                    array[j] = array[i];
+                    array[i] = temp;
+                }
+            }
+        }
+
+        k = 0;
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                matrix[i][j] = array[k++];
+            }
+        }
+
+        System.out.println(Arrays.toString(array));
+
+        System.out.println();
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                System.out.print(matrix[i][j]);
+            }
+            System.out.println();
+        }
     }
 
     private boolean tableExist(String tableSchema, String tableName, Connection connection) throws SQLException {

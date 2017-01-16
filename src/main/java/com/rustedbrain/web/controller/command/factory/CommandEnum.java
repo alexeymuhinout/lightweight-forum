@@ -1,15 +1,15 @@
 package com.rustedbrain.web.controller.command.factory;
 
-import com.rustedbrain.web.controller.command.ActionCommand;
-import com.rustedbrain.web.controller.command.IndexShowCommand;
-import com.rustedbrain.web.controller.command.category.*;
-import com.rustedbrain.web.controller.command.message.*;
-import com.rustedbrain.web.controller.command.subcategory.*;
-import com.rustedbrain.web.controller.command.swearwords.SwearWordCreateCommand;
-import com.rustedbrain.web.controller.command.swearwords.SwearWordDeleteCommand;
-import com.rustedbrain.web.controller.command.swearwords.SwearWordUpdateCommand;
-import com.rustedbrain.web.controller.command.swearwords.SwearWordsShowCommand;
-import com.rustedbrain.web.controller.command.user.*;
+import com.rustedbrain.web.controller.command.synchronous.IndexShowCommand;
+import com.rustedbrain.web.controller.command.synchronous.SynchronousActionCommand;
+import com.rustedbrain.web.controller.command.synchronous.category.*;
+import com.rustedbrain.web.controller.command.synchronous.message.*;
+import com.rustedbrain.web.controller.command.synchronous.subcategory.*;
+import com.rustedbrain.web.controller.command.synchronous.swearwords.SwearWordCreateCommand;
+import com.rustedbrain.web.controller.command.synchronous.swearwords.SwearWordDeleteCommand;
+import com.rustedbrain.web.controller.command.synchronous.swearwords.SwearWordUpdateCommand;
+import com.rustedbrain.web.controller.command.synchronous.swearwords.SwearWordsShowCommand;
+import com.rustedbrain.web.controller.command.synchronous.user.*;
 
 @SuppressWarnings("unused")
 enum CommandEnum {
@@ -227,9 +227,9 @@ enum CommandEnum {
         }
     };
 
-    protected ActionCommand action;
+    protected SynchronousActionCommand action;
 
-    public ActionCommand getCurrentCommand() {
+    public SynchronousActionCommand getCurrentCommand() {
         return this.action;
     }
 }
